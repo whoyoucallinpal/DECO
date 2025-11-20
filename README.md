@@ -201,9 +201,14 @@ The **Assumptions** tab is your control panel. All inputs are editable:
 
 ```
 DECO/
-├── DECOProForma_Rental.gs    # Google Apps Script (main file)
-└── README.md                  # This file
+├── DECOProForma_Rental_VERIFIED.gs  # ✅ USE THIS - Fully tested & verified
+├── DECOProForma_Rental_FIXED.gs     # Fixed formula errors only
+├── DECOProForma_Rental.gs           # Original (has errors - for reference)
+├── ERRORS_FIXED.md                  # Detailed error report
+└── README.md                        # This file
 ```
+
+**⚠️ IMPORTANT: Use `DECOProForma_Rental_VERIFIED.gs` - it has been fully tested with all errors corrected.**
 
 ## 🎓 Understanding the Financials
 
