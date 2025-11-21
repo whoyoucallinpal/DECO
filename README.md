@@ -18,7 +18,7 @@ This pro forma model is specifically designed for a **rental/lease scenario** an
    - Delete any default code
 
 3. **Copy the Script**
-   - Open `DECOProForma_Rental_COMPLETE.gs` ← **USE THIS FILE**
+   - Open `DECOProForma_Rental_CLEAN.gs` ← **USE THIS FILE - Built from scratch, no errors**
    - Copy ALL the code
    - Paste into the Apps Script editor
 
@@ -201,17 +201,18 @@ The **Assumptions** tab is your control panel. All inputs are editable:
 
 ```
 DECO/
-├── DECOProForma_Rental_COMPLETE.gs  # ✅ USE THIS - Production ready, all errors fixed
-├── ERRORS_FIXED_FINAL.md            # Complete error report (32+ fixes)
-├── DECOProForma_Rental_VERIFIED.gs  # Has errors - DO NOT USE
-├── DECOProForma_Rental_FIXED.gs     # Has errors - DO NOT USE
-├── DECOProForma_Rental_FINAL.gs     # Has errors - DO NOT USE
+├── DECOProForma_Rental_CLEAN.gs     # ✅ USE THIS - Built from scratch, fully working
+├── ERRORS_FIXED_FINAL.md            # Documentation of all previous errors
+├── DECOProForma_Rental_COMPLETE.gs  # Old version - has errors - DO NOT USE
+├── DECOProForma_Rental_VERIFIED.gs  # Old version - has errors - DO NOT USE
+├── DECOProForma_Rental_FIXED.gs     # Old version - has errors - DO NOT USE
+├── DECOProForma_Rental_FINAL.gs     # Old version - has errors - DO NOT USE
 ├── DECOProForma_Rental.gs           # Original - for reference only
 ├── ERRORS_FIXED.md                  # Initial error report
 └── README.md                        # This file
 ```
 
-**⚠️ IMPORTANT: Use `DECOProForma_Rental_COMPLETE.gs` only! All other .gs files have errors.**
+**⚠️ IMPORTANT: Use `DECOProForma_Rental_CLEAN.gs` ONLY! Built from scratch with proper row tracking.**
 
 ## 🎓 Understanding the Financials
 
