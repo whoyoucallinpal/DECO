@@ -708,7 +708,7 @@ function createStartupCostsSheet(ss) {
   row++;
 
   sheet.getRange(row, 1).setValue('Reserve Months (from Assumptions)').setFontStyle('italic');
-  sheet.getRange(row, 2).setFormula('=Assumptions!B90').setNumberFormat('#,##0').setFontStyle('italic');
+  sheet.getRange(row, 2).setFormula('=Assumptions!B87').setNumberFormat('#,##0').setFontStyle('italic');
   row++;
 
   sheet.getRange(row, 1).setValue('Average Monthly Operating Expenses').setFontStyle('italic');
@@ -766,7 +766,7 @@ function createLoanAmortizationSheet(ss) {
   row++;
 
   sheet.getRange(row, 1).setValue('Annual Interest Rate');
-  sheet.getRange(row, 2).setFormula('=Assumptions!B87').setNumberFormat('0.00%');
+  sheet.getRange(row, 2).setFormula('=Assumptions!B84').setNumberFormat('0.00%');
   const annualRateRow = row;
   row++;
 
@@ -776,7 +776,7 @@ function createLoanAmortizationSheet(ss) {
   row++;
 
   sheet.getRange(row, 1).setValue('Loan Term (Years)');
-  sheet.getRange(row, 2).setFormula('=Assumptions!B88').setNumberFormat('#,##0');
+  sheet.getRange(row, 2).setFormula('=Assumptions!B85').setNumberFormat('#,##0');
   const loanTermYearsRowLoan = row;
   row++;
 
@@ -786,7 +786,7 @@ function createLoanAmortizationSheet(ss) {
   row++;
 
   sheet.getRange(row, 1).setValue('Grace Period (Months)');
-  sheet.getRange(row, 2).setFormula('=Assumptions!B89').setNumberFormat('#,##0');
+  sheet.getRange(row, 2).setFormula('=Assumptions!B86').setNumberFormat('#,##0');
   const gracePeriodRowLoan = row;
   row++;
 
