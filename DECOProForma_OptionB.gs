@@ -609,7 +609,124 @@ function createStartupCostsSheet(ss) {
   const sheet = ss.insertSheet('Startup Costs');
   sheet.setTabColor('#FBBC04'); // Yellow
 
-  sheet.getRange(1, 1).setValue('STARTUP COSTS - Under Construction');
+  let row = 1;
+
+  // Header
+  sheet.getRange(row, 1).setValue('DECO ART CENTER - STARTUP COSTS').setFontWeight('bold').setFontSize(14);
+  row += 2;
+
+  // ========== EQUIPMENT & FURNISHINGS ==========
+  sheet.getRange(row, 1).setValue('EQUIPMENT & FURNISHINGS').setFontWeight('bold').setFontSize(12).setBackground('#E8EAED');
+  sheet.getRange(row, 1, 1, 2).merge();
+  row++;
+
+  sheet.getRange(row, 1).setValue('Kiln');
+  sheet.getRange(row, 2).setValue(8000).setNumberFormat('$#,##0');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Pottery Wheels (6)');
+  sheet.getRange(row, 2).setValue(4800).setNumberFormat('$#,##0');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Classroom Furniture');
+  sheet.getRange(row, 2).setValue(2500).setNumberFormat('$#,##0');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Lobby Furniture');
+  sheet.getRange(row, 2).setValue(2500).setNumberFormat('$#,##0');
+  row++;
+
+  sheet.getRange(row, 1).setValue('EQUIPMENT SUBTOTAL').setFontWeight('bold');
+  sheet.getRange(row, 2).setFormula('=SUM(B4:B7)').setNumberFormat('$#,##0').setFontWeight('bold');
+  row += 2;
+
+  // ========== INITIAL SUPPLIES ==========
+  sheet.getRange(row, 1).setValue('INITIAL SUPPLIES').setFontWeight('bold').setFontSize(12).setBackground('#E8EAED');
+  sheet.getRange(row, 1, 1, 2).merge();
+  row++;
+
+  sheet.getRange(row, 1).setValue('Art Supplies (from detailed inventory)');
+  sheet.getRange(row, 2).setValue(17699).setNumberFormat('$#,##0');
+  row++;
+
+  sheet.getRange(row, 1).setValue('SUPPLIES SUBTOTAL').setFontWeight('bold');
+  sheet.getRange(row, 2).setFormula('=B11').setNumberFormat('$#,##0').setFontWeight('bold');
+  row += 2;
+
+  // ========== SETUP & PROFESSIONAL ==========
+  sheet.getRange(row, 1).setValue('SETUP & PROFESSIONAL').setFontWeight('bold').setFontSize(12).setBackground('#E8EAED');
+  sheet.getRange(row, 1, 1, 2).merge();
+  row++;
+
+  sheet.getRange(row, 1).setValue('Renovation/Build-out');
+  sheet.getRange(row, 2).setValue(25000).setNumberFormat('$#,##0');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Signage & Branding');
+  sheet.getRange(row, 2).setValue(5000).setNumberFormat('$#,##0');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Initial Marketing');
+  sheet.getRange(row, 2).setValue(3000).setNumberFormat('$#,##0');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Legal & Permits');
+  sheet.getRange(row, 2).setValue(5000).setNumberFormat('$#,##0');
+  row++;
+
+  sheet.getRange(row, 1).setValue('POS System & Software');
+  sheet.getRange(row, 2).setValue(3000).setNumberFormat('$#,##0');
+  row++;
+
+  sheet.getRange(row, 1).setValue('SETUP SUBTOTAL').setFontWeight('bold');
+  sheet.getRange(row, 2).setFormula('=SUM(B15:B19)').setNumberFormat('$#,##0').setFontWeight('bold');
+  row += 2;
+
+  // ========== WORKING CAPITAL ==========
+  sheet.getRange(row, 1).setValue('WORKING CAPITAL').setFontWeight('bold').setFontSize(12).setBackground('#E8EAED');
+  sheet.getRange(row, 1, 1, 2).merge();
+  row++;
+
+  sheet.getRange(row, 1).setValue('Operating Reserve').setFontStyle('italic');
+  sheet.getRange(row, 2).setValue('See calculation below').setFontStyle('italic');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Reserve Months (from Assumptions)').setFontStyle('italic');
+  sheet.getRange(row, 2).setFormula('=Assumptions!B118').setNumberFormat('#,##0').setFontStyle('italic');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Average Monthly Operating Expenses').setFontStyle('italic');
+  sheet.getRange(row, 2).setValue('Calculated from Year 1').setFontStyle('italic');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Operating Reserve Amount').setFontWeight('bold');
+  sheet.getRange(row, 2).setValue('TO BE LINKED TO EXPENSE DETAIL').setFontWeight('bold').setBackground('#FFF9C4');
+  const operatingReserveRow = row;
+  row += 2;
+
+  // ========== TOTALS ==========
+  sheet.getRange(row, 1).setValue('TOTAL CASH NEEDED (before reserve)').setFontWeight('bold').setFontSize(12);
+  sheet.getRange(row, 2).setFormula('=B8+B12+B20').setNumberFormat('$#,##0').setFontWeight('bold').setFontSize(12);
+  row++;
+
+  sheet.getRange(row, 1).setValue('TOTAL PROJECT COST (with reserve)').setFontWeight('bold').setFontSize(12).setBackground('#D9EAD3');
+  sheet.getRange(row, 2).setFormula(`=B${row-1}+B${operatingReserveRow}`).setNumberFormat('$#,##0').setFontWeight('bold').setFontSize(12).setBackground('#D9EAD3');
+  row++;
+
+  sheet.getRange(row, 1).setValue('LOAN AMOUNT NEEDED').setFontWeight('bold').setFontSize(14).setBackground('#B6D7A8');
+  sheet.getRange(row, 2).setFormula(`=B${row-1}`).setNumberFormat('$#,##0').setFontWeight('bold').setFontSize(14).setBackground('#B6D7A8');
+  row += 2;
+
+  sheet.getRange(row, 1).setValue('Note: Operating Reserve will calculate once Expense Detail sheet is complete.').setFontStyle('italic').setFontColor('#666666');
+
+  // Format columns
+  sheet.setColumnWidth(1, 350);
+  sheet.setColumnWidth(2, 150);
+
+  // Freeze header
+  sheet.setFrozenRows(1);
+
+  return sheet;
 }
 
 /**
@@ -620,7 +737,103 @@ function createLoanAmortizationSheet(ss) {
   const sheet = ss.insertSheet('Loan Amortization');
   sheet.setTabColor('#FF6D01'); // Orange
 
-  sheet.getRange(1, 1).setValue('LOAN AMORTIZATION - Under Construction');
+  let row = 1;
+  const monthLabels = getMonthLabels();
+
+  // Header
+  sheet.getRange(row, 1).setValue('DECO ART CENTER - LOAN AMORTIZATION').setFontWeight('bold').setFontSize(14);
+  row += 2;
+
+  // Loan parameters
+  sheet.getRange(row, 1).setValue('Loan Amount');
+  sheet.getRange(row, 2).setFormula('=\'Startup Costs\'!B32').setNumberFormat('$#,##0.00').setFontWeight('bold');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Annual Interest Rate');
+  sheet.getRange(row, 2).setFormula('=Assumptions!B115').setNumberFormat('0.00%');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Monthly Interest Rate');
+  sheet.getRange(row, 2).setFormula('=B5/12').setNumberFormat('0.0000%');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Loan Term (Years)');
+  sheet.getRange(row, 2).setFormula('=Assumptions!B116').setNumberFormat('#,##0');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Loan Term (Months)');
+  sheet.getRange(row, 2).setFormula('=B8*12').setNumberFormat('#,##0');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Grace Period (Months)');
+  sheet.getRange(row, 2).setFormula('=Assumptions!B117').setNumberFormat('#,##0');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Monthly Payment').setFontWeight('bold');
+  sheet.getRange(row, 2).setFormula('=IF(B4>0,PMT(B6,B9,- B4),0)').setNumberFormat('$#,##0.00').setFontWeight('bold');
+  row += 2;
+
+  // Amortization table headers
+  sheet.getRange(row, 1).setValue('Month').setFontWeight('bold');
+  sheet.getRange(row, 2).setValue('Period').setFontWeight('bold');
+  sheet.getRange(row, 3).setValue('Beginning Balance').setFontWeight('bold');
+  sheet.getRange(row, 4).setValue('Payment').setFontWeight('bold');
+  sheet.getRange(row, 5).setValue('Principal').setFontWeight('bold');
+  sheet.getRange(row, 6).setValue('Interest').setFontWeight('bold');
+  sheet.getRange(row, 7).setValue('Ending Balance').setFontWeight('bold');
+  const headerRow = row;
+  row++;
+
+  // Generate 120 months (10 years) of amortization schedule
+  // Start from Month -2 (Jan 2026) but payments don't start until after grace period
+  const gracePeriod = 0; // Default from assumptions, formula will reference
+  const totalMonths = 120; // Show 10 years regardless
+  const startMonth = -2; // Jan 2026
+
+  for (let i = 0; i < totalMonths; i++) {
+    const monthNum = startMonth + i;
+    const monthLabel = monthLabels[i + 2]; // Offset because labels array starts at Jan26 (index 0)
+
+    sheet.getRange(row, 1).setValue(monthLabel);
+    sheet.getRange(row, 2).setValue(monthNum).setNumberFormat('#,##0');
+
+    if (row === headerRow + 1) {
+      // First row - beginning balance is loan amount
+      sheet.getRange(row, 3).setFormula('=$B$4').setNumberFormat('$#,##0.00');
+    } else {
+      // Subsequent rows - beginning balance is previous ending balance
+      sheet.getRange(row, 3).setFormula(`=G${row-1}`).setNumberFormat('$#,##0.00');
+    }
+
+    // Payment amount - only if past grace period and balance > 0
+    sheet.getRange(row, 4).setFormula(`=IF(AND(B${row}>=$B$10,C${row}>0),$B$11,0)`).setNumberFormat('$#,##0.00');
+
+    // Interest = Beginning Balance * Monthly Rate
+    sheet.getRange(row, 6).setFormula(`=C${row}*$B$6`).setNumberFormat('$#,##0.00');
+
+    // Principal = Payment - Interest
+    sheet.getRange(row, 5).setFormula(`=D${row}-F${row}`).setNumberFormat('$#,##0.00');
+
+    // Ending Balance = Beginning Balance - Principal
+    sheet.getRange(row, 7).setFormula(`=MAX(0,C${row}-E${row})`).setNumberFormat('$#,##0.00');
+
+    row++;
+  }
+
+  // Format columns
+  sheet.setColumnWidth(1, 80);  // Month
+  sheet.setColumnWidth(2, 70);  // Period
+  sheet.setColumnWidth(3, 130); // Beginning Balance
+  sheet.setColumnWidth(4, 110); // Payment
+  sheet.setColumnWidth(5, 110); // Principal
+  sheet.setColumnWidth(6, 110); // Interest
+  sheet.setColumnWidth(7, 130); // Ending Balance
+
+  // Freeze headers
+  sheet.setFrozenRows(headerRow);
+  sheet.setFrozenColumns(2);
+
+  return sheet;
 }
 
 /**
