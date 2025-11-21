@@ -1,0 +1,17 @@
+Age Group,Duration,Days,Type,Price,Max Students,Year 1 Enroll %,Year 2,Year 3,Year 4,Year 5,Weeks Offered
+5-7,Half Day AM,5,General,$159,15,85%,94%,102%,112%,122%,12
+5-7,Half Day AM,5,Ceramics/NW,$179,15,85%,94%,102%,112%,122%,12
+5-7,Half Day PM,4,General,$135,15,85%,94%,102%,112%,122%,12
+5-7,Full Day PM,5,General,$275,15,85%,94%,102%,112%,122%,12
+5-7,Full Day,5,Ceramics/NW,$250,15,85%,94%,102%,112%,122%,12
+8-12,Half Day AM,5,General,$159,15,85%,94%,102%,112%,122%,12
+8-12,Half Day AM,5,Ceramics/NW,$179,15,85%,94%,102%,112%,122%,12
+8-12,Half Day AM,4,General,$135,15,85%,94%,102%,112%,122%,12
+8-12,Full Day,5,General,$275,15,85%,94%,102%,112%,122%,12
+8-12,Full Day,5,Ceramics/NW,$295,15,85%,94%,102%,112%,122%,12
+8-12,Full Day,4,General,$234,15,85%,94%,102%,112%,122%,12
+12-16,Half Day,5,General,$159,15,85%,94%,102%,112%,122%,12
+12-16,Half Day PM,5,Ceramics/W,$179,6,85%,94%,102%,112%,122%,12
+12-16,Full Day,5,General,$275,15,85%,94%,102%,112%,122%,12
+12-16,Full Day,5,Ceramics/W,$295,6,85%,94%,102%,112%,122%,12
+All Ages,Extended Care,5,Add-on,$50,40,50%,55%,60%,66%,72%,12
