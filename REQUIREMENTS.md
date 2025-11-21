@@ -26,9 +26,10 @@ Create a Google Apps Script that generates a comprehensive 5-year financial pro 
 | Item | Default Value | Adjustable? |
 |------|--------------|-------------|
 | Square Footage | 5,000 sf | Yes |
-| Base Rent | $16/sf/month | Yes |
-| NNN (Triple Net) | $4/sf/month | Yes |
-| Total Monthly Rent | $100,000/year | Auto-calc |
+| Base Rent | $16/sf/year | Yes |
+| NNN (Triple Net) | $4/sf/year | Yes |
+| Total Annual Rent (5,000 sf) | $100,000 | Auto-calc |
+| Total Monthly Rent (5,000 sf) | $8,333.33 | Auto-calc |
 
 ---
 
@@ -244,9 +245,9 @@ Create a Google Apps Script that generates a comprehensive 5-year financial pro 
 
 | Expense | Calculation | Annual (5,000 sf) |
 |---------|-------------|-------------------|
-| Base Rent | $16/sf/month | $960,000 |
-| NNN | $4/sf/month | $240,000 |
-| **Total Rent** | | **$1,200,000** |
+| Base Rent | $16/sf/year | $80,000 |
+| NNN | $4/sf/year | $20,000 |
+| **Total Rent** | | **$100,000** |
 | Electricity | $1,200/month | $14,400 |
 | Gas | $400/month | $4,800 |
 | Water | $300/month | $3,600 |
