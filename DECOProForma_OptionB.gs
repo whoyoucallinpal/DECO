@@ -91,10 +91,11 @@ function createAssumptionsSheet(ss) {
   sheet.getRange(row, 1).setValue('Total Annual Rent').setFontWeight('bold');
   sheet.getRange(row, 2).setFormula('=B4*(B5+B6)').setNumberFormat('$#,##0.00').setFontWeight('bold');
   sheet.getRange(row, 3).setValue('auto-calculated').setFontStyle('italic');
+  const totalAnnualRentRow = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Total Monthly Rent').setFontWeight('bold');
-  sheet.getRange(row, 2).setFormula('=B8/12').setNumberFormat('$#,##0.00').setFontWeight('bold');
+  sheet.getRange(row, 2).setFormula(`=B${totalAnnualRentRow}/12`).setNumberFormat('$#,##0.00').setFontWeight('bold');
   sheet.getRange(row, 3).setValue('auto-calculated').setFontStyle('italic');
   row += 2;
 
@@ -233,32 +234,38 @@ function createAssumptionsSheet(ss) {
   sheet.getRange(row, 1).setValue('Wine Price');
   sheet.getRange(row, 2).setValue(8).setNumberFormat('$#,##0');
   sheet.getRange(row, 3).setValue('per glass');
+  const winePriceRow = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Beer Price');
   sheet.getRange(row, 2).setValue(6).setNumberFormat('$#,##0');
   sheet.getRange(row, 3).setValue('per bottle');
+  const beerPriceRow = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Cocktail Price');
   sheet.getRange(row, 2).setValue(10).setNumberFormat('$#,##0');
   sheet.getRange(row, 3).setValue('per drink');
+  const cocktailPriceRow = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Drink Mix - Wine %');
   sheet.getRange(row, 2).setValue(0.40).setNumberFormat('0%');
+  const wineMixRow = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Drink Mix - Beer %');
   sheet.getRange(row, 2).setValue(0.40).setNumberFormat('0%');
+  const beerMixRow = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Drink Mix - Cocktail %');
   sheet.getRange(row, 2).setValue(0.20).setNumberFormat('0%');
+  const cocktailMixRow = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Weighted Avg Drink Price').setFontWeight('bold');
-  sheet.getRange(row, 2).setFormula('=B65*B68+B66*B69+B67*B70').setNumberFormat('$#,##0.00').setFontWeight('bold');
+  sheet.getRange(row, 2).setFormula(`=B${winePriceRow}*B${wineMixRow}+B${beerPriceRow}*B${beerMixRow}+B${cocktailPriceRow}*B${cocktailMixRow}`).setNumberFormat('$#,##0.00').setFontWeight('bold');
   sheet.getRange(row, 3).setValue('auto-calculated').setFontStyle('italic');
   row++;
 
@@ -289,20 +296,23 @@ function createAssumptionsSheet(ss) {
   sheet.getRange(row, 1).setValue('Initial Supplies Investment');
   sheet.getRange(row, 2).setValue(17699).setNumberFormat('$#,##0');
   sheet.getRange(row, 3).setValue('From Startup Supplies sheet');
+  const initialSuppliesRow = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Supply Replenishment %');
   sheet.getRange(row, 2).setValue(0.30).setNumberFormat('0%');
   sheet.getRange(row, 3).setValue('% of initial to reorder');
+  const replenishPctRow = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Replenishment Frequency');
   sheet.getRange(row, 2).setValue(4).setNumberFormat('#,##0');
   sheet.getRange(row, 3).setValue('times per year (quarterly)');
+  const replenishFreqRow = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Annual Supply Replenishment').setFontWeight('bold');
-  sheet.getRange(row, 2).setFormula('=B79*B80*B81').setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 2).setFormula(`=B${initialSuppliesRow}*B${replenishPctRow}*B${replenishFreqRow}`).setNumberFormat('$#,##0').setFontWeight('bold');
   sheet.getRange(row, 3).setValue('auto-calculated').setFontStyle('italic');
   row += 2;
 
@@ -384,15 +394,17 @@ function createAssumptionsSheet(ss) {
   sheet.getRange(row, 1).setValue('Building/Improvements/Year');
   sheet.getRange(row, 2).setValue(33333).setNumberFormat('$#,##0');
   sheet.getRange(row, 3).setValue('39-year straight line');
+  const buildingDepreciationRow = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Equipment/Year');
   sheet.getRange(row, 2).setValue(17857).setNumberFormat('$#,##0');
   sheet.getRange(row, 3).setValue('7-year straight line');
+  const equipmentDepreciationRow = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Total Annual Depreciation').setFontWeight('bold');
-  sheet.getRange(row, 2).setFormula('=B109+B110').setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 2).setFormula(`=B${buildingDepreciationRow}+B${equipmentDepreciationRow}`).setNumberFormat('$#,##0').setFontWeight('bold');
   sheet.getRange(row, 3).setValue('auto-calculated').setFontStyle('italic');
   row += 2;
 
@@ -404,19 +416,23 @@ function createAssumptionsSheet(ss) {
   sheet.getRange(row, 1).setValue('Interest Rate');
   sheet.getRange(row, 2).setValue(0.12).setNumberFormat('0.00%');
   sheet.getRange(row, 3).setValue('annual');
+  const interestRateRow = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Loan Term (Years)');
   sheet.getRange(row, 2).setValue(10).setNumberFormat('#,##0');
+  const loanTermYearsRow = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Grace Period (Months)');
   sheet.getRange(row, 2).setValue(0).setNumberFormat('#,##0');
+  const gracePeriodRow = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Operating Reserve (Months)');
   sheet.getRange(row, 2).setValue(4).setNumberFormat('#,##0');
   sheet.getRange(row, 3).setValue('Months of expenses to reserve');
+  const operatingReserveMonthsRow = row;
   row += 2;
 
   // ========== RETAIL ==========
@@ -692,7 +708,7 @@ function createStartupCostsSheet(ss) {
   row++;
 
   sheet.getRange(row, 1).setValue('Reserve Months (from Assumptions)').setFontStyle('italic');
-  sheet.getRange(row, 2).setFormula('=Assumptions!B118').setNumberFormat('#,##0').setFontStyle('italic');
+  sheet.getRange(row, 2).setFormula('=Assumptions!B90').setNumberFormat('#,##0').setFontStyle('italic');
   row++;
 
   sheet.getRange(row, 1).setValue('Average Monthly Operating Expenses').setFontStyle('italic');
@@ -750,27 +766,33 @@ function createLoanAmortizationSheet(ss) {
   row++;
 
   sheet.getRange(row, 1).setValue('Annual Interest Rate');
-  sheet.getRange(row, 2).setFormula('=Assumptions!B115').setNumberFormat('0.00%');
+  sheet.getRange(row, 2).setFormula('=Assumptions!B87').setNumberFormat('0.00%');
+  const annualRateRow = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Monthly Interest Rate');
-  sheet.getRange(row, 2).setFormula('=B5/12').setNumberFormat('0.0000%');
+  sheet.getRange(row, 2).setFormula(`=B${annualRateRow}/12`).setNumberFormat('0.0000%');
+  const monthlyRateRow = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Loan Term (Years)');
-  sheet.getRange(row, 2).setFormula('=Assumptions!B116').setNumberFormat('#,##0');
+  sheet.getRange(row, 2).setFormula('=Assumptions!B88').setNumberFormat('#,##0');
+  const loanTermYearsRowLoan = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Loan Term (Months)');
-  sheet.getRange(row, 2).setFormula('=B8*12').setNumberFormat('#,##0');
+  sheet.getRange(row, 2).setFormula(`=B${loanTermYearsRowLoan}*12`).setNumberFormat('#,##0');
+  const loanTermMonthsRow = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Grace Period (Months)');
-  sheet.getRange(row, 2).setFormula('=Assumptions!B117').setNumberFormat('#,##0');
+  sheet.getRange(row, 2).setFormula('=Assumptions!B89').setNumberFormat('#,##0');
+  const gracePeriodRowLoan = row;
   row++;
 
   sheet.getRange(row, 1).setValue('Monthly Payment').setFontWeight('bold');
-  sheet.getRange(row, 2).setFormula('=IF(B4>0,PMT(B6,B9,- B4),0)').setNumberFormat('$#,##0.00').setFontWeight('bold');
+  sheet.getRange(row, 2).setFormula(`=IF(B4>0,PMT(B${monthlyRateRow},B${loanTermMonthsRow},-B4),0)`).setNumberFormat('$#,##0.00').setFontWeight('bold');
+  const monthlyPaymentRow = row;
   row += 2;
 
   // Amortization table headers
@@ -786,9 +808,9 @@ function createLoanAmortizationSheet(ss) {
 
   // Generate 120 months (10 years) of amortization schedule
   // Start from Month -2 (Jan 2026) but payments don't start until after grace period
-  const gracePeriod = 0; // Default from assumptions, formula will reference
   const totalMonths = 120; // Show 10 years regardless
   const startMonth = -2; // Jan 2026
+  const loanAmountRow = 4;
 
   for (let i = 0; i < totalMonths; i++) {
     const monthNum = startMonth + i;
@@ -799,17 +821,17 @@ function createLoanAmortizationSheet(ss) {
 
     if (row === headerRow + 1) {
       // First row - beginning balance is loan amount
-      sheet.getRange(row, 3).setFormula('=$B$4').setNumberFormat('$#,##0.00');
+      sheet.getRange(row, 3).setFormula(`=$B$${loanAmountRow}`).setNumberFormat('$#,##0.00');
     } else {
       // Subsequent rows - beginning balance is previous ending balance
       sheet.getRange(row, 3).setFormula(`=G${row-1}`).setNumberFormat('$#,##0.00');
     }
 
     // Payment amount - only if past grace period and balance > 0
-    sheet.getRange(row, 4).setFormula(`=IF(AND(B${row}>=$B$10,C${row}>0),$B$11,0)`).setNumberFormat('$#,##0.00');
+    sheet.getRange(row, 4).setFormula(`=IF(AND(B${row}>=$B$${gracePeriodRowLoan},C${row}>0),$B$${monthlyPaymentRow},0)`).setNumberFormat('$#,##0.00');
 
     // Interest = Beginning Balance * Monthly Rate
-    sheet.getRange(row, 6).setFormula(`=C${row}*$B$6`).setNumberFormat('$#,##0.00');
+    sheet.getRange(row, 6).setFormula(`=C${row}*$B$${monthlyRateRow}`).setNumberFormat('$#,##0.00');
 
     // Principal = Payment - Interest
     sheet.getRange(row, 5).setFormula(`=D${row}-F${row}`).setNumberFormat('$#,##0.00');
