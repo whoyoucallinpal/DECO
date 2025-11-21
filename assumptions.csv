@@ -1,0 +1,55 @@
+Category,Item,Value
+STAFF COMPENSATION,,
+,Owner 1 Annual Salary (Year 1),$50000
+,Owner 2 Annual Salary (Year 2),$50000
+,Studio Manager Hourly,$25
+,Studio Manager Hours/Week,40
+,Teacher Hourly,$25
+,Assistant Hourly,$15
+,Payroll Tax Rate,7.65%
+,,
+EVENTS & WORKSHOPS,,
+,Paint & Sip Events/Month,8
+,Paint & Sip Price,$45
+,Paint & Sip Attendance,15
+,Private Events/Month,1
+,Private Event Base Fee,$500
+,Private Event Per Person,$20
+,Private Event Attendance,25
+,Workshops/Month,2
+,Workshop Price,$75
+,Workshop Attendance,15
+,Space Rentals/Month,3
+,Space Rental Rate,$3500
+,,
+BEVERAGE SALES,,
+,Drinks/Person (Paint & Sip),2
+,Drinks/Person (Private Event),2
+,Drinks/Person (Workshop),1.5
+,Coffee Price,$4
+,Beer Price,$6
+,Wine Price,$8
+,Beverage COGS %,30%
+,,
+OPERATING EXPENSES,,
+,Art Supplies COGS %,7.56%
+,Pottery COGS %,2.02%
+,Supplies Replenish % (Quarterly),30%
+,Electricity/Month,$1200
+,Gas/Month,$400
+,Water/Month,$300
+,Internet/Month,$200
+,Insurance/Month,$1500
+,Property Tax/Year,$19500
+,Repairs/Year,$26000
+,Marketing Year 1/Month,$1500
+,Marketing Year 2+ %,3.00%
+,Accounting/Year,$3600
+,Legal/Year,$2400
+,Payroll Service/Year,$1800
+,Liquor License/Year,$1030
+,,
+DEPRECIATION,,
+,Building (39 years),$33333
+,Equipment (7 years),$17857
+,Total Annual Depreciation,$51190
