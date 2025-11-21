@@ -602,8 +602,60 @@ function createRevenueDetailSheet(ss) {
   const sheet = ss.insertSheet('Revenue Detail');
   sheet.setTabColor('#34A853'); // Green
 
-  // This will be built next
-  sheet.getRange(1, 1).setValue('REVENUE DETAIL - Under Construction');
+  const monthLabels = getMonthLabels();
+  let row = 1;
+  let col = 1;
+
+  // Header
+  sheet.getRange(row, col).setValue('DECO ART CENTER - REVENUE DETAIL (60 Months)').setFontWeight('bold').setFontSize(14);
+  row += 2;
+
+  // Column headers - Month labels
+  sheet.getRange(row, 1).setValue('Revenue Stream').setFontWeight('bold');
+  for (let i = 0; i < 60; i++) {
+    // Months 1-60 = MAR26 through FEB31
+    sheet.getRange(row, i + 2).setValue(monthLabels[i + 2]).setFontWeight('bold');
+  }
+  const headerRow = row;
+  row++;
+
+  // Note: This is a simplified structure showing the framework
+  // Full implementation would add all revenue calculations here
+
+  // Placeholder rows for now
+  sheet.getRange(row, 1).setValue('Regular Classes').setFontWeight('bold');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Summer Camps').setFontWeight('bold');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Paint & Sip Events').setFontWeight('bold');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Private Events').setFontWeight('bold');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Workshops').setFontWeight('bold');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Beverage Sales').setFontWeight('bold');
+  row++;
+
+  sheet.getRange(row, 1).setValue('Retail').setFontWeight('bold');
+  row++;
+
+  sheet.getRange(row, 1).setValue('TOTAL REVENUE').setFontWeight('bold').setBackground('#D9EAD3');
+  row++;
+
+  // Format
+  sheet.setColumnWidth(1, 250);
+  for (let i = 2; i <= 61; i++) {
+    sheet.setColumnWidth(i, 100);
+  }
+  sheet.setFrozenRows(headerRow);
+  sheet.setFrozenColumns(1);
+
+  return sheet;
 }
 
 /**
