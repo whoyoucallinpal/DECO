@@ -604,47 +604,218 @@ function createRevenueDetailSheet(ss) {
 
   const monthLabels = getMonthLabels();
   let row = 1;
-  let col = 1;
 
   // Header
-  sheet.getRange(row, col).setValue('DECO ART CENTER - REVENUE DETAIL (60 Months)').setFontWeight('bold').setFontSize(14);
+  sheet.getRange(row, 1).setValue('DECO ART CENTER - REVENUE DETAIL (60 Months)').setFontWeight('bold').setFontSize(14);
   row += 2;
 
-  // Column headers - Month labels
+  // Column headers - Month labels (Months 1-60 = MAR26 through FEB31)
   sheet.getRange(row, 1).setValue('Revenue Stream').setFontWeight('bold');
   for (let i = 0; i < 60; i++) {
-    // Months 1-60 = MAR26 through FEB31
     sheet.getRange(row, i + 2).setValue(monthLabels[i + 2]).setFontWeight('bold');
   }
   const headerRow = row;
   row++;
 
-  // Note: This is a simplified structure showing the framework
-  // Full implementation would add all revenue calculations here
-
-  // Placeholder rows for now
+  // ========== REGULAR CLASSES ==========
+  // Simplified: Use aggregate monthly class revenue based on assumptions
+  // Total annual class revenue = sum of (price * max students * enrollment% * sessions) for each class
+  // Spread evenly across 12 months (no classes in summer = June, July, Aug)
   sheet.getRange(row, 1).setValue('Regular Classes').setFontWeight('bold');
+  const regularClassesRow = row;
+
+  // For each month, calculate class revenue
+  // Classes run all months except summer (months 4-6 = Jun, Jul, Aug in Year 1)
+  // Reference enrollment rates from Assumptions
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const colLetter = getColLetter(col);
+
+    // Determine which year this month is in and corresponding enrollment rate
+    // Year 1: months 1-10 (Mar-Dec 2026), Year 2: 11-22, Year 3: 23-34, Year 4: 35-46, Year 5: 47-60
+    // Get month of year to check if summer (Jun=4, Jul=5, Aug=6 in Year 1 starting Mar)
+    // Actually Mar=1, Apr=2, May=3, Jun=4, Jul=5, Aug=6, Sep=7... for Year 1
+    // For subsequent years: Jan=11, Feb=12, Mar=13... Jun=16,17,18 etc.
+
+    // Simplified: Calculate monthly class revenue from assumptions
+    // Using a formula that sums all class revenues and divides by 9 (non-summer months per year)
+    // Then applies 0 for summer months
+
+    // Check if summer month (roughly months where classes don't run)
+    // Month 4,5,6 = Jun,Jul,Aug Year 1; Month 16,17,18 = Jun,Jul,Aug Year 2; etc.
+    const monthInYear = ((month - 1) % 12) + 1; // 1-12 cycle, where 1=Mar for Year1
+    // In Year 1: Mar=1, so Jun=4, Jul=5, Aug=6
+    // In Year 2+: Jan=1, so Jun=6, Jul=7, Aug=8
+    // This is getting complex - let's simplify with a conditional formula
+
+    // Use a simpler approach: Calculate total annual class revenue and spread across 9 months
+    // Classes: 10 classes in rows 93-102 of Assumptions (after class header at row 92)
+    // For now, use a placeholder calculation based on Paint & Sip-like logic
+
+    // Enrollment rate by year
+    let enrollmentRate;
+    if (month <= 10) enrollmentRate = 0.85;      // Year 1
+    else if (month <= 22) enrollmentRate = 0.94; // Year 2
+    else enrollmentRate = 1.00;                   // Year 3+
+
+    // Check if summer month (no regular classes)
+    // Year 1: months 4,5,6 (Jun, Jul, Aug)
+    // Year 2+: months 16,17,18 (Jun), 28,29,30 (Jun), etc.
+    // Monthly position in fiscal year: (month-1) % 12 gives 0-11 where 0=Mar
+    // So summer = positions 3,4,5 (Jun, Jul, Aug)
+    const fiscalMonth = (month - 1) % 12; // 0=Mar, 3=Jun, 4=Jul, 5=Aug
+    const isSummer = (fiscalMonth >= 3 && fiscalMonth <= 5);
+
+    if (isSummer) {
+      sheet.getRange(row, col).setValue(0).setNumberFormat('$#,##0');
+    } else {
+      // Calculate monthly class revenue
+      // Simplified: Base monthly class revenue * enrollment rate
+      // Total from all 10 classes annually ≈ $150,000, so ~$16,667/month for 9 months
+      // Reference assumptions for actual calc
+      const formula = `=SUMPRODUCT(Assumptions!$C$93:$C$102,Assumptions!$D$93:$D$102)*${enrollmentRate}/9`;
+      sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+    }
+  }
   row++;
 
+  // ========== SUMMER CAMPS ==========
   sheet.getRange(row, 1).setValue('Summer Camps').setFontWeight('bold');
+  const summerCampsRow = row;
+
+  // Summer camps only run June, July, August (fiscal months 3,4,5)
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const fiscalMonth = (month - 1) % 12;
+    const isSummer = (fiscalMonth >= 3 && fiscalMonth <= 5);
+
+    // Determine enrollment rate by year
+    let enrollmentRate;
+    if (month <= 10) enrollmentRate = 0.85;
+    else if (month <= 22) enrollmentRate = 0.94;
+    else enrollmentRate = 1.00;
+
+    if (!isSummer) {
+      sheet.getRange(row, col).setValue(0).setNumberFormat('$#,##0');
+    } else {
+      // Summer camp revenue: sum of all camp prices * max students * enrollment
+      // Camps in Assumptions rows 109-124 (after camp header at 108)
+      // Total camp revenue per summer ≈ $100,000, spread over 3 months
+      const formula = `=SUMPRODUCT(Assumptions!$E$109:$E$124,Assumptions!$F$109:$F$124)*${enrollmentRate}/3`;
+      sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+    }
+  }
   row++;
 
+  // ========== PAINT & SIP EVENTS ==========
   sheet.getRange(row, 1).setValue('Paint & Sip Events').setFontWeight('bold');
+  const paintSipRow = row;
+
+  // Paint & Sip: events/month * price * attendance * enrollment rate
+  // Assumptions: B29 = events/month, B30 = price, B31 = attendance
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+
+    let enrollmentRate;
+    if (month <= 10) enrollmentRate = 0.85;
+    else if (month <= 22) enrollmentRate = 0.94;
+    else enrollmentRate = 1.00;
+
+    // Paint & Sip revenue formula
+    const formula = `=Assumptions!$B$29*Assumptions!$B$30*Assumptions!$B$31*${enrollmentRate}`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // ========== PRIVATE EVENTS ==========
   sheet.getRange(row, 1).setValue('Private Events').setFontWeight('bold');
+  const privateEventsRow = row;
+
+  // Private Events: events/month * (reservation fee + price/person * avg attendance) * enrollment
+  // Assumptions: B32 = reservation fee, B33 = price/person, B34 = avg attendance, B35 = events/month
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+
+    let enrollmentRate;
+    if (month <= 10) enrollmentRate = 0.85;
+    else if (month <= 22) enrollmentRate = 0.94;
+    else enrollmentRate = 1.00;
+
+    const formula = `=Assumptions!$B$38*(Assumptions!$B$32+Assumptions!$B$33*Assumptions!$B$34)*${enrollmentRate}`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // ========== WORKSHOPS ==========
   sheet.getRange(row, 1).setValue('Workshops').setFontWeight('bold');
+  const workshopsRow = row;
+
+  // Workshops: workshops/month * price * attendance * DECO split * enrollment
+  // Assumptions: B36 = price, B37 = attendance, B38 = DECO split (60%), B39 = workshops/month
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+
+    let enrollmentRate;
+    if (month <= 10) enrollmentRate = 0.85;
+    else if (month <= 22) enrollmentRate = 0.94;
+    else enrollmentRate = 1.00;
+
+    const formula = `=Assumptions!$B$42*Assumptions!$B$39*Assumptions!$B$40*Assumptions!$B$41*${enrollmentRate}`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // ========== BEVERAGE SALES ==========
   sheet.getRange(row, 1).setValue('Beverage Sales').setFontWeight('bold');
+  const beveragesRow = row;
+
+  // Beverage sales from Paint & Sip and Private Events
+  // Assumptions: B44=drinks/person P&S, B45=drinks/person private, B51=drink participation %, B54=weighted avg price
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const colLetter = getColLetter(col);
+
+    // Reference Paint & Sip attendance and Private Event attendance
+    // Simplified: Use percentage of event revenue as beverage proxy
+    // Actual: (P&S attendance * drinks * participation * price) + (Private attendance * drinks * price)
+    let enrollmentRate;
+    if (month <= 10) enrollmentRate = 0.85;
+    else if (month <= 22) enrollmentRate = 0.94;
+    else enrollmentRate = 1.00;
+
+    // P&S beverages: events * attendance * participation% * drinks/person * avg price
+    // Private beverages: events * attendance * drinks/person * avg price
+    const formula = `=(Assumptions!$B$29*Assumptions!$B$31*Assumptions!$B$51*Assumptions!$B$44*Assumptions!$B$54 + Assumptions!$B$38*Assumptions!$B$34*Assumptions!$B$45*Assumptions!$B$54)*${enrollmentRate}`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // ========== RETAIL ==========
   sheet.getRange(row, 1).setValue('Retail').setFontWeight('bold');
+  const retailRow = row;
+
+  // Retail: 5% of other revenue (Assumptions B91)
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const colLetter = getColLetter(col);
+
+    // Sum of all other revenue streams * retail percentage
+    const formula = `=(${colLetter}${regularClassesRow}+${colLetter}${summerCampsRow}+${colLetter}${paintSipRow}+${colLetter}${privateEventsRow}+${colLetter}${workshopsRow}+${colLetter}${beveragesRow})*Assumptions!$B$91`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // ========== TOTAL REVENUE ==========
   sheet.getRange(row, 1).setValue('TOTAL REVENUE').setFontWeight('bold').setBackground('#D9EAD3');
+  const totalRevenueRow = row;
+
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const colLetter = getColLetter(col);
+
+    const formula = `=SUM(${colLetter}${regularClassesRow}:${colLetter}${retailRow})`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0').setBackground('#D9EAD3');
+  }
   row++;
 
   // Format
@@ -681,66 +852,293 @@ function createExpenseDetailSheet(ss) {
   const headerRow = row;
   row++;
 
-  // Expense categories (simplified framework)
+  // ========== OWNER SALARIES ==========
+  // Two owners at $50,000/year each = $100,000/year = $8,333.33/month total
   sheet.getRange(row, 1).setValue('Owner Salaries').setFontWeight('bold');
+  const ownerSalaryRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    // Monthly owner salary = (Owner1 + Owner2 annual) / 12
+    const formula = `=(Assumptions!$B$15+Assumptions!$B$16)/12`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // ========== STUDIO MANAGER ==========
+  // Year 1: 0 hours (owners manage), Year 2+: 40 hrs/week * $25/hr * 4.33 weeks/month
   sheet.getRange(row, 1).setValue('Studio Manager').setFontWeight('bold');
+  const studioMgrRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    // Year 1 (months 1-10): use B20 (0 hrs), Year 2+ (months 11+): use B21 (40 hrs)
+    if (month <= 10) {
+      // Year 1: 0 hours
+      const formula = `=Assumptions!$B$20*Assumptions!$B$17*4.33`;
+      sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+    } else {
+      // Year 2+: 40 hours
+      const formula = `=Assumptions!$B$21*Assumptions!$B$17*4.33`;
+      sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+    }
+  }
   row++;
 
+  // ========== TEACHERS ==========
+  // Based on class hours * hourly rate - simplified calculation
   sheet.getRange(row, 1).setValue('Teachers').setFontWeight('bold');
+  const teachersRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const fiscalMonth = (month - 1) % 12;
+    const isSummer = (fiscalMonth >= 3 && fiscalMonth <= 5);
+
+    let enrollmentRate;
+    if (month <= 10) enrollmentRate = 0.85;
+    else if (month <= 22) enrollmentRate = 0.94;
+    else enrollmentRate = 1.00;
+
+    if (isSummer) {
+      // Summer: camp teachers (simplified - assume similar hours to regular)
+      const formula = `=SUMPRODUCT(Assumptions!$B$93:$B$102,Assumptions!$E$93:$E$102)*Assumptions!$B$22*${enrollmentRate}/9`;
+      sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+    } else {
+      // Regular months: class teachers
+      // Hours per class * sessions per month * teacher rate
+      const formula = `=SUMPRODUCT(Assumptions!$B$93:$B$102,Assumptions!$E$93:$E$102)*Assumptions!$B$22*${enrollmentRate}/9`;
+      sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+    }
+  }
   row++;
 
+  // ========== ASSISTANTS ==========
+  // Assistant needed for classes with >10 students
   sheet.getRange(row, 1).setValue('Assistants').setFontWeight('bold');
+  const assistantsRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const fiscalMonth = (month - 1) % 12;
+    const isSummer = (fiscalMonth >= 3 && fiscalMonth <= 5);
+
+    let enrollmentRate;
+    if (month <= 10) enrollmentRate = 0.85;
+    else if (month <= 22) enrollmentRate = 0.94;
+    else enrollmentRate = 1.00;
+
+    // Simplified: 25% of teacher cost for assistants (classes >10 students)
+    if (isSummer) {
+      sheet.getRange(row, col).setValue(0).setNumberFormat('$#,##0');
+    } else {
+      const formula = `=SUMPRODUCT(Assumptions!$B$93:$B$102,Assumptions!$E$93:$E$102)*Assumptions!$B$23*0.25*${enrollmentRate}/9`;
+      sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+    }
+  }
   row++;
 
+  // ========== PAYROLL TAXES ==========
+  // 9.75% of all wages (FICA + FUTA + OK SUI)
   sheet.getRange(row, 1).setValue('Payroll Taxes').setFontWeight('bold');
+  const payrollTaxRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const colLetter = getColLetter(col);
+    // Payroll tax on all wages
+    const formula = `=(${colLetter}${ownerSalaryRow}+${colLetter}${studioMgrRow}+${colLetter}${teachersRow}+${colLetter}${assistantsRow})*Assumptions!$B$24`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // ========== RENT ==========
+  // Monthly rent from Assumptions B9
   sheet.getRange(row, 1).setValue('Rent (Base + NNN)').setFontWeight('bold');
+  const rentRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const formula = `=Assumptions!$B$9`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // ========== UTILITIES ==========
+  // Electricity + Gas + Water + Internet from Assumptions
   sheet.getRange(row, 1).setValue('Utilities').setFontWeight('bold');
+  const utilitiesRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const formula = `=Assumptions!$B$66+Assumptions!$B$67+Assumptions!$B$68+Assumptions!$B$69`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // ========== INSURANCE ==========
   sheet.getRange(row, 1).setValue('Insurance').setFontWeight('bold');
+  const insuranceRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const formula = `=Assumptions!$B$70`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // ========== PROPERTY TAX ==========
+  // Annual property tax / 12
   sheet.getRange(row, 1).setValue('Property Tax').setFontWeight('bold');
+  const propTaxRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const formula = `=Assumptions!$B$71/12`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // ========== REPAIRS & MAINTENANCE ==========
+  // Annual / 12
   sheet.getRange(row, 1).setValue('Repairs & Maintenance').setFontWeight('bold');
+  const repairsRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const formula = `=Assumptions!$B$72/12`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // ========== MARKETING ==========
+  // Pre-launch: $3,000/mo for months 1-2, then 3% of revenue
   sheet.getRange(row, 1).setValue('Marketing').setFontWeight('bold');
+  const marketingRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const colLetter = getColLetter(col);
+    if (month <= 2) {
+      // Pre-launch marketing
+      const formula = `=Assumptions!$B$78`;
+      sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+    } else {
+      // Ongoing: 3% of revenue
+      const formula = `='Revenue Detail'!${colLetter}11*Assumptions!$B$79`;
+      sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+    }
+  }
   row++;
 
+  // ========== PROFESSIONAL SERVICES ==========
+  // Accounting + Legal + Payroll service / 12
   sheet.getRange(row, 1).setValue('Professional Services').setFontWeight('bold');
+  const profSvcRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const formula = `=(Assumptions!$B$73+Assumptions!$B$74+Assumptions!$B$75)/12`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // ========== LIQUOR LICENSE ==========
+  // Year 1: Initial fee in month 1, Year 2+: Renewal in January
   sheet.getRange(row, 1).setValue('Liquor License').setFontWeight('bold');
+  const liquorRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const fiscalMonth = (month - 1) % 12;
+    // Month 1 = March, so January = month 11, 23, 35, 47
+    if (month === 1) {
+      // Initial license in Month 1
+      const formula = `=Assumptions!$B$76`;
+      sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+    } else if (month === 11 || month === 23 || month === 35 || month === 47) {
+      // Renewal in January of each subsequent year
+      const formula = `=Assumptions!$B$77`;
+      sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+    } else {
+      sheet.getRange(row, col).setValue(0).setNumberFormat('$#,##0');
+    }
+  }
   row++;
 
+  // ========== SUPPLY REPLENISHMENT ==========
+  // Quarterly replenishment (months 3, 6, 9, 12, etc.)
   sheet.getRange(row, 1).setValue('Supply Replenishment').setFontWeight('bold');
+  const supplyRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    // Quarterly = every 3 months
+    if (month % 3 === 0) {
+      const formula = `=Assumptions!$B$64/4`;  // Annual supply replenishment / 4
+      sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+    } else {
+      sheet.getRange(row, col).setValue(0).setNumberFormat('$#,##0');
+    }
+  }
   row++;
 
+  // ========== COGS - ART SUPPLIES ==========
   sheet.getRange(row, 1).setValue('COGS - Art Supplies').setFontWeight('bold');
+  const cogsArtRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const colLetter = getColLetter(col);
+    // Art supplies COGS % of class + camp revenue (excluding pottery)
+    const formula = `=('Revenue Detail'!${colLetter}4+'Revenue Detail'!${colLetter}5)*Assumptions!$B$57*0.75`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // ========== COGS - POTTERY ==========
   sheet.getRange(row, 1).setValue('COGS - Pottery').setFontWeight('bold');
+  const cogsPotteryRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const colLetter = getColLetter(col);
+    // Pottery COGS % of pottery class revenue (about 25% of class revenue)
+    const formula = `=('Revenue Detail'!${colLetter}4+'Revenue Detail'!${colLetter}5)*Assumptions!$B$58*0.25`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // ========== COGS - BEVERAGES ==========
   sheet.getRange(row, 1).setValue('COGS - Beverages').setFontWeight('bold');
+  const cogsBevRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const colLetter = getColLetter(col);
+    // Beverage COGS = 30% of beverage revenue
+    const formula = `='Revenue Detail'!${colLetter}9*Assumptions!$B$55`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // ========== COGS - RETAIL ==========
   sheet.getRange(row, 1).setValue('COGS - Retail').setFontWeight('bold');
+  const cogsRetailRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const colLetter = getColLetter(col);
+    // Retail COGS = 50% of retail revenue
+    const formula = `='Revenue Detail'!${colLetter}10*Assumptions!$B$59`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // ========== LOAN PAYMENT ==========
   sheet.getRange(row, 1).setValue('Loan Payment').setFontWeight('bold');
+  const loanPaymentRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    // Reference loan amortization payment for this month
+    // Loan amortization starts at row 13, month -2 is row 13, so month 1 is row 16
+    const amortRow = 13 + month + 1; // Offset for header rows and month numbering
+    const formula = `='Loan Amortization'!D${amortRow}`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // ========== TOTAL EXPENSES ==========
   sheet.getRange(row, 1).setValue('TOTAL EXPENSES').setFontWeight('bold').setBackground('#F4CCCC');
   const totalExpenseRow = row;
+  for (let month = 1; month <= 60; month++) {
+    const col = month + 1;
+    const colLetter = getColLetter(col);
+    const formula = `=SUM(${colLetter}${ownerSalaryRow}:${colLetter}${loanPaymentRow})`;
+    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0').setBackground('#F4CCCC');
+  }
   row++;
 
   // Format
