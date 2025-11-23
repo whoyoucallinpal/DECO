@@ -1736,9 +1736,8 @@ function createAnnualSummarySheet(ss) {
   sheet.setColumnWidth(6, 110);
   sheet.setColumnWidth(7, 120);
 
-  // Freeze header
+  // Freeze header row only (no column freeze due to merged note cells)
   sheet.setFrozenRows(headerRow);
-  sheet.setFrozenColumns(1);
 
   return sheet;
 }
