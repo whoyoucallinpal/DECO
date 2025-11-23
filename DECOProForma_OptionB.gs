@@ -673,7 +673,7 @@ function createRevenueDetailSheet(ss) {
       // Simplified: Base monthly class revenue * enrollment rate
       // Total from all 10 classes annually ≈ $150,000, so ~$16,667/month for 9 months
       // Reference assumptions for actual calc
-      const formula = `=SUMPRODUCT(Assumptions!$C$93:$C$102,Assumptions!$D$93:$D$102)*${enrollmentRate}/9`;
+      const formula = `=SUMPRODUCT(Assumptions!$C$94:$C$103,Assumptions!$D$94:$D$103)*${enrollmentRate}/9`;
       sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
     }
   }
@@ -701,7 +701,7 @@ function createRevenueDetailSheet(ss) {
       // Summer camp revenue: sum of all camp prices * max students * enrollment
       // Camps in Assumptions rows 109-124 (after camp header at 108)
       // Total camp revenue per summer ≈ $100,000, spread over 3 months
-      const formula = `=SUMPRODUCT(Assumptions!$E$109:$E$124,Assumptions!$F$109:$F$124)*${enrollmentRate}/3`;
+      const formula = `=SUMPRODUCT(Assumptions!$E$110:$E$125,Assumptions!$F$110:$F$125)*${enrollmentRate}/3`;
       sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
     }
   }
@@ -722,7 +722,7 @@ function createRevenueDetailSheet(ss) {
     else enrollmentRate = 1.00;
 
     // Paint & Sip revenue formula
-    const formula = `=Assumptions!$B$29*Assumptions!$B$30*Assumptions!$B$31*${enrollmentRate}`;
+    const formula = `=Assumptions!$B$25*Assumptions!$B$26*Assumptions!$B$27*${enrollmentRate}`;
     sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
   }
   row++;
@@ -741,7 +741,7 @@ function createRevenueDetailSheet(ss) {
     else if (month <= 22) enrollmentRate = 0.94;
     else enrollmentRate = 1.00;
 
-    const formula = `=Assumptions!$B$38*(Assumptions!$B$32+Assumptions!$B$33*Assumptions!$B$34)*${enrollmentRate}`;
+    const formula = `=Assumptions!$B$31*(Assumptions!$B$28+Assumptions!$B$29*Assumptions!$B$30)*${enrollmentRate}`;
     sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
   }
   row++;
@@ -760,7 +760,7 @@ function createRevenueDetailSheet(ss) {
     else if (month <= 22) enrollmentRate = 0.94;
     else enrollmentRate = 1.00;
 
-    const formula = `=Assumptions!$B$42*Assumptions!$B$39*Assumptions!$B$40*Assumptions!$B$41*${enrollmentRate}`;
+    const formula = `=Assumptions!$B$35*Assumptions!$B$32*Assumptions!$B$33*Assumptions!$B$34*${enrollmentRate}`;
     sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
   }
   row++;
@@ -785,7 +785,7 @@ function createRevenueDetailSheet(ss) {
 
     // P&S beverages: events * attendance * participation% * drinks/person * avg price
     // Private beverages: events * attendance * drinks/person * avg price
-    const formula = `=(Assumptions!$B$29*Assumptions!$B$31*Assumptions!$B$51*Assumptions!$B$44*Assumptions!$B$54 + Assumptions!$B$38*Assumptions!$B$34*Assumptions!$B$45*Assumptions!$B$54)*${enrollmentRate}`;
+    const formula = `=(Assumptions!$B$25*Assumptions!$B$27*Assumptions!$B$41*Assumptions!$B$38*Assumptions!$B$48 + Assumptions!$B$31*Assumptions!$B$30*Assumptions!$B$39*Assumptions!$B$48)*${enrollmentRate}`;
     sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
   }
   row++;
@@ -800,7 +800,7 @@ function createRevenueDetailSheet(ss) {
     const colLetter = getColLetter(col);
 
     // Sum of all other revenue streams * retail percentage
-    const formula = `=(${colLetter}${regularClassesRow}+${colLetter}${summerCampsRow}+${colLetter}${paintSipRow}+${colLetter}${privateEventsRow}+${colLetter}${workshopsRow}+${colLetter}${beveragesRow})*Assumptions!$B$91`;
+    const formula = `=(${colLetter}${regularClassesRow}+${colLetter}${summerCampsRow}+${colLetter}${paintSipRow}+${colLetter}${privateEventsRow}+${colLetter}${workshopsRow}+${colLetter}${beveragesRow})*Assumptions!$B$90`;
     sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
   }
   row++;
@@ -870,14 +870,14 @@ function createExpenseDetailSheet(ss) {
   const studioMgrRow = row;
   for (let month = 1; month <= 60; month++) {
     const col = month + 1;
-    // Year 1 (months 1-10): use B20 (0 hrs), Year 2+ (months 11+): use B21 (40 hrs)
+    // Year 1 (months 1-10): use B18 (0 hrs), Year 2+ (months 11+): use B19 (40 hrs)
     if (month <= 10) {
       // Year 1: 0 hours
-      const formula = `=Assumptions!$B$20*Assumptions!$B$17*4.33`;
+      const formula = `=Assumptions!$B$18*Assumptions!$B$17*4.33`;
       sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
     } else {
       // Year 2+: 40 hours
-      const formula = `=Assumptions!$B$21*Assumptions!$B$17*4.33`;
+      const formula = `=Assumptions!$B$19*Assumptions!$B$17*4.33`;
       sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
     }
   }
@@ -899,12 +899,12 @@ function createExpenseDetailSheet(ss) {
 
     if (isSummer) {
       // Summer: camp teachers (simplified - assume similar hours to regular)
-      const formula = `=SUMPRODUCT(Assumptions!$B$93:$B$102,Assumptions!$E$93:$E$102)*Assumptions!$B$22*${enrollmentRate}/9`;
+      const formula = `=SUMPRODUCT(Assumptions!$B$94:$B$103,Assumptions!$E$94:$E$103)*Assumptions!$B$20*${enrollmentRate}/9`;
       sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
     } else {
       // Regular months: class teachers
       // Hours per class * sessions per month * teacher rate
-      const formula = `=SUMPRODUCT(Assumptions!$B$93:$B$102,Assumptions!$E$93:$E$102)*Assumptions!$B$22*${enrollmentRate}/9`;
+      const formula = `=SUMPRODUCT(Assumptions!$B$94:$B$103,Assumptions!$E$94:$E$103)*Assumptions!$B$20*${enrollmentRate}/9`;
       sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
     }
   }
@@ -928,7 +928,7 @@ function createExpenseDetailSheet(ss) {
     if (isSummer) {
       sheet.getRange(row, col).setValue(0).setNumberFormat('$#,##0');
     } else {
-      const formula = `=SUMPRODUCT(Assumptions!$B$93:$B$102,Assumptions!$E$93:$E$102)*Assumptions!$B$23*0.25*${enrollmentRate}/9`;
+      const formula = `=SUMPRODUCT(Assumptions!$B$94:$B$103,Assumptions!$E$94:$E$103)*Assumptions!$B$21*0.25*${enrollmentRate}/9`;
       sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
     }
   }
@@ -942,7 +942,7 @@ function createExpenseDetailSheet(ss) {
     const col = month + 1;
     const colLetter = getColLetter(col);
     // Payroll tax on all wages
-    const formula = `=(${colLetter}${ownerSalaryRow}+${colLetter}${studioMgrRow}+${colLetter}${teachersRow}+${colLetter}${assistantsRow})*Assumptions!$B$24`;
+    const formula = `=(${colLetter}${ownerSalaryRow}+${colLetter}${studioMgrRow}+${colLetter}${teachersRow}+${colLetter}${assistantsRow})*Assumptions!$B$22`;
     sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
   }
   row++;
@@ -964,7 +964,7 @@ function createExpenseDetailSheet(ss) {
   const utilitiesRow = row;
   for (let month = 1; month <= 60; month++) {
     const col = month + 1;
-    const formula = `=Assumptions!$B$66+Assumptions!$B$67+Assumptions!$B$68+Assumptions!$B$69`;
+    const formula = `=Assumptions!$B$61+Assumptions!$B$62+Assumptions!$B$63+Assumptions!$B$64`;
     sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
   }
   row++;
@@ -974,7 +974,7 @@ function createExpenseDetailSheet(ss) {
   const insuranceRow = row;
   for (let month = 1; month <= 60; month++) {
     const col = month + 1;
-    const formula = `=Assumptions!$B$70`;
+    const formula = `=Assumptions!$B$65`;
     sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
   }
   row++;
@@ -985,7 +985,7 @@ function createExpenseDetailSheet(ss) {
   const propTaxRow = row;
   for (let month = 1; month <= 60; month++) {
     const col = month + 1;
-    const formula = `=Assumptions!$B$71/12`;
+    const formula = `=Assumptions!$B$66/12`;
     sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
   }
   row++;
@@ -996,7 +996,7 @@ function createExpenseDetailSheet(ss) {
   const repairsRow = row;
   for (let month = 1; month <= 60; month++) {
     const col = month + 1;
-    const formula = `=Assumptions!$B$72/12`;
+    const formula = `=Assumptions!$B$67/12`;
     sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
   }
   row++;
@@ -1010,11 +1010,11 @@ function createExpenseDetailSheet(ss) {
     const colLetter = getColLetter(col);
     if (month <= 2) {
       // Pre-launch marketing
-      const formula = `=Assumptions!$B$78`;
+      const formula = `=Assumptions!$B$75`;
       sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
     } else {
       // Ongoing: 3% of revenue
-      const formula = `='Revenue Detail'!${colLetter}11*Assumptions!$B$79`;
+      const formula = `='Revenue Detail'!${colLetter}11*Assumptions!$B$76`;
       sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
     }
   }
@@ -1026,7 +1026,7 @@ function createExpenseDetailSheet(ss) {
   const profSvcRow = row;
   for (let month = 1; month <= 60; month++) {
     const col = month + 1;
-    const formula = `=(Assumptions!$B$73+Assumptions!$B$74+Assumptions!$B$75)/12`;
+    const formula = `=(Assumptions!$B$68+Assumptions!$B$69+Assumptions!$B$70)/12`;
     sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
   }
   row++;
@@ -1041,11 +1041,11 @@ function createExpenseDetailSheet(ss) {
     // Month 1 = March, so January = month 11, 23, 35, 47
     if (month === 1) {
       // Initial license in Month 1
-      const formula = `=Assumptions!$B$76`;
+      const formula = `=Assumptions!$B$71`;
       sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
     } else if (month === 11 || month === 23 || month === 35 || month === 47) {
       // Renewal in January of each subsequent year
-      const formula = `=Assumptions!$B$77`;
+      const formula = `=Assumptions!$B$72`;
       sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
     } else {
       sheet.getRange(row, col).setValue(0).setNumberFormat('$#,##0');
@@ -1061,7 +1061,7 @@ function createExpenseDetailSheet(ss) {
     const col = month + 1;
     // Quarterly = every 3 months
     if (month % 3 === 0) {
-      const formula = `=Assumptions!$B$64/4`;  // Annual supply replenishment / 4
+      const formula = `=Assumptions!$B$58/4`;  // Annual supply replenishment / 4
       sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
     } else {
       sheet.getRange(row, col).setValue(0).setNumberFormat('$#,##0');
@@ -1076,7 +1076,7 @@ function createExpenseDetailSheet(ss) {
     const col = month + 1;
     const colLetter = getColLetter(col);
     // Art supplies COGS % of class + camp revenue (excluding pottery)
-    const formula = `=('Revenue Detail'!${colLetter}4+'Revenue Detail'!${colLetter}5)*Assumptions!$B$57*0.75`;
+    const formula = `=('Revenue Detail'!${colLetter}4+'Revenue Detail'!${colLetter}5)*Assumptions!$B$52*0.75`;
     sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
   }
   row++;
@@ -1088,7 +1088,7 @@ function createExpenseDetailSheet(ss) {
     const col = month + 1;
     const colLetter = getColLetter(col);
     // Pottery COGS % of pottery class revenue (about 25% of class revenue)
-    const formula = `=('Revenue Detail'!${colLetter}4+'Revenue Detail'!${colLetter}5)*Assumptions!$B$58*0.25`;
+    const formula = `=('Revenue Detail'!${colLetter}4+'Revenue Detail'!${colLetter}5)*Assumptions!$B$53*0.25`;
     sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
   }
   row++;
@@ -1100,7 +1100,7 @@ function createExpenseDetailSheet(ss) {
     const col = month + 1;
     const colLetter = getColLetter(col);
     // Beverage COGS = 30% of beverage revenue
-    const formula = `='Revenue Detail'!${colLetter}9*Assumptions!$B$55`;
+    const formula = `='Revenue Detail'!${colLetter}9*Assumptions!$B$49`;
     sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
   }
   row++;
@@ -1112,7 +1112,7 @@ function createExpenseDetailSheet(ss) {
     const col = month + 1;
     const colLetter = getColLetter(col);
     // Retail COGS = 50% of retail revenue
-    const formula = `='Revenue Detail'!${colLetter}10*Assumptions!$B$59`;
+    const formula = `='Revenue Detail'!${colLetter}10*Assumptions!$B$54`;
     sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
   }
   row++;
