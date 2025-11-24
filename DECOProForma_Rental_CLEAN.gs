@@ -516,91 +516,91 @@ function createStartupSuppliesSheet(ss) {
   // POTTERY
   addSectionHeader(sheet, r++, 'POTTERY SUPPLIES', 5);
   var potteryData = [
-    ['Pottery', 'Clay (500 lbs)', 10, 45, '=C15*D15'],
-    ['Pottery', 'Pottery Wheels', 6, 850, '=C16*D16'],
-    ['Pottery', 'Tools Sets', 25, 22, '=C17*D17'],
-    ['Pottery', 'Glazes', 50, 18, '=C18*D18'],
-    ['Pottery', 'Kiln (large)', 1, 4500, '=C19*D19'],
-    ['Pottery', 'Kiln Shelves', 1, 600, '=C20*D20'],
-    ['Pottery', 'Underglazes', 30, 12, '=C21*D21']
+    ['Pottery', 'Clay (500 lbs)', 10, 45, '=C16*D16'],
+    ['Pottery', 'Pottery Wheels', 6, 850, '=C17*D17'],
+    ['Pottery', 'Tools Sets', 25, 22, '=C18*D18'],
+    ['Pottery', 'Glazes', 50, 18, '=C19*D19'],
+    ['Pottery', 'Kiln (large)', 1, 4500, '=C20*D20'],
+    ['Pottery', 'Kiln Shelves', 1, 600, '=C21*D21'],
+    ['Pottery', 'Underglazes', 30, 12, '=C22*D22']
   ];
   for (var i = 0; i < potteryData.length; i++) {
     sheet.getRange(r++, 1, 1, 5).setValues([potteryData[i]]);
   }
   sheet.getRange(r, 1).setValue('Pottery Subtotal').setFontWeight('bold');
-  sheet.getRange(r++, 5).setFormula('=SUM(E15:E21)').setFontWeight('bold');
+  sheet.getRange(r++, 5).setFormula('=SUM(E16:E22)').setFontWeight('bold');
   r++;
 
   // DRAWING
   addSectionHeader(sheet, r++, 'DRAWING SUPPLIES', 5);
   var drawingData = [
-    ['Drawing', 'Sketch Pads', 100, 6, '=C25*D25'],
-    ['Drawing', 'Pencil Sets', 50, 15, '=C26*D26'],
-    ['Drawing', 'Colored Pencils', 50, 22, '=C27*D27'],
-    ['Drawing', 'Charcoal Sets', 40, 12, '=C28*D28'],
-    ['Drawing', 'Pastels', 40, 18, '=C29*D29'],
-    ['Drawing', 'Markers & Pens', 100, 8, '=C30*D30'],
-    ['Drawing', 'Drawing Boards', 30, 15, '=C31*D31']
+    ['Drawing', 'Sketch Pads', 100, 6, '=C26*D26'],
+    ['Drawing', 'Pencil Sets', 50, 15, '=C27*D27'],
+    ['Drawing', 'Colored Pencils', 50, 22, '=C28*D28'],
+    ['Drawing', 'Charcoal Sets', 40, 12, '=C29*D29'],
+    ['Drawing', 'Pastels', 40, 18, '=C30*D30'],
+    ['Drawing', 'Markers & Pens', 100, 8, '=C31*D31'],
+    ['Drawing', 'Drawing Boards', 30, 15, '=C32*D32']
   ];
   for (var i = 0; i < drawingData.length; i++) {
     sheet.getRange(r++, 1, 1, 5).setValues([drawingData[i]]);
   }
   sheet.getRange(r, 1).setValue('Drawing Subtotal').setFontWeight('bold');
-  sheet.getRange(r++, 5).setFormula('=SUM(E25:E31)').setFontWeight('bold');
+  sheet.getRange(r++, 5).setFormula('=SUM(E26:E32)').setFontWeight('bold');
   r++;
 
   // MIXED MEDIA
   addSectionHeader(sheet, r++, 'MIXED MEDIA & GENERAL', 5);
   var mixedData = [
-    ['Mixed Media', 'Collage Materials', 1, 500, '=C35*D35'],
-    ['Mixed Media', 'Adhesives & Tapes', 1, 200, '=C36*D36'],
-    ['Mixed Media', 'Scissors & Tools', 1, 300, '=C37*D37'],
-    ['Mixed Media', 'Papers (various)', 1, 400, '=C38*D38'],
-    ['Mixed Media', 'Protective Equip', 50, 8, '=C39*D39'],
-    ['Mixed Media', 'Storage/Organization', 1, 600, '=C40*D40']
+    ['Mixed Media', 'Collage Materials', 1, 500, '=C36*D36'],
+    ['Mixed Media', 'Adhesives & Tapes', 1, 200, '=C37*D37'],
+    ['Mixed Media', 'Scissors & Tools', 1, 300, '=C38*D38'],
+    ['Mixed Media', 'Papers (various)', 1, 400, '=C39*D39'],
+    ['Mixed Media', 'Protective Equip', 50, 8, '=C40*D40'],
+    ['Mixed Media', 'Storage/Organization', 1, 600, '=C41*D41']
   ];
   for (var i = 0; i < mixedData.length; i++) {
     sheet.getRange(r++, 1, 1, 5).setValues([mixedData[i]]);
   }
   sheet.getRange(r, 1).setValue('Mixed Media Subtotal').setFontWeight('bold');
-  sheet.getRange(r++, 5).setFormula('=SUM(E35:E40)').setFontWeight('bold');
+  sheet.getRange(r++, 5).setFormula('=SUM(E36:E41)').setFontWeight('bold');
   r++;
 
   // FURNITURE
   addSectionHeader(sheet, r++, 'STUDIO FURNITURE', 5);
   var furnitureData = [
-    ['Furniture', 'Work Tables', 15, 200, '=C44*D44'],
-    ['Furniture', 'Chairs/Stools', 60, 45, '=C45*D45'],
-    ['Furniture', 'Shelving Units', 12, 150, '=C46*D46'],
-    ['Furniture', 'Drying Racks', 8, 120, '=C47*D47'],
-    ['Furniture', 'Sink/Wash Station', 1, 800, '=C48*D48'],
-    ['Furniture', 'Task Lighting', 20, 50, '=C49*D49']
+    ['Furniture', 'Work Tables', 15, 200, '=C45*D45'],
+    ['Furniture', 'Chairs/Stools', 60, 45, '=C46*D46'],
+    ['Furniture', 'Shelving Units', 12, 150, '=C47*D47'],
+    ['Furniture', 'Drying Racks', 8, 120, '=C48*D48'],
+    ['Furniture', 'Sink/Wash Station', 1, 800, '=C49*D49'],
+    ['Furniture', 'Task Lighting', 20, 50, '=C50*D50']
   ];
   for (var i = 0; i < furnitureData.length; i++) {
     sheet.getRange(r++, 1, 1, 5).setValues([furnitureData[i]]);
   }
   sheet.getRange(r, 1).setValue('Furniture Subtotal').setFontWeight('bold');
-  sheet.getRange(r++, 5).setFormula('=SUM(E44:E49)').setFontWeight('bold');
+  sheet.getRange(r++, 5).setFormula('=SUM(E45:E50)').setFontWeight('bold');
   r++;
 
   // OFFICE & RETAIL
   addSectionHeader(sheet, r++, 'OFFICE & RETAIL', 5);
   var officeData = [
-    ['Office', 'Retail Displays', 1, 800, '=C53*D53'],
-    ['Office', 'Retail Inventory', 1, 2000, '=C54*D54'],
-    ['Office', 'Office Supplies', 1, 500, '=C55*D55'],
-    ['Office', 'Cleaning Supplies', 1, 400, '=C56*D56'],
-    ['Office', 'Safety Equipment', 1, 300, '=C57*D57'],
-    ['Office', 'Marketing Materials', 1, 1000, '=C58*D58']
+    ['Office', 'Retail Displays', 1, 800, '=C54*D54'],
+    ['Office', 'Retail Inventory', 1, 2000, '=C55*D55'],
+    ['Office', 'Office Supplies', 1, 500, '=C56*D56'],
+    ['Office', 'Cleaning Supplies', 1, 400, '=C57*D57'],
+    ['Office', 'Safety Equipment', 1, 300, '=C58*D58'],
+    ['Office', 'Marketing Materials', 1, 1000, '=C59*D59']
   ];
   for (var i = 0; i < officeData.length; i++) {
     sheet.getRange(r++, 1, 1, 5).setValues([officeData[i]]);
   }
   sheet.getRange(r, 1).setValue('Office/Retail Subtotal').setFontWeight('bold');
-  sheet.getRange(r++, 5).setFormula('=SUM(E53:E58)').setFontWeight('bold');
+  sheet.getRange(r++, 5).setFormula('=SUM(E54:E59)').setFontWeight('bold');
   r++;
 
-  // GRAND TOTAL - Row 63
+  // GRAND TOTAL - Row 62
   sheet.getRange(r, 1).setValue('GRAND TOTAL').setFontWeight('bold').setBackground('#8E7CC3').setFontColor('white');
   sheet.getRange(r, 5).setFormula('=E13+E23+E33+E42+E51+E60').setFontWeight('bold').setBackground('#8E7CC3').setFontColor('white').setNumberFormat('$#,##0');
 
@@ -663,7 +663,7 @@ function createStartupCostsSheet(ss) {
   // SUPPLIES (rows 18-20)
   addSectionHeader(sheet, r++, 'INITIAL SUPPLIES');
   sheet.getRange(r, 1).setValue('Art Supplies');
-  sheet.getRange(r++, 2).setFormula('=\'Startup Supplies\'!E63').setNumberFormat('$#,##0');
+  sheet.getRange(r++, 2).setFormula('=\'Startup Supplies\'!E62').setNumberFormat('$#,##0');
   r++;
 
   // PROFESSIONAL (rows 21-26)
@@ -690,7 +690,7 @@ function createStartupCostsSheet(ss) {
   // WORKING CAPITAL (rows 29-31)
   addSectionHeader(sheet, r++, 'WORKING CAPITAL');
   sheet.getRange(r, 1).setValue('Operating Reserve (4 months)');
-  sheet.getRange(r, 2).setFormula('=Expenses!B30/10*4').setNumberFormat('$#,##0');
+  sheet.getRange(r, 2).setFormula('=Expenses!B32/10*4').setNumberFormat('$#,##0');
   r++;
   r++;
 
@@ -854,27 +854,27 @@ function createExpensesSheet(ss) {
   addSectionHeader(sheet, r++, 'COST OF GOODS SOLD', 6);
 
   sheet.getRange(r, 1).setValue('Art Supplies');
-  sheet.getRange(r, 2).setFormula('=\'Revenue Model\'!B26*Assumptions!$B$73');
-  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C26*Assumptions!$B$73');
-  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D26*Assumptions!$B$73');
-  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E26*Assumptions!$B$73');
-  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F26*Assumptions!$B$73');
+  sheet.getRange(r, 2).setFormula('=\'Revenue Model\'!B24*Assumptions!$B$73');
+  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C24*Assumptions!$B$73');
+  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D24*Assumptions!$B$73');
+  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E24*Assumptions!$B$73');
+  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F24*Assumptions!$B$73');
   r++;
 
   sheet.getRange(r, 1).setValue('Pottery Supplies');
-  sheet.getRange(r, 2).setFormula('=\'Revenue Model\'!B26*Assumptions!$B$74');
-  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C26*Assumptions!$B$74');
-  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D26*Assumptions!$B$74');
-  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E26*Assumptions!$B$74');
-  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F26*Assumptions!$B$74');
+  sheet.getRange(r, 2).setFormula('=\'Revenue Model\'!B24*Assumptions!$B$74');
+  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C24*Assumptions!$B$74');
+  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D24*Assumptions!$B$74');
+  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E24*Assumptions!$B$74');
+  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F24*Assumptions!$B$74');
   r++;
 
   sheet.getRange(r, 1).setValue('Beverage COGS');
-  sheet.getRange(r, 2).setFormula('=(\'Revenue Model\'!B18+\'Revenue Model\'!B19+\'Revenue Model\'!B20)*Assumptions!$B$70');
-  sheet.getRange(r, 3).setFormula('=(\'Revenue Model\'!C18+\'Revenue Model\'!C19+\'Revenue Model\'!C20)*Assumptions!$B$70');
-  sheet.getRange(r, 4).setFormula('=(\'Revenue Model\'!D18+\'Revenue Model\'!D19+\'Revenue Model\'!D20)*Assumptions!$B$70');
-  sheet.getRange(r, 5).setFormula('=(\'Revenue Model\'!E18+\'Revenue Model\'!E19+\'Revenue Model\'!E20)*Assumptions!$B$70');
-  sheet.getRange(r, 6).setFormula('=(\'Revenue Model\'!F18+\'Revenue Model\'!F19+\'Revenue Model\'!F20)*Assumptions!$B$70');
+  sheet.getRange(r, 2).setFormula('=(\'Revenue Model\'!B17+\'Revenue Model\'!B18+\'Revenue Model\'!B19)*Assumptions!$B$70');
+  sheet.getRange(r, 3).setFormula('=(\'Revenue Model\'!C17+\'Revenue Model\'!C18+\'Revenue Model\'!C19)*Assumptions!$B$70');
+  sheet.getRange(r, 4).setFormula('=(\'Revenue Model\'!D17+\'Revenue Model\'!D18+\'Revenue Model\'!D19)*Assumptions!$B$70');
+  sheet.getRange(r, 5).setFormula('=(\'Revenue Model\'!E17+\'Revenue Model\'!E18+\'Revenue Model\'!E19)*Assumptions!$B$70');
+  sheet.getRange(r, 6).setFormula('=(\'Revenue Model\'!F17+\'Revenue Model\'!F18+\'Revenue Model\'!F19)*Assumptions!$B$70');
   r++;
 
   sheet.getRange(r, 1).setValue('Supplies Replenishment');
@@ -979,10 +979,10 @@ function createExpensesSheet(ss) {
 
   sheet.getRange(r, 1).setValue('Marketing');
   sheet.getRange(r, 2).setFormula('=Assumptions!$B$82*10');
-  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C26*Assumptions!$B$83');
-  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D26*Assumptions!$B$83');
-  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E26*Assumptions!$B$83');
-  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F26*Assumptions!$B$83');
+  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C24*Assumptions!$B$83');
+  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D24*Assumptions!$B$83');
+  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E24*Assumptions!$B$83');
+  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F24*Assumptions!$B$83');
   r++;
 
   sheet.getRange(r, 1).setValue('Professional Services');
@@ -1157,21 +1157,21 @@ function createProfitLossSheet(ss) {
   var r = 4;
 
   sheet.getRange(r, 1).setValue('GROSS REVENUE');
-  sheet.getRange(r, 2).setFormula('=\'Revenue Model\'!B26');
-  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C26');
-  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D26');
-  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E26');
-  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F26');
+  sheet.getRange(r, 2).setFormula('=\'Revenue Model\'!B24');
+  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C24');
+  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D24');
+  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E24');
+  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F24');
   sheet.getRange(r, 1, 1, 6).setFontWeight('bold');
   r++;
   r++;
 
   sheet.getRange(r, 1).setValue('TOTAL EXPENSES');
-  sheet.getRange(r, 2).setFormula('=Expenses!B31');
-  sheet.getRange(r, 3).setFormula('=Expenses!C31');
-  sheet.getRange(r, 4).setFormula('=Expenses!D31');
-  sheet.getRange(r, 5).setFormula('=Expenses!E31');
-  sheet.getRange(r, 6).setFormula('=Expenses!F31');
+  sheet.getRange(r, 2).setFormula('=Expenses!B32');
+  sheet.getRange(r, 3).setFormula('=Expenses!C32');
+  sheet.getRange(r, 4).setFormula('=Expenses!D32');
+  sheet.getRange(r, 5).setFormula('=Expenses!E32');
+  sheet.getRange(r, 6).setFormula('=Expenses!F32');
   sheet.getRange(r, 1, 1, 6).setFontWeight('bold');
   r++;
   r++;
@@ -1385,19 +1385,19 @@ function createDashboardSheet(ss) {
   r++;
 
   sheet.getRange(r, 1).setValue('Revenue');
-  sheet.getRange(r, 2).setFormula('=\'Revenue Model\'!B26');
-  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C26');
-  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D26');
-  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E26');
-  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F26');
+  sheet.getRange(r, 2).setFormula('=\'Revenue Model\'!B24');
+  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C24');
+  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D24');
+  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E24');
+  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F24');
   r++;
 
   sheet.getRange(r, 1).setValue('Expenses');
-  sheet.getRange(r, 2).setFormula('=Expenses!B31');
-  sheet.getRange(r, 3).setFormula('=Expenses!C31');
-  sheet.getRange(r, 4).setFormula('=Expenses!D31');
-  sheet.getRange(r, 5).setFormula('=Expenses!E31');
-  sheet.getRange(r, 6).setFormula('=Expenses!F31');
+  sheet.getRange(r, 2).setFormula('=Expenses!B32');
+  sheet.getRange(r, 3).setFormula('=Expenses!C32');
+  sheet.getRange(r, 4).setFormula('=Expenses!D32');
+  sheet.getRange(r, 5).setFormula('=Expenses!E32');
+  sheet.getRange(r, 6).setFormula('=Expenses!F32');
   r++;
 
   sheet.getRange(r, 1).setValue('EBITDA');
