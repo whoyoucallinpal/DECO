@@ -1327,7 +1327,8 @@ function createLoanAmortizationSheet(ss) {
   row++;
 
   sheet.getRange(row, 1).setValue('Monthly Payment').setFontWeight('bold');
-  sheet.getRange(row, 2).setFormula(`=IF(B4>0,PMT(B${monthlyRateRow},B${loanTermMonthsRow},-B4),0)`).setNumberFormat('$#,##0.00').setFontWeight('bold');
+  const loanAmountRow = 3; // Loan Amount is at row 3
+  sheet.getRange(row, 2).setFormula(`=IF(B${loanAmountRow}>0,PMT(B${monthlyRateRow},B${loanTermMonthsRow},-B${loanAmountRow}),0)`).setNumberFormat('$#,##0.00').setFontWeight('bold');
   const monthlyPaymentRow = row;
   row += 2;
 
@@ -1346,7 +1347,7 @@ function createLoanAmortizationSheet(ss) {
   // Start from Month -2 (Jan 2026) but payments don't start until after grace period
   const totalMonths = 120; // Show 10 years regardless
   const startMonth = -2; // Jan 2026
-  const loanAmountRow = 3; // Loan Amount is at row 3
+  // loanAmountRow already defined above
 
   for (let i = 0; i < totalMonths; i++) {
     const monthNum = startMonth + i;
