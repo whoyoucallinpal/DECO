@@ -1117,26 +1117,15 @@ function createExpenseDetailSheet(ss) {
   }
   row++;
 
-  // ========== LOAN PAYMENT ==========
-  sheet.getRange(row, 1).setValue('Loan Payment').setFontWeight('bold');
-  const loanPaymentRow = row;
-  for (let month = 1; month <= 60; month++) {
-    const col = month + 1;
-    // Reference loan amortization payment for this month
-    // Loan amortization starts at row 13, month -2 is row 13, so month 1 is row 16
-    const amortRow = 13 + month + 1; // Offset for header rows and month numbering
-    const formula = `='Loan Amortization'!D${amortRow}`;
-    sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0');
-  }
-  row++;
-
   // ========== TOTAL EXPENSES ==========
+  // Note: Does NOT include loan payments (circular reference issue)
+  // Loan payments appear in Cash Flow sheet only
   sheet.getRange(row, 1).setValue('TOTAL EXPENSES').setFontWeight('bold').setBackground('#F4CCCC');
   const totalExpenseRow = row;
   for (let month = 1; month <= 60; month++) {
     const col = month + 1;
     const colLetter = getColLetter(col);
-    const formula = `=SUM(${colLetter}${ownerSalaryRow}:${colLetter}${loanPaymentRow})`;
+    const formula = `=SUM(${colLetter}${ownerSalaryRow}:${colLetter}${cogsRetailRow})`;
     sheet.getRange(row, col).setFormula(formula).setNumberFormat('$#,##0').setBackground('#F4CCCC');
   }
   row++;
@@ -1251,8 +1240,8 @@ function createStartupCostsSheet(ss) {
   row++;
 
   sheet.getRange(row, 1).setValue('Operating Reserve Amount').setFontWeight('bold');
-  // Calculate: Average monthly operating expenses from Year 1 (Expense Detail row 23, cols B:K = 10 months) * reserve months
-  sheet.getRange(row, 2).setFormula('=AVERAGE(\'Expense Detail\'!B23:K23)*Assumptions!$B$87').setNumberFormat('$#,##0').setFontWeight('bold');
+  // Calculate: Average monthly operating expenses from Year 1 (Expense Detail row 22, cols B:K = 10 months) * reserve months
+  sheet.getRange(row, 2).setFormula("=AVERAGE('Expense Detail'!B22:K22)*Assumptions!$B$87").setNumberFormat('$#,##0').setFontWeight('bold');
   const operatingReserveRow = row;
   row += 2;
 
@@ -1269,7 +1258,7 @@ function createStartupCostsSheet(ss) {
   sheet.getRange(row, 2).setFormula(`=B${row-1}`).setNumberFormat('$#,##0').setFontWeight('bold').setFontSize(14).setBackground('#B6D7A8');
   row += 2;
 
-  sheet.getRange(row, 1).setValue('Note: Operating Reserve is calculated as average monthly Year 1 expenses (from Expense Detail) × reserve months.').setFontStyle('italic').setFontColor('#666666');
+  sheet.getRange(row, 1).setValue('Note: Operating Reserve = average monthly Year 1 operating expenses (excluding loan payments) × reserve months.').setFontStyle('italic').setFontColor('#666666');
 
   // Format columns
   sheet.setColumnWidth(1, 350);

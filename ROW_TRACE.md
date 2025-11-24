@@ -26,8 +26,7 @@ This document traces EXACT row numbers in each sheet to verify all cross-sheet r
 - Row 19: COGS - Pottery
 - Row 20: COGS - Beverages
 - Row 21: COGS - Retail
-- Row 22: Loan Payment
-- Row 23: TOTAL EXPENSES
+- Row 22: TOTAL EXPENSES (NOTE: Does NOT include loan payments to avoid circular reference)
 
 ---
 
