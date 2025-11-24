@@ -1251,7 +1251,8 @@ function createStartupCostsSheet(ss) {
   row++;
 
   sheet.getRange(row, 1).setValue('Operating Reserve Amount').setFontWeight('bold');
-  sheet.getRange(row, 2).setValue('TO BE LINKED TO EXPENSE DETAIL').setFontWeight('bold').setBackground('#FFF9C4');
+  // Calculate: Average monthly operating expenses from Year 1 (P&L row 28, cols B:K = 10 months) * reserve months
+  sheet.getRange(row, 2).setFormula("=AVERAGE('P&L'!B28:K28)*Assumptions!B87").setNumberFormat('$#,##0').setFontWeight('bold');
   const operatingReserveRow = row;
   row += 2;
 
@@ -1268,7 +1269,7 @@ function createStartupCostsSheet(ss) {
   sheet.getRange(row, 2).setFormula(`=B${row-1}`).setNumberFormat('$#,##0').setFontWeight('bold').setFontSize(14).setBackground('#B6D7A8');
   row += 2;
 
-  sheet.getRange(row, 1).setValue('Note: Operating Reserve will calculate once Expense Detail sheet is complete.').setFontStyle('italic').setFontColor('#666666');
+  sheet.getRange(row, 1).setValue('Note: Operating Reserve is calculated as average monthly Year 1 expenses × reserve months.').setFontStyle('italic').setFontColor('#666666');
 
   // Format columns
   sheet.setColumnWidth(1, 350);
@@ -1297,7 +1298,7 @@ function createLoanAmortizationSheet(ss) {
 
   // Loan parameters
   sheet.getRange(row, 1).setValue('Loan Amount');
-  sheet.getRange(row, 2).setFormula('=\'Startup Costs\'!B32').setNumberFormat('$#,##0.00').setFontWeight('bold');
+  sheet.getRange(row, 2).setFormula('=\'Startup Costs\'!B30').setNumberFormat('$#,##0.00').setFontWeight('bold');
   row++;
 
   sheet.getRange(row, 1).setValue('Annual Interest Rate');
@@ -1672,7 +1673,7 @@ function createDashboardSheet(ss) {
   row++;
 
   sheet.getRange(row, 1).setValue('Loan Amount');
-  sheet.getRange(row, 2).setFormula("='Startup Costs'!B32").setNumberFormat('$#,##0');
+  sheet.getRange(row, 2).setFormula("='Startup Costs'!B30").setNumberFormat('$#,##0');
   const loanAmountDashRow = row;
   row++;
 
@@ -1822,11 +1823,11 @@ function createDashboardSheet(ss) {
   row++;
 
   sheet.getRange(row, 1).setValue('Operating Reserve');
-  sheet.getRange(row, 2).setFormula("='Startup Costs'!B27").setNumberFormat('$#,##0');
+  sheet.getRange(row, 2).setFormula("='Startup Costs'!B26").setNumberFormat('$#,##0');
   row++;
 
   sheet.getRange(row, 1).setValue('TOTAL LOAN REQUIRED').setFontWeight('bold').setBackground('#B6D7A8');
-  sheet.getRange(row, 2).setFormula("='Startup Costs'!B32").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#B6D7A8');
+  sheet.getRange(row, 2).setFormula("='Startup Costs'!B30").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#B6D7A8');
   row += 2;
 
   // ========== NOTES ==========
@@ -1927,11 +1928,11 @@ function createAnnualSummarySheet(ss) {
   row++;
 
   sheet.getRange(row, 1).setValue('Total COGS').setFontWeight('bold');
-  sheet.getRange(row, 2).setFormula("=SUM('P&L'!B12:K12)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 3).setFormula("=SUM('P&L'!L12:W12)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 4).setFormula("=SUM('P&L'!X12:AI12)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ12:AU12)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV12:BI12)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 2).setFormula("=SUM('P&L'!B11:K11)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 3).setFormula("=SUM('P&L'!L11:W11)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 4).setFormula("=SUM('P&L'!X11:AI11)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ11:AU11)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV11:BI11)").setNumberFormat('$#,##0');
   sheet.getRange(row, 7).setFormula('=SUM(B7:F7)').setNumberFormat('$#,##0').setFontWeight('bold');
   const totalCOGSRow = row;
   row++;
@@ -1955,41 +1956,41 @@ function createAnnualSummarySheet(ss) {
 
   // Payroll (Owners + Manager + Teachers + Assistants + Taxes)
   sheet.getRange(row, 1).setValue('Payroll (all staff)');
-  sheet.getRange(row, 2).setFormula("=SUM('P&L'!B17:K21)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 3).setFormula("=SUM('P&L'!L17:W21)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 4).setFormula("=SUM('P&L'!X17:AI21)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ17:AU21)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV17:BI21)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 2).setFormula("=SUM('P&L'!B14:K18)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 3).setFormula("=SUM('P&L'!L14:W18)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 4).setFormula("=SUM('P&L'!X14:AI18)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ14:AU18)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV14:BI18)").setNumberFormat('$#,##0');
   sheet.getRange(row, 7).setFormula('=SUM(B11:F11)').setNumberFormat('$#,##0');
   row++;
 
   // Rent
   sheet.getRange(row, 1).setValue('Rent');
-  sheet.getRange(row, 2).setFormula("=SUM('P&L'!B22:K22)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 3).setFormula("=SUM('P&L'!L22:W22)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 4).setFormula("=SUM('P&L'!X22:AI22)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ22:AU22)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV22:BI22)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 2).setFormula("=SUM('P&L'!B19:K19)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 3).setFormula("=SUM('P&L'!L19:W19)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 4).setFormula("=SUM('P&L'!X19:AI19)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ19:AU19)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV19:BI19)").setNumberFormat('$#,##0');
   sheet.getRange(row, 7).setFormula('=SUM(B12:F12)').setNumberFormat('$#,##0');
   row++;
 
   // Utilities
   sheet.getRange(row, 1).setValue('Utilities');
-  sheet.getRange(row, 2).setFormula("=SUM('P&L'!B23:K23)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 3).setFormula("=SUM('P&L'!L23:W23)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 4).setFormula("=SUM('P&L'!X23:AI23)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ23:AU23)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV23:BI23)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 2).setFormula("=SUM('P&L'!B20:K20)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 3).setFormula("=SUM('P&L'!L20:W20)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 4).setFormula("=SUM('P&L'!X20:AI20)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ20:AU20)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV20:BI20)").setNumberFormat('$#,##0');
   sheet.getRange(row, 7).setFormula('=SUM(B13:F13)').setNumberFormat('$#,##0');
   row++;
 
   // Other Operating
   sheet.getRange(row, 1).setValue('Other Operating Expenses');
-  sheet.getRange(row, 2).setFormula("=SUM('P&L'!B24:K30)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 3).setFormula("=SUM('P&L'!L24:W30)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 4).setFormula("=SUM('P&L'!X24:AI30)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ24:AU30)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV24:BI30)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 2).setFormula("=SUM('P&L'!B21:K27)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 3).setFormula("=SUM('P&L'!L21:W27)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 4).setFormula("=SUM('P&L'!X21:AI27)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ21:AU27)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV21:BI27)").setNumberFormat('$#,##0');
   sheet.getRange(row, 7).setFormula('=SUM(B14:F14)').setNumberFormat('$#,##0');
   row++;
 
@@ -2006,11 +2007,11 @@ function createAnnualSummarySheet(ss) {
 
   // Total Operating Expenses
   sheet.getRange(row, 1).setValue('Total Operating Expenses').setFontWeight('bold');
-  sheet.getRange(row, 2).setFormula("=SUM('P&L'!B31:K31)").setNumberFormat('$#,##0').setFontWeight('bold');
-  sheet.getRange(row, 3).setFormula("=SUM('P&L'!L31:W31)").setNumberFormat('$#,##0').setFontWeight('bold');
-  sheet.getRange(row, 4).setFormula("=SUM('P&L'!X31:AI31)").setNumberFormat('$#,##0').setFontWeight('bold');
-  sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ31:AU31)").setNumberFormat('$#,##0').setFontWeight('bold');
-  sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV31:BI31)").setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 2).setFormula("=SUM('P&L'!B28:K28)").setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 3).setFormula("=SUM('P&L'!L28:W28)").setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 4).setFormula("=SUM('P&L'!X28:AI28)").setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ28:AU28)").setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV28:BI28)").setNumberFormat('$#,##0').setFontWeight('bold');
   sheet.getRange(row, 7).setFormula('=SUM(B17:F17)').setNumberFormat('$#,##0').setFontWeight('bold');
   const totalOpExpRow = row;
   row++;
@@ -2029,11 +2030,11 @@ function createAnnualSummarySheet(ss) {
 
   // Depreciation
   sheet.getRange(row, 1).setValue('Depreciation');
-  sheet.getRange(row, 2).setFormula("=SUM('P&L'!B33:K33)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 3).setFormula("=SUM('P&L'!L33:W33)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 4).setFormula("=SUM('P&L'!X33:AI33)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ33:AU33)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV33:BI33)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 2).setFormula("=SUM('P&L'!B30:K30)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 3).setFormula("=SUM('P&L'!L30:W30)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 4).setFormula("=SUM('P&L'!X30:AI30)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ30:AU30)").setNumberFormat('$#,##0');
+  sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV30:BI30)").setNumberFormat('$#,##0');
   sheet.getRange(row, 7).setFormula('=SUM(B20:F20)').setNumberFormat('$#,##0');
   const deprecRow = row;
   row++;
@@ -2073,11 +2074,11 @@ function createAnnualSummarySheet(ss) {
   // Year 4 ends at Dec29 (Month 46) = column AU
   // Year 5 ends at Feb31 (Month 60) = column BI
   sheet.getRange(row, 1).setValue('Ending Cash Balance').setFontWeight('bold');
-  sheet.getRange(row, 2).setFormula("='Cash Flow'!K19").setNumberFormat('$#,##0').setFontWeight('bold');
-  sheet.getRange(row, 3).setFormula("='Cash Flow'!W19").setNumberFormat('$#,##0').setFontWeight('bold');
-  sheet.getRange(row, 4).setFormula("='Cash Flow'!AI19").setNumberFormat('$#,##0').setFontWeight('bold');
-  sheet.getRange(row, 5).setFormula("='Cash Flow'!AU19").setNumberFormat('$#,##0').setFontWeight('bold');
-  sheet.getRange(row, 6).setFormula("='Cash Flow'!BI19").setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 2).setFormula("='Cash Flow'!K17").setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 3).setFormula("='Cash Flow'!W17").setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 4).setFormula("='Cash Flow'!AI17").setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 5).setFormula("='Cash Flow'!AU17").setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 6).setFormula("='Cash Flow'!BI17").setNumberFormat('$#,##0').setFontWeight('bold');
   sheet.getRange(row, 7).setValue('N/A').setFontStyle('italic');
   const endCashRow = row;
   row += 2;
