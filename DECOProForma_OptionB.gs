@@ -1434,17 +1434,54 @@ function createProfitLossSheet(ss) {
   sheet.getRange(row, 1).setValue('COST OF GOODS SOLD').setFontWeight('bold').setFontSize(12).setBackground('#FCE5CD');
   row++;
 
+  // Art Supplies COGS - reference Expense Detail row 18
   sheet.getRange(row, 1).setValue('Art Supplies COGS');
-  row++;
-  sheet.getRange(row, 1).setValue('Pottery COGS');
-  row++;
-  sheet.getRange(row, 1).setValue('Beverage COGS');
-  row++;
-  sheet.getRange(row, 1).setValue('Retail COGS');
+  const artCOGSRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Expense Detail'!${colLetter}18`).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // Pottery COGS - reference Expense Detail row 19
+  sheet.getRange(row, 1).setValue('Pottery COGS');
+  const potteryCOGSRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Expense Detail'!${colLetter}19`).setNumberFormat('$#,##0');
+  }
+  row++;
+
+  // Beverage COGS - reference Expense Detail row 20
+  sheet.getRange(row, 1).setValue('Beverage COGS');
+  const bevCOGSRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Expense Detail'!${colLetter}20`).setNumberFormat('$#,##0');
+  }
+  row++;
+
+  // Retail COGS - reference Expense Detail row 21
+  sheet.getRange(row, 1).setValue('Retail COGS');
+  const retailCOGSRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Expense Detail'!${colLetter}21`).setNumberFormat('$#,##0');
+  }
+  row++;
+
+  // Total COGS - sum of all COGS rows
   sheet.getRange(row, 1).setValue('Total COGS').setFontWeight('bold');
   const totalCOGSRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`=SUM(${colLetter}${artCOGSRow}:${colLetter}${retailCOGSRow})`).setNumberFormat('$#,##0').setFontWeight('bold');
+  }
   row++;
 
   // GROSS PROFIT
@@ -1461,37 +1498,143 @@ function createProfitLossSheet(ss) {
   sheet.getRange(row, 1).setValue('OPERATING EXPENSES').setFontWeight('bold').setFontSize(12).setBackground('#F4CCCC');
   row++;
 
+  // Owner Salaries - reference Expense Detail row 4
   sheet.getRange(row, 1).setValue('Owner Salaries');
-  row++;
-  sheet.getRange(row, 1).setValue('Studio Manager');
-  row++;
-  sheet.getRange(row, 1).setValue('Teachers');
-  row++;
-  sheet.getRange(row, 1).setValue('Assistants');
-  row++;
-  sheet.getRange(row, 1).setValue('Payroll Taxes');
-  row++;
-  sheet.getRange(row, 1).setValue('Rent');
-  row++;
-  sheet.getRange(row, 1).setValue('Utilities');
-  row++;
-  sheet.getRange(row, 1).setValue('Insurance');
-  row++;
-  sheet.getRange(row, 1).setValue('Property Tax');
-  row++;
-  sheet.getRange(row, 1).setValue('Repairs & Maintenance');
-  row++;
-  sheet.getRange(row, 1).setValue('Marketing');
-  row++;
-  sheet.getRange(row, 1).setValue('Professional Services');
-  row++;
-  sheet.getRange(row, 1).setValue('Liquor License');
-  row++;
-  sheet.getRange(row, 1).setValue('Supply Replenishment');
+  const ownerSalRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Expense Detail'!${colLetter}4`).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // Studio Manager - reference Expense Detail row 5
+  sheet.getRange(row, 1).setValue('Studio Manager');
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Expense Detail'!${colLetter}5`).setNumberFormat('$#,##0');
+  }
+  row++;
+
+  // Teachers - reference Expense Detail row 6
+  sheet.getRange(row, 1).setValue('Teachers');
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Expense Detail'!${colLetter}6`).setNumberFormat('$#,##0');
+  }
+  row++;
+
+  // Assistants - reference Expense Detail row 7
+  sheet.getRange(row, 1).setValue('Assistants');
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Expense Detail'!${colLetter}7`).setNumberFormat('$#,##0');
+  }
+  row++;
+
+  // Payroll Taxes - reference Expense Detail row 8
+  sheet.getRange(row, 1).setValue('Payroll Taxes');
+  const payrollTaxRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Expense Detail'!${colLetter}8`).setNumberFormat('$#,##0');
+  }
+  row++;
+
+  // Rent - reference Expense Detail row 9
+  sheet.getRange(row, 1).setValue('Rent');
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Expense Detail'!${colLetter}9`).setNumberFormat('$#,##0');
+  }
+  row++;
+
+  // Utilities - reference Expense Detail row 10
+  sheet.getRange(row, 1).setValue('Utilities');
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Expense Detail'!${colLetter}10`).setNumberFormat('$#,##0');
+  }
+  row++;
+
+  // Insurance - reference Expense Detail row 11
+  sheet.getRange(row, 1).setValue('Insurance');
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Expense Detail'!${colLetter}11`).setNumberFormat('$#,##0');
+  }
+  row++;
+
+  // Property Tax - reference Expense Detail row 12
+  sheet.getRange(row, 1).setValue('Property Tax');
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Expense Detail'!${colLetter}12`).setNumberFormat('$#,##0');
+  }
+  row++;
+
+  // Repairs & Maintenance - reference Expense Detail row 13
+  sheet.getRange(row, 1).setValue('Repairs & Maintenance');
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Expense Detail'!${colLetter}13`).setNumberFormat('$#,##0');
+  }
+  row++;
+
+  // Marketing - reference Expense Detail row 14
+  sheet.getRange(row, 1).setValue('Marketing');
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Expense Detail'!${colLetter}14`).setNumberFormat('$#,##0');
+  }
+  row++;
+
+  // Professional Services - reference Expense Detail row 15
+  sheet.getRange(row, 1).setValue('Professional Services');
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Expense Detail'!${colLetter}15`).setNumberFormat('$#,##0');
+  }
+  row++;
+
+  // Liquor License - reference Expense Detail row 16
+  sheet.getRange(row, 1).setValue('Liquor License');
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Expense Detail'!${colLetter}16`).setNumberFormat('$#,##0');
+  }
+  row++;
+
+  // Supply Replenishment - reference Expense Detail row 17
+  sheet.getRange(row, 1).setValue('Supply Replenishment');
+  const supplyRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Expense Detail'!${colLetter}17`).setNumberFormat('$#,##0');
+  }
+  row++;
+
+  // Total Operating Expenses - sum of all operating expense rows
   sheet.getRange(row, 1).setValue('Total Operating Expenses').setFontWeight('bold');
   const totalOpExRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`=SUM(${colLetter}${ownerSalRow}:${colLetter}${supplyRow})`).setNumberFormat('$#,##0').setFontWeight('bold');
+  }
   row++;
 
   // EBITDA
@@ -1504,14 +1647,27 @@ function createProfitLossSheet(ss) {
   }
   row++;
 
-  // DEPRECIATION
+  // DEPRECIATION - Equipment cost / 60 months (5-year straight line)
   sheet.getRange(row, 1).setValue('Depreciation');
   const depreciationRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    // Depreciation = Startup Costs equipment subtotal (B8) / 60 months
+    sheet.getRange(row, col).setFormula("='Startup Costs'!$B$8/60").setNumberFormat('$#,##0');
+  }
   row++;
 
-  // INTEREST EXPENSE
+  // INTEREST EXPENSE - from Loan Amortization column F
   sheet.getRange(row, 1).setValue('Interest Expense');
   const interestRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const month = i + 1;
+    // Loan amortization: row 14 is month -1, row 15 is month 0, row 16 is month 1
+    // So month 1 = row 16, month 2 = row 17, etc.
+    const amortRow = 15 + month;
+    sheet.getRange(row, col).setFormula(`='Loan Amortization'!F${amortRow}`).setNumberFormat('$#,##0');
+  }
   row++;
 
   // NET INCOME BEFORE TAX
@@ -1571,46 +1727,130 @@ function createCashFlowSheet(ss) {
   const headerRow = row;
   row++;
 
-  // BEGINNING CASH
+  // BEGINNING CASH - Month 1 = 0, subsequent months = previous month's ending cash
   sheet.getRange(row, 1).setValue('Beginning Cash Balance').setFontWeight('bold').setBackground('#E8EAED');
   const beginCashRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    if (i === 0) {
+      // Month 1: Start with $0
+      sheet.getRange(row, col).setValue(0).setNumberFormat('$#,##0');
+    } else {
+      // Subsequent months: Previous month's ending cash
+      const prevColLetter = getColLetter(col - 1);
+      // Ending cash row will be row + 13 (calculated from structure)
+      sheet.getRange(row, col).setFormula(`=${prevColLetter}${row + 13}`).setNumberFormat('$#,##0');
+    }
+  }
   row++;
 
   // CASH INFLOWS
   sheet.getRange(row, 1).setValue('CASH INFLOWS').setFontWeight('bold').setFontSize(12).setBackground('#D9EAD3');
   row++;
 
+  // Revenue Collections - reference P&L Total Revenue (row 5)
   sheet.getRange(row, 1).setValue('Revenue Collections');
+  const revenueCollRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='P&L'!${colLetter}5`).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // Loan Proceeds - Month 1 only gets the full loan amount
   sheet.getRange(row, 1).setValue('Loan Proceeds (Month 1 only)');
+  const loanProceedsRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    if (i === 0) {
+      // Month 1: Full loan amount from Startup Costs
+      sheet.getRange(row, col).setFormula("='Startup Costs'!B30").setNumberFormat('$#,##0');
+    } else {
+      sheet.getRange(row, col).setValue(0).setNumberFormat('$#,##0');
+    }
+  }
   row++;
 
+  // Total Cash Inflows
   sheet.getRange(row, 1).setValue('Total Cash Inflows').setFontWeight('bold');
   const totalInflowsRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`=${colLetter}${revenueCollRow}+${colLetter}${loanProceedsRow}`).setNumberFormat('$#,##0').setFontWeight('bold');
+  }
   row++;
 
   // CASH OUTFLOWS
   sheet.getRange(row, 1).setValue('CASH OUTFLOWS').setFontWeight('bold').setFontSize(12).setBackground('#F4CCCC');
   row++;
 
+  // Startup Costs - Month 1 only
   sheet.getRange(row, 1).setValue('Startup Costs (Pre-opening)');
+  const startupCostRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    if (i === 0) {
+      // Month 1: Total cash needed before reserve (equipment + supplies + setup)
+      sheet.getRange(row, col).setFormula("='Startup Costs'!B28").setNumberFormat('$#,##0');
+    } else {
+      sheet.getRange(row, col).setValue(0).setNumberFormat('$#,##0');
+    }
+  }
   row++;
 
+  // Operating Expenses - reference P&L Total Operating Expenses (row 28)
   sheet.getRange(row, 1).setValue('Operating Expenses');
+  const opExpCashRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='P&L'!${colLetter}28`).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // COGS - reference P&L Total COGS (row 11)
   sheet.getRange(row, 1).setValue('COGS');
+  const cogsCashRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='P&L'!${colLetter}11`).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // Loan Principal Payment - reference Loan Amortization column E
   sheet.getRange(row, 1).setValue('Loan Principal Payment');
+  const principalRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const month = i + 1;
+    // Loan amortization: row 14 is month -1, row 15 is month 0, row 16 is month 1
+    const amortRow = 15 + month;
+    sheet.getRange(row, col).setFormula(`='Loan Amortization'!E${amortRow}`).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // Loan Interest Payment - reference Loan Amortization column F
   sheet.getRange(row, 1).setValue('Loan Interest Payment');
+  const interestCashRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const month = i + 1;
+    const amortRow = 15 + month;
+    sheet.getRange(row, col).setFormula(`='Loan Amortization'!F${amortRow}`).setNumberFormat('$#,##0');
+  }
   row++;
 
+  // Total Cash Outflows
   sheet.getRange(row, 1).setValue('Total Cash Outflows').setFontWeight('bold');
   const totalOutflowsRow = row;
+  for (let i = 0; i < 60; i++) {
+    const col = i + 2;
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`=SUM(${colLetter}${startupCostRow}:${colLetter}${interestCashRow})`).setNumberFormat('$#,##0').setFontWeight('bold');
+  }
   row++;
 
   // NET CASH FLOW
@@ -1718,41 +1958,41 @@ function createDashboardSheet(ss) {
   const dashRevenueRow = row;
   row++;
 
-  // Total Expenses row
+  // Total Expenses row - references Annual Summary row 15 (Total Operating Expenses)
   sheet.getRange(row, 1).setValue('Total Expenses');
-  sheet.getRange(row, 2).setFormula("='Annual Summary'!B17").setNumberFormat('$#,##0');
-  sheet.getRange(row, 3).setFormula("='Annual Summary'!C17").setNumberFormat('$#,##0');
-  sheet.getRange(row, 4).setFormula("='Annual Summary'!D17").setNumberFormat('$#,##0');
-  sheet.getRange(row, 5).setFormula("='Annual Summary'!E17").setNumberFormat('$#,##0');
-  sheet.getRange(row, 6).setFormula("='Annual Summary'!F17").setNumberFormat('$#,##0');
+  sheet.getRange(row, 2).setFormula("='Annual Summary'!B15").setNumberFormat('$#,##0');
+  sheet.getRange(row, 3).setFormula("='Annual Summary'!C15").setNumberFormat('$#,##0');
+  sheet.getRange(row, 4).setFormula("='Annual Summary'!D15").setNumberFormat('$#,##0');
+  sheet.getRange(row, 5).setFormula("='Annual Summary'!E15").setNumberFormat('$#,##0');
+  sheet.getRange(row, 6).setFormula("='Annual Summary'!F15").setNumberFormat('$#,##0');
   const dashExpenseRow = row;
   row++;
 
-  // EBITDA row
+  // EBITDA row - references Annual Summary row 16
   sheet.getRange(row, 1).setValue('EBITDA').setFontWeight('bold');
-  sheet.getRange(row, 2).setFormula("='Annual Summary'!B19").setNumberFormat('$#,##0').setFontWeight('bold');
-  sheet.getRange(row, 3).setFormula("='Annual Summary'!C19").setNumberFormat('$#,##0').setFontWeight('bold');
-  sheet.getRange(row, 4).setFormula("='Annual Summary'!D19").setNumberFormat('$#,##0').setFontWeight('bold');
-  sheet.getRange(row, 5).setFormula("='Annual Summary'!E19").setNumberFormat('$#,##0').setFontWeight('bold');
-  sheet.getRange(row, 6).setFormula("='Annual Summary'!F19").setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 2).setFormula("='Annual Summary'!B16").setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 3).setFormula("='Annual Summary'!C16").setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 4).setFormula("='Annual Summary'!D16").setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 5).setFormula("='Annual Summary'!E16").setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 6).setFormula("='Annual Summary'!F16").setNumberFormat('$#,##0').setFontWeight('bold');
   row++;
 
-  // Net Income row
+  // Net Income row - references Annual Summary row 19
   sheet.getRange(row, 1).setValue('Net Income').setFontWeight('bold').setBackground('#B6D7A8');
-  sheet.getRange(row, 2).setFormula("='Annual Summary'!B22").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#B6D7A8');
-  sheet.getRange(row, 3).setFormula("='Annual Summary'!C22").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#B6D7A8');
-  sheet.getRange(row, 4).setFormula("='Annual Summary'!D22").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#B6D7A8');
-  sheet.getRange(row, 5).setFormula("='Annual Summary'!E22").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#B6D7A8');
-  sheet.getRange(row, 6).setFormula("='Annual Summary'!F22").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#B6D7A8');
+  sheet.getRange(row, 2).setFormula("='Annual Summary'!B19").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#B6D7A8');
+  sheet.getRange(row, 3).setFormula("='Annual Summary'!C19").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#B6D7A8');
+  sheet.getRange(row, 4).setFormula("='Annual Summary'!D19").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#B6D7A8');
+  sheet.getRange(row, 5).setFormula("='Annual Summary'!E19").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#B6D7A8');
+  sheet.getRange(row, 6).setFormula("='Annual Summary'!F19").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#B6D7A8');
   row++;
 
-  // Ending Cash Balance row
+  // Ending Cash Balance row - references Annual Summary row 22
   sheet.getRange(row, 1).setValue('Ending Cash Balance').setFontWeight('bold').setBackground('#C9DAF8');
-  sheet.getRange(row, 2).setFormula("='Annual Summary'!B25").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#C9DAF8');
-  sheet.getRange(row, 3).setFormula("='Annual Summary'!C25").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#C9DAF8');
-  sheet.getRange(row, 4).setFormula("='Annual Summary'!D25").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#C9DAF8');
-  sheet.getRange(row, 5).setFormula("='Annual Summary'!E25").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#C9DAF8');
-  sheet.getRange(row, 6).setFormula("='Annual Summary'!F25").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#C9DAF8');
+  sheet.getRange(row, 2).setFormula("='Annual Summary'!B22").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#C9DAF8');
+  sheet.getRange(row, 3).setFormula("='Annual Summary'!C22").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#C9DAF8');
+  sheet.getRange(row, 4).setFormula("='Annual Summary'!D22").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#C9DAF8');
+  sheet.getRange(row, 5).setFormula("='Annual Summary'!E22").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#C9DAF8');
+  sheet.getRange(row, 6).setFormula("='Annual Summary'!F22").setNumberFormat('$#,##0').setFontWeight('bold').setBackground('#C9DAF8');
   row += 2;
 
   // ========== 5-YEAR TOTALS ==========
@@ -1765,7 +2005,7 @@ function createDashboardSheet(ss) {
   row++;
 
   sheet.getRange(row, 1).setValue('Total Net Income (5 Years)').setFontWeight('bold');
-  sheet.getRange(row, 2).setFormula(`=SUM('Annual Summary'!B22:F22)`).setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 2).setFormula(`=SUM('Annual Summary'!B19:F19)`).setNumberFormat('$#,##0').setFontWeight('bold');
   row++;
 
   sheet.getRange(row, 1).setValue('Total Loan Payments (5 Years)');
@@ -1918,7 +2158,7 @@ function createAnnualSummarySheet(ss) {
   // Year 5: Jan30-Feb31 (14 months: Jan30-Dec30=12 + Jan31-Feb31=2) = P&L columns AV:BI
   sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV5:BI5)").setNumberFormat('$#,##0');
   // 5-Year Total
-  sheet.getRange(row, 7).setFormula('=SUM(B5:F5)').setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 7).setFormula(`=SUM(B${row}:F${row})`).setNumberFormat('$#,##0').setFontWeight('bold');
   const totalRevenueRow = row;
   row++;
 
@@ -1933,7 +2173,7 @@ function createAnnualSummarySheet(ss) {
   sheet.getRange(row, 4).setFormula("=SUM('P&L'!X11:AI11)").setNumberFormat('$#,##0');
   sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ11:AU11)").setNumberFormat('$#,##0');
   sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV11:BI11)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 7).setFormula('=SUM(B7:F7)').setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 7).setFormula(`=SUM(B${row}:F${row})`).setNumberFormat('$#,##0').setFontWeight('bold');
   const totalCOGSRow = row;
   row++;
 
@@ -1961,7 +2201,7 @@ function createAnnualSummarySheet(ss) {
   sheet.getRange(row, 4).setFormula("=SUM('P&L'!X14:AI18)").setNumberFormat('$#,##0');
   sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ14:AU18)").setNumberFormat('$#,##0');
   sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV14:BI18)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 7).setFormula('=SUM(B11:F11)').setNumberFormat('$#,##0');
+  sheet.getRange(row, 7).setFormula(`=SUM(B${row}:F${row})`).setNumberFormat('$#,##0');
   row++;
 
   // Rent
@@ -1971,7 +2211,7 @@ function createAnnualSummarySheet(ss) {
   sheet.getRange(row, 4).setFormula("=SUM('P&L'!X19:AI19)").setNumberFormat('$#,##0');
   sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ19:AU19)").setNumberFormat('$#,##0');
   sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV19:BI19)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 7).setFormula('=SUM(B12:F12)').setNumberFormat('$#,##0');
+  sheet.getRange(row, 7).setFormula(`=SUM(B${row}:F${row})`).setNumberFormat('$#,##0');
   row++;
 
   // Utilities
@@ -1981,7 +2221,7 @@ function createAnnualSummarySheet(ss) {
   sheet.getRange(row, 4).setFormula("=SUM('P&L'!X20:AI20)").setNumberFormat('$#,##0');
   sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ20:AU20)").setNumberFormat('$#,##0');
   sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV20:BI20)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 7).setFormula('=SUM(B13:F13)').setNumberFormat('$#,##0');
+  sheet.getRange(row, 7).setFormula(`=SUM(B${row}:F${row})`).setNumberFormat('$#,##0');
   row++;
 
   // Other Operating
@@ -1991,7 +2231,7 @@ function createAnnualSummarySheet(ss) {
   sheet.getRange(row, 4).setFormula("=SUM('P&L'!X21:AI27)").setNumberFormat('$#,##0');
   sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ21:AU27)").setNumberFormat('$#,##0');
   sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV21:BI27)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 7).setFormula('=SUM(B14:F14)').setNumberFormat('$#,##0');
+  sheet.getRange(row, 7).setFormula(`=SUM(B${row}:F${row})`).setNumberFormat('$#,##0');
   row++;
 
   // Loan Payments (Principal + Interest)
@@ -2002,7 +2242,7 @@ function createAnnualSummarySheet(ss) {
   sheet.getRange(row, 4).setFormula("=SUMIFS('Loan Amortization'!D:D,'Loan Amortization'!B:B,\">22\",'Loan Amortization'!B:B,\"<=34\")").setNumberFormat('$#,##0');
   sheet.getRange(row, 5).setFormula("=SUMIFS('Loan Amortization'!D:D,'Loan Amortization'!B:B,\">34\",'Loan Amortization'!B:B,\"<=46\")").setNumberFormat('$#,##0');
   sheet.getRange(row, 6).setFormula("=SUMIFS('Loan Amortization'!D:D,'Loan Amortization'!B:B,\">46\",'Loan Amortization'!B:B,\"<=60\")").setNumberFormat('$#,##0');
-  sheet.getRange(row, 7).setFormula('=SUM(B15:F15)').setNumberFormat('$#,##0');
+  sheet.getRange(row, 7).setFormula(`=SUM(B${row}:F${row})`).setNumberFormat('$#,##0');
   row++;
 
   // Total Operating Expenses
@@ -2012,7 +2252,7 @@ function createAnnualSummarySheet(ss) {
   sheet.getRange(row, 4).setFormula("=SUM('P&L'!X28:AI28)").setNumberFormat('$#,##0').setFontWeight('bold');
   sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ28:AU28)").setNumberFormat('$#,##0').setFontWeight('bold');
   sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV28:BI28)").setNumberFormat('$#,##0').setFontWeight('bold');
-  sheet.getRange(row, 7).setFormula('=SUM(B17:F17)').setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 7).setFormula(`=SUM(B${row}:F${row})`).setNumberFormat('$#,##0').setFontWeight('bold');
   const totalOpExpRow = row;
   row++;
 
@@ -2035,7 +2275,7 @@ function createAnnualSummarySheet(ss) {
   sheet.getRange(row, 4).setFormula("=SUM('P&L'!X30:AI30)").setNumberFormat('$#,##0');
   sheet.getRange(row, 5).setFormula("=SUM('P&L'!AJ30:AU30)").setNumberFormat('$#,##0');
   sheet.getRange(row, 6).setFormula("=SUM('P&L'!AV30:BI30)").setNumberFormat('$#,##0');
-  sheet.getRange(row, 7).setFormula('=SUM(B20:F20)').setNumberFormat('$#,##0');
+  sheet.getRange(row, 7).setFormula(`=SUM(B${row}:F${row})`).setNumberFormat('$#,##0');
   const deprecRow = row;
   row++;
 
@@ -2046,7 +2286,7 @@ function createAnnualSummarySheet(ss) {
   sheet.getRange(row, 4).setFormula("=SUMIFS('Loan Amortization'!F:F,'Loan Amortization'!B:B,\">22\",'Loan Amortization'!B:B,\"<=34\")").setNumberFormat('$#,##0');
   sheet.getRange(row, 5).setFormula("=SUMIFS('Loan Amortization'!F:F,'Loan Amortization'!B:B,\">34\",'Loan Amortization'!B:B,\"<=46\")").setNumberFormat('$#,##0');
   sheet.getRange(row, 6).setFormula("=SUMIFS('Loan Amortization'!F:F,'Loan Amortization'!B:B,\">46\",'Loan Amortization'!B:B,\"<=60\")").setNumberFormat('$#,##0');
-  sheet.getRange(row, 7).setFormula('=SUM(B21:F21)').setNumberFormat('$#,##0');
+  sheet.getRange(row, 7).setFormula(`=SUM(B${row}:F${row})`).setNumberFormat('$#,##0');
   const interestRow = row;
   row++;
 
