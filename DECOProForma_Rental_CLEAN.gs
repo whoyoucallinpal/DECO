@@ -33,6 +33,7 @@ function createDECOProForma() {
   createLoanAmortizationSheet(ss);
   createProfitLossSheet(ss);
   createCashFlowSheet(ss);
+  createAnnualSummarySheet(ss);
   createDashboardSheet(ss);
 
   SpreadsheetApp.getUi().alert('DECO Pro Forma Created Successfully!\n\nStart with Dashboard tab.');
@@ -878,11 +879,11 @@ function createExpensesSheet(ss) {
   r++;
 
   sheet.getRange(r, 1).setValue('Supplies Replenishment');
-  sheet.getRange(r, 2).setFormula('=\'Startup Supplies\'!E63*Assumptions!$B$75*3');
-  sheet.getRange(r, 3).setFormula('=\'Startup Supplies\'!E63*Assumptions!$B$75*4');
-  sheet.getRange(r, 4).setFormula('=\'Startup Supplies\'!E63*Assumptions!$B$75*4');
-  sheet.getRange(r, 5).setFormula('=\'Startup Supplies\'!E63*Assumptions!$B$75*4');
-  sheet.getRange(r, 6).setFormula('=\'Startup Supplies\'!E63*Assumptions!$B$75*4');
+  sheet.getRange(r, 2).setFormula('=\'Startup Supplies\'!E62*Assumptions!$B$75*3');
+  sheet.getRange(r, 3).setFormula('=\'Startup Supplies\'!E62*Assumptions!$B$75*4');
+  sheet.getRange(r, 4).setFormula('=\'Startup Supplies\'!E62*Assumptions!$B$75*4');
+  sheet.getRange(r, 5).setFormula('=\'Startup Supplies\'!E62*Assumptions!$B$75*4');
+  sheet.getRange(r, 6).setFormula('=\'Startup Supplies\'!E62*Assumptions!$B$75*4');
   r++;
   r++;
 
@@ -1337,7 +1338,201 @@ function createCashFlowSheet(ss) {
 }
 
 // ============================================
-// SHEET 12: DASHBOARD
+// SHEET 12: ANNUAL SUMMARY
+// ============================================
+
+function createAnnualSummarySheet(ss) {
+  var sheet = getOrCreateSheet(ss, 'Annual Summary');
+  sheet.setTabColor('#6AA84F');
+
+  addHeader(sheet, 1, 'ANNUAL SUMMARY - 5 YEAR OVERVIEW', 6, '#6AA84F');
+
+  var headers = ['', 'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'];
+  sheet.getRange('A3:F3').setValues([headers]).setFontWeight('bold').setBackground('#B6D7A8');
+
+  var r = 4;
+
+  // REVENUE SUMMARY
+  sheet.getRange(r++, 1).setValue('REVENUE').setFontWeight('bold').setBackground('#B6D7A8');
+
+  sheet.getRange(r, 1).setValue('Regular Classes');
+  sheet.getRange(r, 2).setFormula('=\'Revenue Model\'!B5+\'Revenue Model\'!B6');
+  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C5+\'Revenue Model\'!C6');
+  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D5+\'Revenue Model\'!D6');
+  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E5+\'Revenue Model\'!E6');
+  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F5+\'Revenue Model\'!F6');
+  r++;
+
+  sheet.getRange(r, 1).setValue('Summer Camps');
+  sheet.getRange(r, 2).setFormula('=\'Revenue Model\'!B9');
+  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C9');
+  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D9');
+  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E9');
+  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F9');
+  r++;
+
+  sheet.getRange(r, 1).setValue('Events & Workshops');
+  sheet.getRange(r, 2).setFormula('=\'Revenue Model\'!B12+\'Revenue Model\'!B13+\'Revenue Model\'!B14');
+  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C12+\'Revenue Model\'!C13+\'Revenue Model\'!C14');
+  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D12+\'Revenue Model\'!D13+\'Revenue Model\'!D14');
+  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E12+\'Revenue Model\'!E13+\'Revenue Model\'!E14');
+  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F12+\'Revenue Model\'!F13+\'Revenue Model\'!F14');
+  r++;
+
+  sheet.getRange(r, 1).setValue('Beverages');
+  sheet.getRange(r, 2).setFormula('=\'Revenue Model\'!B17+\'Revenue Model\'!B18+\'Revenue Model\'!B19');
+  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C17+\'Revenue Model\'!C18+\'Revenue Model\'!C19');
+  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D17+\'Revenue Model\'!D18+\'Revenue Model\'!D19');
+  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E17+\'Revenue Model\'!E18+\'Revenue Model\'!E19');
+  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F17+\'Revenue Model\'!F18+\'Revenue Model\'!F19');
+  r++;
+
+  sheet.getRange(r, 1).setValue('Retail');
+  sheet.getRange(r, 2).setFormula('=\'Revenue Model\'!B22');
+  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C22');
+  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D22');
+  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E22');
+  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F22');
+  r++;
+
+  sheet.getRange(r, 1).setValue('TOTAL REVENUE').setFontWeight('bold');
+  sheet.getRange(r, 2).setFormula('=\'Revenue Model\'!B24').setFontWeight('bold');
+  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C24').setFontWeight('bold');
+  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D24').setFontWeight('bold');
+  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E24').setFontWeight('bold');
+  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F24').setFontWeight('bold');
+  sheet.getRange(r, 1, 1, 6).setBackground('#B6D7A8');
+  r++;
+  r++;
+
+  // EXPENSES SUMMARY
+  sheet.getRange(r++, 1).setValue('EXPENSES').setFontWeight('bold').setBackground('#B6D7A8');
+
+  sheet.getRange(r, 1).setValue('Cost of Goods Sold');
+  sheet.getRange(r, 2).setFormula('=SUM(Expenses!B5:B8)');
+  sheet.getRange(r, 3).setFormula('=SUM(Expenses!C5:C8)');
+  sheet.getRange(r, 4).setFormula('=SUM(Expenses!D5:D8)');
+  sheet.getRange(r, 5).setFormula('=SUM(Expenses!E5:E8)');
+  sheet.getRange(r, 6).setFormula('=SUM(Expenses!F5:F8)');
+  r++;
+
+  sheet.getRange(r, 1).setValue('Payroll & Labor');
+  sheet.getRange(r, 2).setFormula('=SUM(Expenses!B11:B15)');
+  sheet.getRange(r, 3).setFormula('=SUM(Expenses!C11:C15)');
+  sheet.getRange(r, 4).setFormula('=SUM(Expenses!D11:D15)');
+  sheet.getRange(r, 5).setFormula('=SUM(Expenses!E11:E15)');
+  sheet.getRange(r, 6).setFormula('=SUM(Expenses!F11:F15)');
+  r++;
+
+  sheet.getRange(r, 1).setValue('Facilities');
+  sheet.getRange(r, 2).setFormula('=SUM(Expenses!B18:B22)');
+  sheet.getRange(r, 3).setFormula('=SUM(Expenses!C18:C22)');
+  sheet.getRange(r, 4).setFormula('=SUM(Expenses!D18:D22)');
+  sheet.getRange(r, 5).setFormula('=SUM(Expenses!E18:E22)');
+  sheet.getRange(r, 6).setFormula('=SUM(Expenses!F18:F22)');
+  r++;
+
+  sheet.getRange(r, 1).setValue('Operations');
+  sheet.getRange(r, 2).setFormula('=SUM(Expenses!B25:B27)');
+  sheet.getRange(r, 3).setFormula('=SUM(Expenses!C25:C27)');
+  sheet.getRange(r, 4).setFormula('=SUM(Expenses!D25:D27)');
+  sheet.getRange(r, 5).setFormula('=SUM(Expenses!E25:E27)');
+  sheet.getRange(r, 6).setFormula('=SUM(Expenses!F25:F27)');
+  r++;
+
+  sheet.getRange(r, 1).setValue('Depreciation');
+  sheet.getRange(r, 2).setFormula('=Expenses!B30');
+  sheet.getRange(r, 3).setFormula('=Expenses!C30');
+  sheet.getRange(r, 4).setFormula('=Expenses!D30');
+  sheet.getRange(r, 5).setFormula('=Expenses!E30');
+  sheet.getRange(r, 6).setFormula('=Expenses!F30');
+  r++;
+
+  sheet.getRange(r, 1).setValue('TOTAL EXPENSES').setFontWeight('bold');
+  sheet.getRange(r, 2).setFormula('=Expenses!B32').setFontWeight('bold');
+  sheet.getRange(r, 3).setFormula('=Expenses!C32').setFontWeight('bold');
+  sheet.getRange(r, 4).setFormula('=Expenses!D32').setFontWeight('bold');
+  sheet.getRange(r, 5).setFormula('=Expenses!E32').setFontWeight('bold');
+  sheet.getRange(r, 6).setFormula('=Expenses!F32').setFontWeight('bold');
+  sheet.getRange(r, 1, 1, 6).setBackground('#B6D7A8');
+  r++;
+  r++;
+
+  // PROFITABILITY
+  sheet.getRange(r++, 1).setValue('PROFITABILITY').setFontWeight('bold').setBackground('#B6D7A8');
+
+  sheet.getRange(r, 1).setValue('EBITDA');
+  sheet.getRange(r, 2).setFormula('=\'Profit & Loss\'!B8');
+  sheet.getRange(r, 3).setFormula('=\'Profit & Loss\'!C8');
+  sheet.getRange(r, 4).setFormula('=\'Profit & Loss\'!D8');
+  sheet.getRange(r, 5).setFormula('=\'Profit & Loss\'!E8');
+  sheet.getRange(r, 6).setFormula('=\'Profit & Loss\'!F8');
+  r++;
+
+  sheet.getRange(r, 1).setValue('Net Income');
+  sheet.getRange(r, 2).setFormula('=\'Profit & Loss\'!B16');
+  sheet.getRange(r, 3).setFormula('=\'Profit & Loss\'!C16');
+  sheet.getRange(r, 4).setFormula('=\'Profit & Loss\'!D16');
+  sheet.getRange(r, 5).setFormula('=\'Profit & Loss\'!E16');
+  sheet.getRange(r, 6).setFormula('=\'Profit & Loss\'!F16');
+  r++;
+  r++;
+
+  // CASH POSITION
+  sheet.getRange(r++, 1).setValue('CASH POSITION').setFontWeight('bold').setBackground('#B6D7A8');
+
+  sheet.getRange(r, 1).setValue('Net Cash Flow');
+  sheet.getRange(r, 2).setFormula('=\'Cash Flow\'!B12');
+  sheet.getRange(r, 3).setFormula('=\'Cash Flow\'!C12');
+  sheet.getRange(r, 4).setFormula('=\'Cash Flow\'!D12');
+  sheet.getRange(r, 5).setFormula('=\'Cash Flow\'!E12');
+  sheet.getRange(r, 6).setFormula('=\'Cash Flow\'!F12');
+  r++;
+
+  sheet.getRange(r, 1).setValue('Ending Cash Balance').setFontWeight('bold');
+  sheet.getRange(r, 2).setFormula('=\'Cash Flow\'!B14').setFontWeight('bold');
+  sheet.getRange(r, 3).setFormula('=\'Cash Flow\'!C14').setFontWeight('bold');
+  sheet.getRange(r, 4).setFormula('=\'Cash Flow\'!D14').setFontWeight('bold');
+  sheet.getRange(r, 5).setFormula('=\'Cash Flow\'!E14').setFontWeight('bold');
+  sheet.getRange(r, 6).setFormula('=\'Cash Flow\'!F14').setFontWeight('bold');
+  sheet.getRange(r, 1, 1, 6).setBackground('#B6D7A8');
+  r++;
+  r++;
+
+  // LOAN METRICS
+  sheet.getRange(r++, 1).setValue('LOAN METRICS').setFontWeight('bold').setBackground('#B6D7A8');
+
+  sheet.getRange(r, 1).setValue('Loan Amount');
+  sheet.getRange(r++, 2).setFormula('=\'Loan Calculator\'!B17').setNumberFormat('$#,##0');
+
+  sheet.getRange(r, 1).setValue('Annual Debt Service');
+  sheet.getRange(r, 2).setFormula('=\'Loan Calculator\'!B18*10');
+  sheet.getRange(r, 3).setFormula('=\'Loan Calculator\'!B18*12');
+  sheet.getRange(r, 4).setFormula('=\'Loan Calculator\'!B18*12');
+  sheet.getRange(r, 5).setFormula('=\'Loan Calculator\'!B18*12');
+  sheet.getRange(r, 6).setFormula('=\'Loan Calculator\'!B18*12');
+  r++;
+
+  sheet.getRange(r, 1).setValue('DSCR (Debt Service Coverage)');
+  sheet.getRange(r, 2).setFormula('=\'Profit & Loss\'!B8/(\'Loan Calculator\'!B18*10)');
+  sheet.getRange(r, 3).setFormula('=\'Profit & Loss\'!C8/(\'Loan Calculator\'!B18*12)');
+  sheet.getRange(r, 4).setFormula('=\'Profit & Loss\'!D8/(\'Loan Calculator\'!B18*12)');
+  sheet.getRange(r, 5).setFormula('=\'Profit & Loss\'!E8/(\'Loan Calculator\'!B18*12)');
+  sheet.getRange(r, 6).setFormula('=\'Profit & Loss\'!F8/(\'Loan Calculator\'!B18*12)');
+  sheet.getRange(r, 2, 1, 5).setNumberFormat('0.00');
+
+  // Format
+  sheet.getRange('B4:F' + r).setNumberFormat('$#,##0');
+  sheet.getRange(r, 2, 1, 5).setNumberFormat('0.00');
+
+  sheet.setColumnWidth(1, 200);
+  for (var i = 2; i <= 6; i++) {
+    sheet.setColumnWidth(i, 110);
+  }
+}
+
+// ============================================
+// SHEET 13: DASHBOARD
 // ============================================
 
 function createDashboardSheet(ss) {
