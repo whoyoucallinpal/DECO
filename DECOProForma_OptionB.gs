@@ -1251,8 +1251,8 @@ function createStartupCostsSheet(ss) {
   row++;
 
   sheet.getRange(row, 1).setValue('Operating Reserve Amount').setFontWeight('bold');
-  // Calculate: Average monthly operating expenses from Year 1 (P&L row 28, cols B:K = 10 months) * reserve months
-  sheet.getRange(row, 2).setFormula("=AVERAGE('P&L'!B28:K28)*Assumptions!B87").setNumberFormat('$#,##0').setFontWeight('bold');
+  // Calculate: Average monthly operating expenses from Year 1 (Expense Detail row 23, cols B:K = 10 months) * reserve months
+  sheet.getRange(row, 2).setFormula("=AVERAGE('Expense Detail'!B23:K23)*Assumptions!B87").setNumberFormat('$#,##0').setFontWeight('bold');
   const operatingReserveRow = row;
   row += 2;
 
@@ -1269,7 +1269,7 @@ function createStartupCostsSheet(ss) {
   sheet.getRange(row, 2).setFormula(`=B${row-1}`).setNumberFormat('$#,##0').setFontWeight('bold').setFontSize(14).setBackground('#B6D7A8');
   row += 2;
 
-  sheet.getRange(row, 1).setValue('Note: Operating Reserve is calculated as average monthly Year 1 expenses × reserve months.').setFontStyle('italic').setFontColor('#666666');
+  sheet.getRange(row, 1).setValue('Note: Operating Reserve is calculated as average monthly Year 1 expenses (from Expense Detail) × reserve months.').setFontStyle('italic').setFontColor('#666666');
 
   // Format columns
   sheet.setColumnWidth(1, 350);
