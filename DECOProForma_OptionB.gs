@@ -1346,11 +1346,23 @@ function createLoanAmortizationSheet(ss) {
   // Start from Month -2 (Jan 2026) but payments don't start until after grace period
   const totalMonths = 120; // Show 10 years regardless
   const startMonth = -2; // Jan 2026
-  const loanAmountRow = 4;
+  const loanAmountRow = 3; // Loan Amount is at row 3
 
   for (let i = 0; i < totalMonths; i++) {
     const monthNum = startMonth + i;
-    const monthLabel = monthLabels[i + 2]; // Offset because labels array starts at Jan26 (index 0)
+    // monthLabels[0] = JAN26 (month -2), monthLabels[1] = FEB26 (month -1), etc.
+    // For months beyond the 63-month array, generate label dynamically
+    let monthLabel;
+    if (i < monthLabels.length) {
+      monthLabel = monthLabels[i];
+    } else {
+      // Generate month label for months beyond array
+      const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+      const totalMonthsFromJan26 = i;
+      const year = 26 + Math.floor(totalMonthsFromJan26 / 12);
+      const monthIndex = totalMonthsFromJan26 % 12;
+      monthLabel = months[monthIndex] + year.toString().padStart(2, '0');
+    }
 
     sheet.getRange(row, 1).setValue(monthLabel);
     sheet.getRange(row, 2).setValue(monthNum).setNumberFormat('#,##0');
@@ -1663,9 +1675,9 @@ function createProfitLossSheet(ss) {
   for (let i = 0; i < 60; i++) {
     const col = i + 2;
     const month = i + 1;
-    // Loan amortization: row 14 is month -1, row 15 is month 0, row 16 is month 1
-    // So month 1 = row 16, month 2 = row 17, etc.
-    const amortRow = 15 + month;
+    // Loan amortization: row 12 is month -2, row 13 is month -1, row 14 is month 0, row 15 is month 1
+    // So month 1 = row 15 = 14 + month
+    const amortRow = 14 + month;
     sheet.getRange(row, col).setFormula(`='Loan Amortization'!F${amortRow}`).setNumberFormat('$#,##0');
   }
   row++;
@@ -1826,8 +1838,9 @@ function createCashFlowSheet(ss) {
   for (let i = 0; i < 60; i++) {
     const col = i + 2;
     const month = i + 1;
-    // Loan amortization: row 14 is month -1, row 15 is month 0, row 16 is month 1
-    const amortRow = 15 + month;
+    // Loan amortization: row 12 is month -2, row 13 is month -1, row 14 is month 0, row 15 is month 1
+    // So month 1 = row 15 = 14 + month
+    const amortRow = 14 + month;
     sheet.getRange(row, col).setFormula(`='Loan Amortization'!E${amortRow}`).setNumberFormat('$#,##0');
   }
   row++;
@@ -1838,7 +1851,8 @@ function createCashFlowSheet(ss) {
   for (let i = 0; i < 60; i++) {
     const col = i + 2;
     const month = i + 1;
-    const amortRow = 15 + month;
+    // Same row calculation as Principal
+    const amortRow = 14 + month;
     sheet.getRange(row, col).setFormula(`='Loan Amortization'!F${amortRow}`).setNumberFormat('$#,##0');
   }
   row++;
@@ -2149,7 +2163,6 @@ function createAnnualSummarySheet(ss) {
   // Year 1: Mar26-Dec26 (10 months) = P&L columns B:K
   sheet.getRange(row, 2).setFormula("=SUM('P&L'!B5:K5)").setNumberFormat('$#,##0');
   // Year 2: Jan27-Dec27 (12 months) = P&L columns L:W
-  sheet.getRange(row, 2).setFormula("=SUM('P&L'!B5:K5)").setNumberFormat('$#,##0');
   sheet.getRange(row, 3).setFormula("=SUM('P&L'!L5:W5)").setNumberFormat('$#,##0');
   // Year 3: Jan28-Dec28 (12 months) = P&L columns X:AI
   sheet.getRange(row, 4).setFormula("=SUM('P&L'!X5:AI5)").setNumberFormat('$#,##0');
