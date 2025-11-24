@@ -1252,7 +1252,7 @@ function createStartupCostsSheet(ss) {
 
   sheet.getRange(row, 1).setValue('Operating Reserve Amount').setFontWeight('bold');
   // Calculate: Average monthly operating expenses from Year 1 (Expense Detail row 23, cols B:K = 10 months) * reserve months
-  sheet.getRange(row, 2).setFormula("=AVERAGE('Expense Detail'!B23:K23)*Assumptions!B87").setNumberFormat('$#,##0').setFontWeight('bold');
+  sheet.getRange(row, 2).setFormula('=AVERAGE(\'Expense Detail\'!B23:K23)*Assumptions!$B$87').setNumberFormat('$#,##0').setFontWeight('bold');
   const operatingReserveRow = row;
   row += 2;
 
@@ -1436,10 +1436,11 @@ function createProfitLossSheet(ss) {
 
   sheet.getRange(row, 1).setValue('Total Revenue');
   const totalRevenueRow = row;
-  // Reference Revenue Detail total row
+  // Reference Revenue Detail total row - use getColLetter for all columns
   for (let i = 0; i < 60; i++) {
     const col = i + 2;
-    sheet.getRange(row, col).setFormula(`='Revenue Detail'!${String.fromCharCode(65 + col - 1)}11`).setNumberFormat('$#,##0');
+    const colLetter = getColLetter(col);
+    sheet.getRange(row, col).setFormula(`='Revenue Detail'!${colLetter}11`).setNumberFormat('$#,##0');
   }
   row++;
 
