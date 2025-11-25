@@ -708,11 +708,11 @@ function createExpensesSheet(ss) {
   
   sheet.getRange(r, 1).setValue('Art Supplies (15% of non-pottery program revenue)');
   // Art Supplies = (Total - Beverages - Retail - Pottery) × 15%
-  sheet.getRange(r, 2).setFormula('=(\'Revenue Model\'!B30-(\'Revenue Model\'!B22+\'Revenue Model\'!B23+\'Revenue Model\'!B24)-\'Revenue Model\'!B28-(\'Revenue Model\'!B6+\'Revenue Model\'!B12))*Assumptions!$B$61');
-  sheet.getRange(r, 3).setFormula('=(\'Revenue Model\'!C30-(\'Revenue Model\'!C22+\'Revenue Model\'!C23+\'Revenue Model\'!C24)-\'Revenue Model\'!C28-(\'Revenue Model\'!C6+\'Revenue Model\'!C12))*Assumptions!$B$61');
-  sheet.getRange(r, 4).setFormula('=(\'Revenue Model\'!D30-(\'Revenue Model\'!D22+\'Revenue Model\'!D23+\'Revenue Model\'!D24)-\'Revenue Model\'!D28-(\'Revenue Model\'!D6+\'Revenue Model\'!D12))*Assumptions!$B$61');
-  sheet.getRange(r, 5).setFormula('=(\'Revenue Model\'!E30-(\'Revenue Model\'!E22+\'Revenue Model\'!E23+\'Revenue Model\'!E24)-\'Revenue Model\'!E28-(\'Revenue Model\'!E6+\'Revenue Model\'!E12))*Assumptions!$B$61');
-  sheet.getRange(r, 6).setFormula('=(\'Revenue Model\'!F30-(\'Revenue Model\'!F22+\'Revenue Model\'!F23+\'Revenue Model\'!F24)-\'Revenue Model\'!F28-(\'Revenue Model\'!F6+\'Revenue Model\'!F12))*Assumptions!$B$61');
+  sheet.getRange(r, 2).setFormula('=(\'Revenue Model\'!B26-(\'Revenue Model\'!B19+\'Revenue Model\'!B20+\'Revenue Model\'!B21)-\'Revenue Model\'!B24-(\'Revenue Model\'!B6+\'Revenue Model\'!B12))*Assumptions!$B$61');
+  sheet.getRange(r, 3).setFormula('=(\'Revenue Model\'!C26-(\'Revenue Model\'!C19+\'Revenue Model\'!C20+\'Revenue Model\'!C21)-\'Revenue Model\'!C24-(\'Revenue Model\'!C6+\'Revenue Model\'!C12))*Assumptions!$B$61');
+  sheet.getRange(r, 4).setFormula('=(\'Revenue Model\'!D26-(\'Revenue Model\'!D19+\'Revenue Model\'!D20+\'Revenue Model\'!D21)-\'Revenue Model\'!D24-(\'Revenue Model\'!D6+\'Revenue Model\'!D12))*Assumptions!$B$61');
+  sheet.getRange(r, 5).setFormula('=(\'Revenue Model\'!E26-(\'Revenue Model\'!E19+\'Revenue Model\'!E20+\'Revenue Model\'!E21)-\'Revenue Model\'!E24-(\'Revenue Model\'!E6+\'Revenue Model\'!E12))*Assumptions!$B$61');
+  sheet.getRange(r, 6).setFormula('=(\'Revenue Model\'!F26-(\'Revenue Model\'!F19+\'Revenue Model\'!F20+\'Revenue Model\'!F21)-\'Revenue Model\'!F24-(\'Revenue Model\'!F6+\'Revenue Model\'!F12))*Assumptions!$B$61');
   r++;
 
   sheet.getRange(r, 1).setValue('Pottery Supplies (12% of pottery classes/camps)');
@@ -725,11 +725,11 @@ function createExpensesSheet(ss) {
   r++;
 
   sheet.getRange(r, 1).setValue('Beverage COGS');
-  sheet.getRange(r, 2).setFormula('=(\'Revenue Model\'!B22+\'Revenue Model\'!B23+\'Revenue Model\'!B24)*Assumptions!$B$58');
-  sheet.getRange(r, 3).setFormula('=(\'Revenue Model\'!C22+\'Revenue Model\'!C23+\'Revenue Model\'!C24)*Assumptions!$B$58');
-  sheet.getRange(r, 4).setFormula('=(\'Revenue Model\'!D22+\'Revenue Model\'!D23+\'Revenue Model\'!D24)*Assumptions!$B$58');
-  sheet.getRange(r, 5).setFormula('=(\'Revenue Model\'!E22+\'Revenue Model\'!E23+\'Revenue Model\'!E24)*Assumptions!$B$58');
-  sheet.getRange(r, 6).setFormula('=(\'Revenue Model\'!F22+\'Revenue Model\'!F23+\'Revenue Model\'!F24)*Assumptions!$B$58');
+  sheet.getRange(r, 2).setFormula('=(\'Revenue Model\'!B19+\'Revenue Model\'!B20+\'Revenue Model\'!B21)*Assumptions!$B$58');
+  sheet.getRange(r, 3).setFormula('=(\'Revenue Model\'!C19+\'Revenue Model\'!C20+\'Revenue Model\'!C21)*Assumptions!$B$58');
+  sheet.getRange(r, 4).setFormula('=(\'Revenue Model\'!D19+\'Revenue Model\'!D20+\'Revenue Model\'!D21)*Assumptions!$B$58');
+  sheet.getRange(r, 5).setFormula('=(\'Revenue Model\'!E19+\'Revenue Model\'!E20+\'Revenue Model\'!E21)*Assumptions!$B$58');
+  sheet.getRange(r, 6).setFormula('=(\'Revenue Model\'!F19+\'Revenue Model\'!F20+\'Revenue Model\'!F21)*Assumptions!$B$58');
   r++;
   
   sheet.getRange(r, 1).setValue('Supplies Replenishment (Quarterly)');
@@ -842,10 +842,10 @@ function createExpensesSheet(ss) {
 
   sheet.getRange(r, 1).setValue('Marketing & Advertising');
   sheet.getRange(r, 2).setFormula('=Assumptions!$B$71*10');
-  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C30*Assumptions!$B$72');
-  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D30*Assumptions!$B$72');
-  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E30*Assumptions!$B$72');
-  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F30*Assumptions!$B$72');
+  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C26*Assumptions!$B$72');
+  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D26*Assumptions!$B$72');
+  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E26*Assumptions!$B$72');
+  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F26*Assumptions!$B$72');
   r++;
 
   sheet.getRange(r, 1).setValue('Professional Services');
