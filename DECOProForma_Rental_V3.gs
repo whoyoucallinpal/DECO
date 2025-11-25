@@ -123,11 +123,11 @@ function createAssumptionsSheet(ss) {
   addSectionHeader(sheet, r++, 'FINANCING (WORKING CAPITAL LOAN)');
   sheet.getRange(r, 1).setValue('Startup Costs Total'); sheet.getRange(r, 2).setFormula('=\'Startup Costs\'!B28').setNumberFormat('$#,##0'); r++;
   sheet.getRange(r, 1).setValue('Operating Reserve (months)'); sheet.getRange(r++, 2).setValue(4);
-  sheet.getRange(r, 1).setValue('Operating Reserve Amount'); sheet.getRange(r, 2).setFormula('=Expenses!B35/10*B17').setNumberFormat('$#,##0'); r++;
-  sheet.getRange(r, 1).setValue('Total Loan Amount').setFontWeight('bold'); sheet.getRange(r, 2).setFormula('=B16+B18').setNumberFormat('$#,##0').setFontWeight('bold'); r++;
+  sheet.getRange(r, 1).setValue('Operating Reserve Amount'); sheet.getRange(r, 2).setFormula('=Expenses!B35/12*B18').setNumberFormat('$#,##0'); r++;
+  sheet.getRange(r, 1).setValue('Total Loan Amount').setFontWeight('bold'); sheet.getRange(r, 2).setFormula('=B17+B19').setNumberFormat('$#,##0').setFontWeight('bold'); r++;
   sheet.getRange(r, 1).setValue('Loan Term (years)'); sheet.getRange(r++, 2).setValue(10);
   sheet.getRange(r, 1).setValue('Interest Rate'); sheet.getRange(r++, 2).setValue(0.1225).setNumberFormat('0.00%');
-  sheet.getRange(r, 1).setValue('Monthly Payment'); sheet.getRange(r, 2).setFormula('=-PMT(B21/12,B20*12,B19)').setNumberFormat('$#,##0'); r++;
+  sheet.getRange(r, 1).setValue('Monthly Payment'); sheet.getRange(r, 2).setFormula('=-PMT(B22/12,B21*12,B20)').setNumberFormat('$#,##0'); r++;
   r++;
   
   // CAPACITY
@@ -175,8 +175,8 @@ function createAssumptionsSheet(ss) {
   
   // EXPENSES
   addSectionHeader(sheet, r++, 'OPERATING EXPENSES');
-  sheet.getRange(r, 1).setValue('Art Supplies COGS %'); sheet.getRange(r++, 2).setValue(0.0756).setNumberFormat('0.00%');
-  sheet.getRange(r, 1).setValue('Pottery COGS %'); sheet.getRange(r++, 2).setValue(0.0202).setNumberFormat('0.00%');
+  sheet.getRange(r, 1).setValue('Art Supplies COGS %'); sheet.getRange(r++, 2).setValue(0.15).setNumberFormat('0.00%');
+  sheet.getRange(r, 1).setValue('Pottery COGS %'); sheet.getRange(r++, 2).setValue(0.12).setNumberFormat('0.00%');
   sheet.getRange(r, 1).setValue('Supplies Replenish % (Quarterly)'); sheet.getRange(r++, 2).setValue(0.30).setNumberFormat('0%');
   sheet.getRange(r, 1).setValue('Electricity/Month'); sheet.getRange(r++, 2).setValue(1200).setNumberFormat('$#,##0');
   sheet.getRange(r, 1).setValue('Gas/Month'); sheet.getRange(r++, 2).setValue(400).setNumberFormat('$#,##0');
@@ -555,23 +555,32 @@ function createRevenueModelSheet(ss) {
 
   sheet.getRange(r, 1).setValue('Classes Revenue');
   // Year 1: Price × Yr1 Enrolled × Sessions (6 for year 1)
-  sheet.getRange(r, 2).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!F4:F13,Assumptions!$B$8)');
+  sheet.getRange(r, 2).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!F4:F13,Assumptions!$B$13)');
   // Year 2: Price × Yr2 Enrolled × Sessions (12 for year 2+)
-  sheet.getRange(r, 3).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!H4:H13,Assumptions!$B$9)');
+  sheet.getRange(r, 3).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!H4:H13,Assumptions!$B$14)');
   // Year 3: Price × Yr3 Enrolled × Sessions
-  sheet.getRange(r, 4).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!J4:J13,Assumptions!$B$9)');
+  sheet.getRange(r, 4).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!J4:J13,Assumptions!$B$14)');
   // Year 4: Price × Yr4 Enrolled × Sessions
-  sheet.getRange(r, 5).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!L4:L13,Assumptions!$B$9)');
+  sheet.getRange(r, 5).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!L4:L13,Assumptions!$B$14)');
   // Year 5: Price × Yr5 Enrolled × Sessions
-  sheet.getRange(r, 6).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!N4:N13,Assumptions!$B$9)');
+  sheet.getRange(r, 6).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!N4:N13,Assumptions!$B$14)');
+  r++;
+
+  sheet.getRange(r, 1).setValue('  - Pottery Classes Only').setFontStyle('italic');
+  // Pottery classes are rows 5, 7, 9 (Adults Pottery, Teens Pottery, Kids Pottery)
+  sheet.getRange(r, 2).setFormula('=(\'Class Schedule\'!C5*\'Class Schedule\'!F5+\'Class Schedule\'!C7*\'Class Schedule\'!F7+\'Class Schedule\'!C9*\'Class Schedule\'!F9)*Assumptions!$B$13');
+  sheet.getRange(r, 3).setFormula('=(\'Class Schedule\'!C5*\'Class Schedule\'!H5+\'Class Schedule\'!C7*\'Class Schedule\'!H7+\'Class Schedule\'!C9*\'Class Schedule\'!H9)*Assumptions!$B$14');
+  sheet.getRange(r, 4).setFormula('=(\'Class Schedule\'!C5*\'Class Schedule\'!J5+\'Class Schedule\'!C7*\'Class Schedule\'!J7+\'Class Schedule\'!C9*\'Class Schedule\'!J9)*Assumptions!$B$14');
+  sheet.getRange(r, 5).setFormula('=(\'Class Schedule\'!C5*\'Class Schedule\'!L5+\'Class Schedule\'!C7*\'Class Schedule\'!L7+\'Class Schedule\'!C9*\'Class Schedule\'!L9)*Assumptions!$B$14');
+  sheet.getRange(r, 6).setFormula('=(\'Class Schedule\'!C5*\'Class Schedule\'!N5+\'Class Schedule\'!C7*\'Class Schedule\'!N7+\'Class Schedule\'!C9*\'Class Schedule\'!N9)*Assumptions!$B$14');
   r++;
   
   sheet.getRange(r, 1).setValue('Drop-in Classes');
-  sheet.getRange(r, 2).setFormula('=B' + (r-1) + '*Assumptions!$B$23*0.25');
-  sheet.getRange(r, 3).setFormula('=C' + (r-1) + '*Assumptions!$B$23*0.25');
-  sheet.getRange(r, 4).setFormula('=D' + (r-1) + '*Assumptions!$B$23*0.25');
-  sheet.getRange(r, 5).setFormula('=E' + (r-1) + '*Assumptions!$B$23*0.25');
-  sheet.getRange(r, 6).setFormula('=F' + (r-1) + '*Assumptions!$B$23*0.25');
+  sheet.getRange(r, 2).setFormula('=B' + (r-2) + '*Assumptions!$B$28*0.25');
+  sheet.getRange(r, 3).setFormula('=C' + (r-2) + '*Assumptions!$B$28*0.25');
+  sheet.getRange(r, 4).setFormula('=D' + (r-2) + '*Assumptions!$B$28*0.25');
+  sheet.getRange(r, 5).setFormula('=E' + (r-2) + '*Assumptions!$B$28*0.25');
+  sheet.getRange(r, 6).setFormula('=F' + (r-2) + '*Assumptions!$B$28*0.25');
   r++;
   r++;
   
@@ -588,29 +597,38 @@ function createRevenueModelSheet(ss) {
   // Year 5: Price × Yr5 Enrolled × Weeks
   sheet.getRange(r, 6).setFormula('=SUMPRODUCT(\'Summer Camps\'!E4:E19,\'Summer Camps\'!P4:P19,\'Summer Camps\'!G4:G19)');
   r++;
+
+  sheet.getRange(r, 1).setValue('  - Ceramics Camps Only').setFontStyle('italic');
+  // Ceramics camps are rows 5, 6, 8, 10, 14, 16 in Summer Camps sheet
+  sheet.getRange(r, 2).setFormula('=(\'Summer Camps\'!E5*\'Summer Camps\'!H5*\'Summer Camps\'!G5+\'Summer Camps\'!E6*\'Summer Camps\'!H6*\'Summer Camps\'!G6+\'Summer Camps\'!E8*\'Summer Camps\'!H8*\'Summer Camps\'!G8+\'Summer Camps\'!E10*\'Summer Camps\'!H10*\'Summer Camps\'!G10+\'Summer Camps\'!E14*\'Summer Camps\'!H14*\'Summer Camps\'!G14+\'Summer Camps\'!E16*\'Summer Camps\'!H16*\'Summer Camps\'!G16)');
+  sheet.getRange(r, 3).setFormula('=(\'Summer Camps\'!E5*\'Summer Camps\'!J5*\'Summer Camps\'!G5+\'Summer Camps\'!E6*\'Summer Camps\'!J6*\'Summer Camps\'!G6+\'Summer Camps\'!E8*\'Summer Camps\'!J8*\'Summer Camps\'!G8+\'Summer Camps\'!E10*\'Summer Camps\'!J10*\'Summer Camps\'!G10+\'Summer Camps\'!E14*\'Summer Camps\'!J14*\'Summer Camps\'!G14+\'Summer Camps\'!E16*\'Summer Camps\'!J16*\'Summer Camps\'!G16)');
+  sheet.getRange(r, 4).setFormula('=(\'Summer Camps\'!E5*\'Summer Camps\'!L5*\'Summer Camps\'!G5+\'Summer Camps\'!E6*\'Summer Camps\'!L6*\'Summer Camps\'!G6+\'Summer Camps\'!E8*\'Summer Camps\'!L8*\'Summer Camps\'!G8+\'Summer Camps\'!E10*\'Summer Camps\'!L10*\'Summer Camps\'!G10+\'Summer Camps\'!E14*\'Summer Camps\'!L14*\'Summer Camps\'!G14+\'Summer Camps\'!E16*\'Summer Camps\'!L16*\'Summer Camps\'!G16)');
+  sheet.getRange(r, 5).setFormula('=(\'Summer Camps\'!E5*\'Summer Camps\'!N5*\'Summer Camps\'!G5+\'Summer Camps\'!E6*\'Summer Camps\'!N6*\'Summer Camps\'!G6+\'Summer Camps\'!E8*\'Summer Camps\'!N8*\'Summer Camps\'!G8+\'Summer Camps\'!E10*\'Summer Camps\'!N10*\'Summer Camps\'!G10+\'Summer Camps\'!E14*\'Summer Camps\'!N14*\'Summer Camps\'!G14+\'Summer Camps\'!E16*\'Summer Camps\'!N16*\'Summer Camps\'!G16)');
+  sheet.getRange(r, 6).setFormula('=(\'Summer Camps\'!E5*\'Summer Camps\'!P5*\'Summer Camps\'!G5+\'Summer Camps\'!E6*\'Summer Camps\'!P6*\'Summer Camps\'!G6+\'Summer Camps\'!E8*\'Summer Camps\'!P8*\'Summer Camps\'!G8+\'Summer Camps\'!E10*\'Summer Camps\'!P10*\'Summer Camps\'!G10+\'Summer Camps\'!E14*\'Summer Camps\'!P14*\'Summer Camps\'!G14+\'Summer Camps\'!E16*\'Summer Camps\'!P16*\'Summer Camps\'!G16)');
+  r++;
   r++;
   
   addSectionHeader(sheet, r++, 'EVENTS & WORKSHOPS', 6);
   
   sheet.getRange(r, 1).setValue('Paint & Sip Events');
-  sheet.getRange(r, 2).setFormula('=Assumptions!$B$34*Assumptions!$B$35*Assumptions!$B$36*10');
-  sheet.getRange(r, 3).setFormula('=Assumptions!$B$34*Assumptions!$B$35*Assumptions!$B$36*12');
+  sheet.getRange(r, 2).setFormula('=Assumptions!$B$40*Assumptions!$B$41*Assumptions!$B$42*10');
+  sheet.getRange(r, 3).setFormula('=Assumptions!$B$40*Assumptions!$B$41*Assumptions!$B$42*12');
   sheet.getRange(r, 4).setFormula('=C' + r);
   sheet.getRange(r, 5).setFormula('=C' + r);
   sheet.getRange(r, 6).setFormula('=C' + r);
   r++;
-  
+
   sheet.getRange(r, 1).setValue('Private Events');
-  sheet.getRange(r, 2).setFormula('=(Assumptions!$B$38+Assumptions!$B$39*Assumptions!$B$40)*Assumptions!$B$37*10');
-  sheet.getRange(r, 3).setFormula('=(Assumptions!$B$38+Assumptions!$B$39*Assumptions!$B$40)*Assumptions!$B$37*12');
+  sheet.getRange(r, 2).setFormula('=(Assumptions!$B$44+Assumptions!$B$45*Assumptions!$B$46)*Assumptions!$B$43*10');
+  sheet.getRange(r, 3).setFormula('=(Assumptions!$B$44+Assumptions!$B$45*Assumptions!$B$46)*Assumptions!$B$43*12');
   sheet.getRange(r, 4).setFormula('=C' + r);
   sheet.getRange(r, 5).setFormula('=C' + r);
   sheet.getRange(r, 6).setFormula('=C' + r);
   r++;
-  
+
   sheet.getRange(r, 1).setValue('Visiting Artist Workshops');
-  sheet.getRange(r, 2).setFormula('=Assumptions!$B$42*Assumptions!$B$43*Assumptions!$B$41*10');
-  sheet.getRange(r, 3).setFormula('=Assumptions!$B$42*Assumptions!$B$43*Assumptions!$B$41*12');
+  sheet.getRange(r, 2).setFormula('=Assumptions!$B$48*Assumptions!$B$49*Assumptions!$B$47*10');
+  sheet.getRange(r, 3).setFormula('=Assumptions!$B$48*Assumptions!$B$49*Assumptions!$B$47*12');
   sheet.getRange(r, 4).setFormula('=C' + r);
   sheet.getRange(r, 5).setFormula('=C' + r);
   sheet.getRange(r, 6).setFormula('=C' + r);
@@ -620,24 +638,24 @@ function createRevenueModelSheet(ss) {
   addSectionHeader(sheet, r++, 'BEVERAGE SALES', 6);
   
   sheet.getRange(r, 1).setValue('Paint & Sip Beverages');
-  sheet.getRange(r, 2).setFormula('=Assumptions!$B$34*Assumptions!$B$36*Assumptions!$B$47*(Assumptions!$B$52*0.6+Assumptions!$B$51*0.4)*10');
-  sheet.getRange(r, 3).setFormula('=Assumptions!$B$34*Assumptions!$B$36*Assumptions!$B$47*(Assumptions!$B$52*0.6+Assumptions!$B$51*0.4)*12');
+  sheet.getRange(r, 2).setFormula('=Assumptions!$B$40*Assumptions!$B$42*Assumptions!$B$52*(Assumptions!$B$57*0.6+Assumptions!$B$56*0.4)*10');
+  sheet.getRange(r, 3).setFormula('=Assumptions!$B$40*Assumptions!$B$42*Assumptions!$B$52*(Assumptions!$B$57*0.6+Assumptions!$B$56*0.4)*12');
   sheet.getRange(r, 4).setFormula('=C' + r);
   sheet.getRange(r, 5).setFormula('=C' + r);
   sheet.getRange(r, 6).setFormula('=C' + r);
   r++;
-  
+
   sheet.getRange(r, 1).setValue('Private Event Beverages');
-  sheet.getRange(r, 2).setFormula('=Assumptions!$B$37*Assumptions!$B$40*Assumptions!$B$48*(Assumptions!$B$52*0.6+Assumptions!$B$51*0.4)*10');
-  sheet.getRange(r, 3).setFormula('=Assumptions!$B$37*Assumptions!$B$40*Assumptions!$B$48*(Assumptions!$B$52*0.6+Assumptions!$B$51*0.4)*12');
+  sheet.getRange(r, 2).setFormula('=Assumptions!$B$43*Assumptions!$B$46*Assumptions!$B$53*(Assumptions!$B$57*0.6+Assumptions!$B$56*0.4)*10');
+  sheet.getRange(r, 3).setFormula('=Assumptions!$B$43*Assumptions!$B$46*Assumptions!$B$53*(Assumptions!$B$57*0.6+Assumptions!$B$56*0.4)*12');
   sheet.getRange(r, 4).setFormula('=C' + r);
   sheet.getRange(r, 5).setFormula('=C' + r);
   sheet.getRange(r, 6).setFormula('=C' + r);
   r++;
-  
+
   sheet.getRange(r, 1).setValue('Workshop Beverages');
-  sheet.getRange(r, 2).setFormula('=Assumptions!$B$41*Assumptions!$B$43*Assumptions!$B$49*((Assumptions!$B$50*0.5)+(Assumptions!$B$52*0.25+Assumptions!$B$51*0.25))*10');
-  sheet.getRange(r, 3).setFormula('=Assumptions!$B$41*Assumptions!$B$43*Assumptions!$B$49*((Assumptions!$B$50*0.5)+(Assumptions!$B$52*0.25+Assumptions!$B$51*0.25))*12');
+  sheet.getRange(r, 2).setFormula('=Assumptions!$B$47*Assumptions!$B$49*Assumptions!$B$54*((Assumptions!$B$55*0.5)+(Assumptions!$B$57*0.25+Assumptions!$B$56*0.25))*10');
+  sheet.getRange(r, 3).setFormula('=Assumptions!$B$47*Assumptions!$B$49*Assumptions!$B$54*((Assumptions!$B$55*0.5)+(Assumptions!$B$57*0.25+Assumptions!$B$56*0.25))*12');
   sheet.getRange(r, 4).setFormula('=C' + r);
   sheet.getRange(r, 5).setFormula('=C' + r);
   sheet.getRange(r, 6).setFormula('=C' + r);
@@ -688,70 +706,72 @@ function createExpensesSheet(ss) {
   
   addSectionHeader(sheet, r++, 'COST OF GOODS SOLD', 6);
   
-  sheet.getRange(r, 1).setValue('Art Supplies');
-  sheet.getRange(r, 2).setFormula('=\'Revenue Model\'!B26*Assumptions!$B$55');
-  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C26*Assumptions!$B$55');
-  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D26*Assumptions!$B$55');
-  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E26*Assumptions!$B$55');
-  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F26*Assumptions!$B$55');
+  sheet.getRange(r, 1).setValue('Art Supplies (15% of non-pottery program revenue)');
+  // Art Supplies = (Total - Beverages - Retail - Pottery) × 15%
+  sheet.getRange(r, 2).setFormula('=(\'Revenue Model\'!B30-(\'Revenue Model\'!B22+\'Revenue Model\'!B23+\'Revenue Model\'!B24)-\'Revenue Model\'!B28-(\'Revenue Model\'!B6+\'Revenue Model\'!B12))*Assumptions!$B$61');
+  sheet.getRange(r, 3).setFormula('=(\'Revenue Model\'!C30-(\'Revenue Model\'!C22+\'Revenue Model\'!C23+\'Revenue Model\'!C24)-\'Revenue Model\'!C28-(\'Revenue Model\'!C6+\'Revenue Model\'!C12))*Assumptions!$B$61');
+  sheet.getRange(r, 4).setFormula('=(\'Revenue Model\'!D30-(\'Revenue Model\'!D22+\'Revenue Model\'!D23+\'Revenue Model\'!D24)-\'Revenue Model\'!D28-(\'Revenue Model\'!D6+\'Revenue Model\'!D12))*Assumptions!$B$61');
+  sheet.getRange(r, 5).setFormula('=(\'Revenue Model\'!E30-(\'Revenue Model\'!E22+\'Revenue Model\'!E23+\'Revenue Model\'!E24)-\'Revenue Model\'!E28-(\'Revenue Model\'!E6+\'Revenue Model\'!E12))*Assumptions!$B$61');
+  sheet.getRange(r, 6).setFormula('=(\'Revenue Model\'!F30-(\'Revenue Model\'!F22+\'Revenue Model\'!F23+\'Revenue Model\'!F24)-\'Revenue Model\'!F28-(\'Revenue Model\'!F6+\'Revenue Model\'!F12))*Assumptions!$B$61');
   r++;
-  
-  sheet.getRange(r, 1).setValue('Pottery Supplies');
-  sheet.getRange(r, 2).setFormula('=\'Revenue Model\'!B26*Assumptions!$B$56');
-  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C26*Assumptions!$B$56');
-  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D26*Assumptions!$B$56');
-  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E26*Assumptions!$B$56');
-  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F26*Assumptions!$B$56');
+
+  sheet.getRange(r, 1).setValue('Pottery Supplies (12% of pottery classes/camps)');
+  // Pottery Supplies = (Pottery Classes + Ceramics Camps) × 12%
+  sheet.getRange(r, 2).setFormula('=(\'Revenue Model\'!B6+\'Revenue Model\'!B12)*Assumptions!$B$62');
+  sheet.getRange(r, 3).setFormula('=(\'Revenue Model\'!C6+\'Revenue Model\'!C12)*Assumptions!$B$62');
+  sheet.getRange(r, 4).setFormula('=(\'Revenue Model\'!D6+\'Revenue Model\'!D12)*Assumptions!$B$62');
+  sheet.getRange(r, 5).setFormula('=(\'Revenue Model\'!E6+\'Revenue Model\'!E12)*Assumptions!$B$62');
+  sheet.getRange(r, 6).setFormula('=(\'Revenue Model\'!F6+\'Revenue Model\'!F12)*Assumptions!$B$62');
   r++;
-  
+
   sheet.getRange(r, 1).setValue('Beverage COGS');
-  sheet.getRange(r, 2).setFormula('=(\'Revenue Model\'!B20+\'Revenue Model\'!B21+\'Revenue Model\'!B22)*Assumptions!$B$53');
-  sheet.getRange(r, 3).setFormula('=(\'Revenue Model\'!C20+\'Revenue Model\'!C21+\'Revenue Model\'!C22)*Assumptions!$B$53');
-  sheet.getRange(r, 4).setFormula('=(\'Revenue Model\'!D20+\'Revenue Model\'!D21+\'Revenue Model\'!D22)*Assumptions!$B$53');
-  sheet.getRange(r, 5).setFormula('=(\'Revenue Model\'!E20+\'Revenue Model\'!E21+\'Revenue Model\'!E22)*Assumptions!$B$53');
-  sheet.getRange(r, 6).setFormula('=(\'Revenue Model\'!F20+\'Revenue Model\'!F21+\'Revenue Model\'!F22)*Assumptions!$B$53');
+  sheet.getRange(r, 2).setFormula('=(\'Revenue Model\'!B22+\'Revenue Model\'!B23+\'Revenue Model\'!B24)*Assumptions!$B$58');
+  sheet.getRange(r, 3).setFormula('=(\'Revenue Model\'!C22+\'Revenue Model\'!C23+\'Revenue Model\'!C24)*Assumptions!$B$58');
+  sheet.getRange(r, 4).setFormula('=(\'Revenue Model\'!D22+\'Revenue Model\'!D23+\'Revenue Model\'!D24)*Assumptions!$B$58');
+  sheet.getRange(r, 5).setFormula('=(\'Revenue Model\'!E22+\'Revenue Model\'!E23+\'Revenue Model\'!E24)*Assumptions!$B$58');
+  sheet.getRange(r, 6).setFormula('=(\'Revenue Model\'!F22+\'Revenue Model\'!F23+\'Revenue Model\'!F24)*Assumptions!$B$58');
   r++;
   
   sheet.getRange(r, 1).setValue('Supplies Replenishment (Quarterly)');
-  sheet.getRange(r, 2).setFormula('=\'Startup Supplies\'!E66*Assumptions!$B$57*3');
-  sheet.getRange(r, 3).setFormula('=\'Startup Supplies\'!E66*Assumptions!$B$57*4');
-  sheet.getRange(r, 4).setFormula('=\'Startup Supplies\'!E66*Assumptions!$B$57*4');
-  sheet.getRange(r, 5).setFormula('=\'Startup Supplies\'!E66*Assumptions!$B$57*4');
-  sheet.getRange(r, 6).setFormula('=\'Startup Supplies\'!E66*Assumptions!$B$57*4');
+  sheet.getRange(r, 2).setFormula('=\'Startup Supplies\'!E66*Assumptions!$B$63*3');
+  sheet.getRange(r, 3).setFormula('=\'Startup Supplies\'!E66*Assumptions!$B$63*4');
+  sheet.getRange(r, 4).setFormula('=\'Startup Supplies\'!E66*Assumptions!$B$63*4');
+  sheet.getRange(r, 5).setFormula('=\'Startup Supplies\'!E66*Assumptions!$B$63*4');
+  sheet.getRange(r, 6).setFormula('=\'Startup Supplies\'!E66*Assumptions!$B$63*4');
   r++;
   r++;
   
   addSectionHeader(sheet, r++, 'PAYROLL & LABOR', 6);
   
   sheet.getRange(r, 1).setValue('Owner Salaries');
-  sheet.getRange(r, 2).setFormula('=Assumptions!$B$25+Assumptions!$B$26');
-  sheet.getRange(r, 3).setFormula('=Assumptions!$B$25+Assumptions!$B$26');
-  sheet.getRange(r, 4).setFormula('=Assumptions!$B$25+Assumptions!$B$26');
-  sheet.getRange(r, 5).setFormula('=Assumptions!$B$25+Assumptions!$B$26');
-  sheet.getRange(r, 6).setFormula('=Assumptions!$B$25+Assumptions!$B$26');
+  sheet.getRange(r, 2).setFormula('=Assumptions!$B$31+Assumptions!$B$32');
+  sheet.getRange(r, 3).setFormula('=Assumptions!$B$31+Assumptions!$B$32');
+  sheet.getRange(r, 4).setFormula('=Assumptions!$B$31+Assumptions!$B$32');
+  sheet.getRange(r, 5).setFormula('=Assumptions!$B$31+Assumptions!$B$32');
+  sheet.getRange(r, 6).setFormula('=Assumptions!$B$31+Assumptions!$B$32');
   r++;
-  
+
   sheet.getRange(r, 1).setValue('Studio Manager');
-  sheet.getRange(r, 2).setFormula('=Assumptions!$B$27*Assumptions!$B$28*52');
-  sheet.getRange(r, 3).setFormula('=Assumptions!$B$27*Assumptions!$B$28*52');
-  sheet.getRange(r, 4).setFormula('=Assumptions!$B$27*Assumptions!$B$28*52');
-  sheet.getRange(r, 5).setFormula('=Assumptions!$B$27*Assumptions!$B$28*52');
-  sheet.getRange(r, 6).setFormula('=Assumptions!$B$27*Assumptions!$B$28*52');
+  sheet.getRange(r, 2).setFormula('=Assumptions!$B$33*Assumptions!$B$34*52');
+  sheet.getRange(r, 3).setFormula('=Assumptions!$B$33*Assumptions!$B$34*52');
+  sheet.getRange(r, 4).setFormula('=Assumptions!$B$33*Assumptions!$B$34*52');
+  sheet.getRange(r, 5).setFormula('=Assumptions!$B$33*Assumptions!$B$34*52');
+  sheet.getRange(r, 6).setFormula('=Assumptions!$B$33*Assumptions!$B$34*52');
   r++;
   
   sheet.getRange(r, 1).setValue('Teachers (calculated from enrollment)');
   // Year 1: (Duration × Enrolled × Sessions) for classes + camps × $25/hr
   // Classes: Duration × Yr1 Enrolled × 6 sessions
   // Camps: Approx 5hr/day × Enrolled × Weeks
-  sheet.getRange(r, 2).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13,\'Class Schedule\'!F4:F13)*Assumptions!$B$8 + SUMPRODUCT(\'Summer Camps\'!H4:H19,\'Summer Camps\'!G4:G19)*5)*Assumptions!$B$29');
+  sheet.getRange(r, 2).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13,\'Class Schedule\'!F4:F13)*Assumptions!$B$13 + SUMPRODUCT(\'Summer Camps\'!H4:H19,\'Summer Camps\'!G4:G19)*5)*Assumptions!$B$35');
   // Year 2: Duration × Yr2 Enrolled × 12 sessions
-  sheet.getRange(r, 3).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13,\'Class Schedule\'!H4:H13)*Assumptions!$B$9 + SUMPRODUCT(\'Summer Camps\'!J4:J19,\'Summer Camps\'!G4:G19)*5)*Assumptions!$B$29');
+  sheet.getRange(r, 3).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13,\'Class Schedule\'!H4:H13)*Assumptions!$B$14 + SUMPRODUCT(\'Summer Camps\'!J4:J19,\'Summer Camps\'!G4:G19)*5)*Assumptions!$B$35');
   // Year 3
-  sheet.getRange(r, 4).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13,\'Class Schedule\'!J4:J13)*Assumptions!$B$9 + SUMPRODUCT(\'Summer Camps\'!L4:L19,\'Summer Camps\'!G4:G19)*5)*Assumptions!$B$29');
+  sheet.getRange(r, 4).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13,\'Class Schedule\'!J4:J13)*Assumptions!$B$14 + SUMPRODUCT(\'Summer Camps\'!L4:L19,\'Summer Camps\'!G4:G19)*5)*Assumptions!$B$35');
   // Year 4
-  sheet.getRange(r, 5).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13,\'Class Schedule\'!L4:L13)*Assumptions!$B$9 + SUMPRODUCT(\'Summer Camps\'!N4:N19,\'Summer Camps\'!G4:G19)*5)*Assumptions!$B$29');
+  sheet.getRange(r, 5).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13,\'Class Schedule\'!L4:L13)*Assumptions!$B$14 + SUMPRODUCT(\'Summer Camps\'!N4:N19,\'Summer Camps\'!G4:G19)*5)*Assumptions!$B$35');
   // Year 5
-  sheet.getRange(r, 6).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13,\'Class Schedule\'!N4:N13)*Assumptions!$B$9 + SUMPRODUCT(\'Summer Camps\'!P4:P19,\'Summer Camps\'!G4:G19)*5)*Assumptions!$B$29');
+  sheet.getRange(r, 6).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13,\'Class Schedule\'!N4:N13)*Assumptions!$B$14 + SUMPRODUCT(\'Summer Camps\'!P4:P19,\'Summer Camps\'!G4:G19)*5)*Assumptions!$B$35');
   r++;
 
   sheet.getRange(r, 1).setValue('Assistants (for classes >10 students)');
@@ -765,11 +785,11 @@ function createExpensesSheet(ss) {
   r++;
   
   sheet.getRange(r, 1).setValue('Payroll Taxes');
-  sheet.getRange(r, 2).setFormula('=SUM(B11:B14)*Assumptions!$B$31');
-  sheet.getRange(r, 3).setFormula('=SUM(C11:C14)*Assumptions!$B$31');
-  sheet.getRange(r, 4).setFormula('=SUM(D11:D14)*Assumptions!$B$31');
-  sheet.getRange(r, 5).setFormula('=SUM(E11:E14)*Assumptions!$B$31');
-  sheet.getRange(r, 6).setFormula('=SUM(F11:F14)*Assumptions!$B$31');
+  sheet.getRange(r, 2).setFormula('=SUM(B11:B14)*Assumptions!$B$37');
+  sheet.getRange(r, 3).setFormula('=SUM(C11:C14)*Assumptions!$B$37');
+  sheet.getRange(r, 4).setFormula('=SUM(D11:D14)*Assumptions!$B$37');
+  sheet.getRange(r, 5).setFormula('=SUM(E11:E14)*Assumptions!$B$37');
+  sheet.getRange(r, 6).setFormula('=SUM(F11:F14)*Assumptions!$B$37');
   r++;
   r++;
   
@@ -784,64 +804,64 @@ function createExpensesSheet(ss) {
   r++;
 
   sheet.getRange(r, 1).setValue('Loan Payment (Principal + Interest)');
-  sheet.getRange(r, 2).setFormula('=Assumptions!$B$22*10');
-  sheet.getRange(r, 3).setFormula('=Assumptions!$B$22*12');
-  sheet.getRange(r, 4).setFormula('=Assumptions!$B$22*12');
-  sheet.getRange(r, 5).setFormula('=Assumptions!$B$22*12');
-  sheet.getRange(r, 6).setFormula('=Assumptions!$B$22*12');
+  sheet.getRange(r, 2).setFormula('=Assumptions!$B$23*10');
+  sheet.getRange(r, 3).setFormula('=Assumptions!$B$23*12');
+  sheet.getRange(r, 4).setFormula('=Assumptions!$B$23*12');
+  sheet.getRange(r, 5).setFormula('=Assumptions!$B$23*12');
+  sheet.getRange(r, 6).setFormula('=Assumptions!$B$23*12');
   r++;
   
   // Property tax removed - included in NNN for rental
   
   sheet.getRange(r, 1).setValue('Insurance');
-  sheet.getRange(r, 2).setFormula('=Assumptions!$B$66*10');
-  sheet.getRange(r, 3).setFormula('=Assumptions!$B$66*12');
-  sheet.getRange(r, 4).setFormula('=Assumptions!$B$66*12');
-  sheet.getRange(r, 5).setFormula('=Assumptions!$B$66*12');
-  sheet.getRange(r, 6).setFormula('=Assumptions!$B$66*12');
+  sheet.getRange(r, 2).setFormula('=Assumptions!$B$68*10');
+  sheet.getRange(r, 3).setFormula('=Assumptions!$B$68*12');
+  sheet.getRange(r, 4).setFormula('=Assumptions!$B$68*12');
+  sheet.getRange(r, 5).setFormula('=Assumptions!$B$68*12');
+  sheet.getRange(r, 6).setFormula('=Assumptions!$B$68*12');
   r++;
   
   sheet.getRange(r, 1).setValue('Utilities (Elec+Gas+Water+Internet)');
-  sheet.getRange(r, 2).setFormula('=(Assumptions!$B$58+Assumptions!$B$59+Assumptions!$B$60+Assumptions!$B$61)*10');
-  sheet.getRange(r, 3).setFormula('=(Assumptions!$B$58+Assumptions!$B$59+Assumptions!$B$60+Assumptions!$B$61)*12');
-  sheet.getRange(r, 4).setFormula('=(Assumptions!$B$58+Assumptions!$B$59+Assumptions!$B$60+Assumptions!$B$61)*12');
-  sheet.getRange(r, 5).setFormula('=(Assumptions!$B$58+Assumptions!$B$59+Assumptions!$B$60+Assumptions!$B$61)*12');
-  sheet.getRange(r, 6).setFormula('=(Assumptions!$B$58+Assumptions!$B$59+Assumptions!$B$60+Assumptions!$B$61)*12');
+  sheet.getRange(r, 2).setFormula('=(Assumptions!$B$64+Assumptions!$B$65+Assumptions!$B$66+Assumptions!$B$67)*10');
+  sheet.getRange(r, 3).setFormula('=(Assumptions!$B$64+Assumptions!$B$65+Assumptions!$B$66+Assumptions!$B$67)*12');
+  sheet.getRange(r, 4).setFormula('=(Assumptions!$B$64+Assumptions!$B$65+Assumptions!$B$66+Assumptions!$B$67)*12');
+  sheet.getRange(r, 5).setFormula('=(Assumptions!$B$64+Assumptions!$B$65+Assumptions!$B$66+Assumptions!$B$67)*12');
+  sheet.getRange(r, 6).setFormula('=(Assumptions!$B$64+Assumptions!$B$65+Assumptions!$B$66+Assumptions!$B$67)*12');
   r++;
   
   sheet.getRange(r, 1).setValue('Repairs & Maintenance');
-  sheet.getRange(r, 2).setFormula('=Assumptions!$B$68/12*10');
-  sheet.getRange(r, 3).setFormula('=Assumptions!$B$68');
-  sheet.getRange(r, 4).setFormula('=Assumptions!$B$68');
-  sheet.getRange(r, 5).setFormula('=Assumptions!$B$68');
-  sheet.getRange(r, 6).setFormula('=Assumptions!$B$68');
+  sheet.getRange(r, 2).setFormula('=Assumptions!$B$70/12*10');
+  sheet.getRange(r, 3).setFormula('=Assumptions!$B$70');
+  sheet.getRange(r, 4).setFormula('=Assumptions!$B$70');
+  sheet.getRange(r, 5).setFormula('=Assumptions!$B$70');
+  sheet.getRange(r, 6).setFormula('=Assumptions!$B$70');
   r++;
   r++;
-  
+
   addSectionHeader(sheet, r++, 'OPERATIONS', 6);
-  
+
   sheet.getRange(r, 1).setValue('Marketing & Advertising');
-  sheet.getRange(r, 2).setFormula('=Assumptions!$B$69*10');
-  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C26*Assumptions!$B$70');
-  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D26*Assumptions!$B$70');
-  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E26*Assumptions!$B$70');
-  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F26*Assumptions!$B$70');
+  sheet.getRange(r, 2).setFormula('=Assumptions!$B$71*10');
+  sheet.getRange(r, 3).setFormula('=\'Revenue Model\'!C30*Assumptions!$B$72');
+  sheet.getRange(r, 4).setFormula('=\'Revenue Model\'!D30*Assumptions!$B$72');
+  sheet.getRange(r, 5).setFormula('=\'Revenue Model\'!E30*Assumptions!$B$72');
+  sheet.getRange(r, 6).setFormula('=\'Revenue Model\'!F30*Assumptions!$B$72');
   r++;
-  
+
   sheet.getRange(r, 1).setValue('Professional Services');
-  sheet.getRange(r, 2).setFormula('=(Assumptions!$B$71+Assumptions!$B$72+Assumptions!$B$73)/12*10');
-  sheet.getRange(r, 3).setFormula('=Assumptions!$B$71+Assumptions!$B$72+Assumptions!$B$73');
-  sheet.getRange(r, 4).setFormula('=Assumptions!$B$71+Assumptions!$B$72+Assumptions!$B$73');
-  sheet.getRange(r, 5).setFormula('=Assumptions!$B$71+Assumptions!$B$72+Assumptions!$B$73');
-  sheet.getRange(r, 6).setFormula('=Assumptions!$B$71+Assumptions!$B$72+Assumptions!$B$73');
+  sheet.getRange(r, 2).setFormula('=(Assumptions!$B$73+Assumptions!$B$74+Assumptions!$B$75)/12*10');
+  sheet.getRange(r, 3).setFormula('=Assumptions!$B$73+Assumptions!$B$74+Assumptions!$B$75');
+  sheet.getRange(r, 4).setFormula('=Assumptions!$B$73+Assumptions!$B$74+Assumptions!$B$75');
+  sheet.getRange(r, 5).setFormula('=Assumptions!$B$73+Assumptions!$B$74+Assumptions!$B$75');
+  sheet.getRange(r, 6).setFormula('=Assumptions!$B$73+Assumptions!$B$74+Assumptions!$B$75');
   r++;
-  
+
   sheet.getRange(r, 1).setValue('Liquor License');
-  sheet.getRange(r, 2).setFormula('=Assumptions!$B$74/12*10');
-  sheet.getRange(r, 3).setFormula('=Assumptions!$B$74');
-  sheet.getRange(r, 4).setFormula('=Assumptions!$B$74');
-  sheet.getRange(r, 5).setFormula('=Assumptions!$B$74');
-  sheet.getRange(r, 6).setFormula('=Assumptions!$B$74');
+  sheet.getRange(r, 2).setFormula('=Assumptions!$B$76/12*10');
+  sheet.getRange(r, 3).setFormula('=Assumptions!$B$76');
+  sheet.getRange(r, 4).setFormula('=Assumptions!$B$76');
+  sheet.getRange(r, 5).setFormula('=Assumptions!$B$76');
+  sheet.getRange(r, 6).setFormula('=Assumptions!$B$76');
   r++;
   
   sheet.getRange(r, 1).setValue('Miscellaneous');
