@@ -555,15 +555,15 @@ function createRevenueModelSheet(ss) {
 
   sheet.getRange(r, 1).setValue('Classes Revenue');
   // Year 1: Price × Yr1 Enrolled × Sessions (6 for year 1)
-  sheet.getRange(r, 2).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!F4:F13,Assumptions!$B$13)');
+  sheet.getRange(r, 2).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!F4:F13)*Assumptions!$B$13');
   // Year 2: Price × Yr2 Enrolled × Sessions (12 for year 2+)
-  sheet.getRange(r, 3).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!H4:H13,Assumptions!$B$14)');
+  sheet.getRange(r, 3).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!H4:H13)*Assumptions!$B$14');
   // Year 3: Price × Yr3 Enrolled × Sessions
-  sheet.getRange(r, 4).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!J4:J13,Assumptions!$B$14)');
+  sheet.getRange(r, 4).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!J4:J13)*Assumptions!$B$14');
   // Year 4: Price × Yr4 Enrolled × Sessions
-  sheet.getRange(r, 5).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!L4:L13,Assumptions!$B$14)');
+  sheet.getRange(r, 5).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!L4:L13)*Assumptions!$B$14');
   // Year 5: Price × Yr5 Enrolled × Sessions
-  sheet.getRange(r, 6).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!N4:N13,Assumptions!$B$14)');
+  sheet.getRange(r, 6).setFormula('=SUMPRODUCT(\'Class Schedule\'!C4:C13,\'Class Schedule\'!N4:N13)*Assumptions!$B$14');
   r++;
 
   sheet.getRange(r, 1).setValue('  - Pottery Classes Only').setFontStyle('italic');
