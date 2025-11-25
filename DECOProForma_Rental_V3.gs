@@ -329,12 +329,12 @@ function createSummerCampsSheet(ss) {
   var sheet = getOrCreateSheet(ss, 'Summer Camps');
   sheet.setTabColor('#F6B26B');
 
-  addHeader(sheet, 1, 'SUMMER CAMP SCHEDULE - Per-Year Enrollment Tracking', 18, '#F6B26B');
+  addHeader(sheet, 1, 'SUMMER CAMP SCHEDULE - Per-Year Enrollment Tracking', 19, '#F6B26B');
 
-  var headers = ['Age Group', 'Duration', 'Days', 'Type', 'Price', 'Max Students', 'Weeks',
+  var headers = ['Age Group', 'Duration', 'Days', 'Hours/Day', 'Type', 'Price', 'Max Students', 'Weeks',
                  'Yr1 Enrolled', 'Yr1 %', 'Yr2 Enrolled', 'Yr2 %', 'Yr3 Enrolled', 'Yr3 %',
                  'Yr4 Enrolled', 'Yr4 %', 'Yr5 Enrolled', 'Yr5 %'];
-  sheet.getRange('A3:Q3').setValues([headers]).setFontWeight('bold').setBackground('#FCE5CD');
+  sheet.getRange('A3:R3').setValues([headers]).setFontWeight('bold').setBackground('#FCE5CD');
 
   // Camp data: Age, Duration, Days, Type, Price, Max, Weeks
   var campData = [
@@ -359,10 +359,20 @@ function createSummerCampsSheet(ss) {
   // Write camp data with enrollment tracking
   for (var i = 0; i < campData.length; i++) {
     var row = 4 + i;
-    // A-G: Age, Duration, Days, Type, Price, Max, Weeks
-    sheet.getRange(row, 1, 1, 7).setValues([campData[i]]);
+    // A-C: Age, Duration, Days
+    sheet.getRange(row, 1, 1, 3).setValues([[campData[i][0], campData[i][1], campData[i][2]]]);
 
-    // H-Q: Year 1-5 Enrolled and % columns
+    // D: Hours/Day (calculated from Duration)
+    var duration = campData[i][1];
+    var hoursPerDay = 3; // Default for Half Day
+    if (duration === 'Full Day') hoursPerDay = 6;
+    if (duration === 'Extended Care') hoursPerDay = 2;
+    sheet.getRange(row, 4).setValue(hoursPerDay);
+
+    // E-H: Type, Price, Max, Weeks
+    sheet.getRange(row, 5, 1, 4).setValues([[campData[i][3], campData[i][4], campData[i][5], campData[i][6]]]);
+
+    // I-R: Year 1-5 Enrolled and % columns
     var maxStudents = campData[i][5];
     var yr1Enrolled = Math.round(maxStudents * 0.5);
     var yr2Enrolled = Math.min(Math.round(yr1Enrolled * 1.2), maxStudents);
@@ -370,56 +380,57 @@ function createSummerCampsSheet(ss) {
     var yr4Enrolled = Math.min(Math.round(yr3Enrolled * 1.2), maxStudents);
     var yr5Enrolled = maxStudents;
 
-    // H: Yr1 Enrolled, I: Yr1 %
-    sheet.getRange(row, 8).setValue(yr1Enrolled);
-    sheet.getRange(row, 9).setFormula('=H' + row + '/$F' + row);
-    // J: Yr2 Enrolled, K: Yr2 %
-    sheet.getRange(row, 10).setValue(yr2Enrolled);
-    sheet.getRange(row, 11).setFormula('=J' + row + '/$F' + row);
-    // L: Yr3 Enrolled, M: Yr3 %
-    sheet.getRange(row, 12).setValue(yr3Enrolled);
-    sheet.getRange(row, 13).setFormula('=L' + row + '/$F' + row);
-    // N: Yr4 Enrolled, O: Yr4 %
-    sheet.getRange(row, 14).setValue(yr4Enrolled);
-    sheet.getRange(row, 15).setFormula('=N' + row + '/$F' + row);
-    // P: Yr5 Enrolled, Q: Yr5 %
-    sheet.getRange(row, 16).setValue(yr5Enrolled);
-    sheet.getRange(row, 17).setFormula('=P' + row + '/$F' + row);
+    // I: Yr1 Enrolled, J: Yr1 %
+    sheet.getRange(row, 9).setValue(yr1Enrolled);
+    sheet.getRange(row, 10).setFormula('=I' + row + '/$G' + row);
+    // K: Yr2 Enrolled, L: Yr2 %
+    sheet.getRange(row, 11).setValue(yr2Enrolled);
+    sheet.getRange(row, 12).setFormula('=K' + row + '/$G' + row);
+    // M: Yr3 Enrolled, N: Yr3 %
+    sheet.getRange(row, 13).setValue(yr3Enrolled);
+    sheet.getRange(row, 14).setFormula('=M' + row + '/$G' + row);
+    // O: Yr4 Enrolled, P: Yr4 %
+    sheet.getRange(row, 15).setValue(yr4Enrolled);
+    sheet.getRange(row, 16).setFormula('=O' + row + '/$G' + row);
+    // Q: Yr5 Enrolled, R: Yr5 %
+    sheet.getRange(row, 17).setValue(yr5Enrolled);
+    sheet.getRange(row, 18).setFormula('=Q' + row + '/$G' + row);
   }
 
   // Format
-  sheet.getRange('E4:E19').setNumberFormat('$#,##0');
-  sheet.getRange('I4:I19').setNumberFormat('0%');
-  sheet.getRange('K4:K19').setNumberFormat('0%');
-  sheet.getRange('M4:M19').setNumberFormat('0%');
-  sheet.getRange('O4:O19').setNumberFormat('0%');
-  sheet.getRange('Q4:Q19').setNumberFormat('0%');
+  sheet.getRange('F4:F19').setNumberFormat('$#,##0');
+  sheet.getRange('J4:J19').setNumberFormat('0%');
+  sheet.getRange('L4:L19').setNumberFormat('0%');
+  sheet.getRange('N4:N19').setNumberFormat('0%');
+  sheet.getRange('P4:P19').setNumberFormat('0%');
+  sheet.getRange('R4:R19').setNumberFormat('0%');
 
   // Column widths
   sheet.setColumnWidth(1, 75);   // Age
   sheet.setColumnWidth(2, 95);   // Duration
   sheet.setColumnWidth(3, 50);   // Days
-  sheet.setColumnWidth(4, 80);   // Type
-  sheet.setColumnWidth(5, 70);   // Price
-  sheet.setColumnWidth(6, 80);   // Max
-  sheet.setColumnWidth(7, 70);   // Weeks
-  sheet.setColumnWidth(8, 85);   // Yr1 Enrolled
-  sheet.setColumnWidth(9, 70);   // Yr1 %
-  sheet.setColumnWidth(10, 85);  // Yr2 Enrolled
-  sheet.setColumnWidth(11, 70);  // Yr2 %
-  sheet.setColumnWidth(12, 85);  // Yr3 Enrolled
-  sheet.setColumnWidth(13, 70);  // Yr3 %
-  sheet.setColumnWidth(14, 85);  // Yr4 Enrolled
-  sheet.setColumnWidth(15, 70);  // Yr4 %
-  sheet.setColumnWidth(16, 85);  // Yr5 Enrolled
-  sheet.setColumnWidth(17, 70);  // Yr5 %
+  sheet.setColumnWidth(4, 70);   // Hours/Day
+  sheet.setColumnWidth(5, 80);   // Type
+  sheet.setColumnWidth(6, 70);   // Price
+  sheet.setColumnWidth(7, 80);   // Max
+  sheet.setColumnWidth(8, 70);   // Weeks
+  sheet.setColumnWidth(9, 85);   // Yr1 Enrolled
+  sheet.setColumnWidth(10, 70);  // Yr1 %
+  sheet.setColumnWidth(11, 85);  // Yr2 Enrolled
+  sheet.setColumnWidth(12, 70);  // Yr2 %
+  sheet.setColumnWidth(13, 85);  // Yr3 Enrolled
+  sheet.setColumnWidth(14, 70);  // Yr3 %
+  sheet.setColumnWidth(15, 85);  // Yr4 Enrolled
+  sheet.setColumnWidth(16, 70);  // Yr4 %
+  sheet.setColumnWidth(17, 85);  // Yr5 Enrolled
+  sheet.setColumnWidth(18, 70);  // Yr5 %
 
   // Color-code enrolled columns
-  sheet.getRange('H4:H19').setBackground('#FFF3E0'); // Light orange
-  sheet.getRange('J4:J19').setBackground('#FFF3E0');
-  sheet.getRange('L4:L19').setBackground('#FFF3E0');
-  sheet.getRange('N4:N19').setBackground('#FFF3E0');
-  sheet.getRange('P4:P19').setBackground('#FFF3E0');
+  sheet.getRange('I4:I19').setBackground('#FFF3E0'); // Light orange
+  sheet.getRange('K4:K19').setBackground('#FFF3E0');
+  sheet.getRange('M4:M19').setBackground('#FFF3E0');
+  sheet.getRange('O4:O19').setBackground('#FFF3E0');
+  sheet.getRange('Q4:Q19').setBackground('#FFF3E0');
   
   sheet.getRange('A21').setValue('INSTRUCTIONS:').setFontWeight('bold');
   sheet.getRange('A22').setValue('• Edit "Enrolled" columns (light orange) to set student numbers per year');
@@ -587,24 +598,24 @@ function createRevenueModelSheet(ss) {
   addSectionHeader(sheet, r++, 'SUMMER CAMPS', 6);
   sheet.getRange(r, 1).setValue('Summer Camps Revenue');
   // Year 1: Price × Yr1 Enrolled × Weeks
-  sheet.getRange(r, 2).setFormula('=SUMPRODUCT(\'Summer Camps\'!E4:E19,\'Summer Camps\'!H4:H19,\'Summer Camps\'!G4:G19)');
+  sheet.getRange(r, 2).setFormula('=SUMPRODUCT(\'Summer Camps\'!F4:F19,\'Summer Camps\'!I4:I19,\'Summer Camps\'!H4:H19)');
   // Year 2: Price × Yr2 Enrolled × Weeks
-  sheet.getRange(r, 3).setFormula('=SUMPRODUCT(\'Summer Camps\'!E4:E19,\'Summer Camps\'!J4:J19,\'Summer Camps\'!G4:G19)');
+  sheet.getRange(r, 3).setFormula('=SUMPRODUCT(\'Summer Camps\'!F4:F19,\'Summer Camps\'!K4:K19,\'Summer Camps\'!H4:H19)');
   // Year 3: Price × Yr3 Enrolled × Weeks
-  sheet.getRange(r, 4).setFormula('=SUMPRODUCT(\'Summer Camps\'!E4:E19,\'Summer Camps\'!L4:L19,\'Summer Camps\'!G4:G19)');
+  sheet.getRange(r, 4).setFormula('=SUMPRODUCT(\'Summer Camps\'!F4:F19,\'Summer Camps\'!M4:M19,\'Summer Camps\'!H4:H19)');
   // Year 4: Price × Yr4 Enrolled × Weeks
-  sheet.getRange(r, 5).setFormula('=SUMPRODUCT(\'Summer Camps\'!E4:E19,\'Summer Camps\'!N4:N19,\'Summer Camps\'!G4:G19)');
+  sheet.getRange(r, 5).setFormula('=SUMPRODUCT(\'Summer Camps\'!F4:F19,\'Summer Camps\'!O4:O19,\'Summer Camps\'!H4:H19)');
   // Year 5: Price × Yr5 Enrolled × Weeks
-  sheet.getRange(r, 6).setFormula('=SUMPRODUCT(\'Summer Camps\'!E4:E19,\'Summer Camps\'!P4:P19,\'Summer Camps\'!G4:G19)');
+  sheet.getRange(r, 6).setFormula('=SUMPRODUCT(\'Summer Camps\'!F4:F19,\'Summer Camps\'!Q4:Q19,\'Summer Camps\'!H4:H19)');
   r++;
 
   sheet.getRange(r, 1).setValue('  - Ceramics Camps Only').setFontStyle('italic');
   // Ceramics camps are rows 5, 6, 8, 10, 14, 16 in Summer Camps sheet
-  sheet.getRange(r, 2).setFormula('=(\'Summer Camps\'!E5*\'Summer Camps\'!H5*\'Summer Camps\'!G5+\'Summer Camps\'!E6*\'Summer Camps\'!H6*\'Summer Camps\'!G6+\'Summer Camps\'!E8*\'Summer Camps\'!H8*\'Summer Camps\'!G8+\'Summer Camps\'!E10*\'Summer Camps\'!H10*\'Summer Camps\'!G10+\'Summer Camps\'!E14*\'Summer Camps\'!H14*\'Summer Camps\'!G14+\'Summer Camps\'!E16*\'Summer Camps\'!H16*\'Summer Camps\'!G16)');
-  sheet.getRange(r, 3).setFormula('=(\'Summer Camps\'!E5*\'Summer Camps\'!J5*\'Summer Camps\'!G5+\'Summer Camps\'!E6*\'Summer Camps\'!J6*\'Summer Camps\'!G6+\'Summer Camps\'!E8*\'Summer Camps\'!J8*\'Summer Camps\'!G8+\'Summer Camps\'!E10*\'Summer Camps\'!J10*\'Summer Camps\'!G10+\'Summer Camps\'!E14*\'Summer Camps\'!J14*\'Summer Camps\'!G14+\'Summer Camps\'!E16*\'Summer Camps\'!J16*\'Summer Camps\'!G16)');
-  sheet.getRange(r, 4).setFormula('=(\'Summer Camps\'!E5*\'Summer Camps\'!L5*\'Summer Camps\'!G5+\'Summer Camps\'!E6*\'Summer Camps\'!L6*\'Summer Camps\'!G6+\'Summer Camps\'!E8*\'Summer Camps\'!L8*\'Summer Camps\'!G8+\'Summer Camps\'!E10*\'Summer Camps\'!L10*\'Summer Camps\'!G10+\'Summer Camps\'!E14*\'Summer Camps\'!L14*\'Summer Camps\'!G14+\'Summer Camps\'!E16*\'Summer Camps\'!L16*\'Summer Camps\'!G16)');
-  sheet.getRange(r, 5).setFormula('=(\'Summer Camps\'!E5*\'Summer Camps\'!N5*\'Summer Camps\'!G5+\'Summer Camps\'!E6*\'Summer Camps\'!N6*\'Summer Camps\'!G6+\'Summer Camps\'!E8*\'Summer Camps\'!N8*\'Summer Camps\'!G8+\'Summer Camps\'!E10*\'Summer Camps\'!N10*\'Summer Camps\'!G10+\'Summer Camps\'!E14*\'Summer Camps\'!N14*\'Summer Camps\'!G14+\'Summer Camps\'!E16*\'Summer Camps\'!N16*\'Summer Camps\'!G16)');
-  sheet.getRange(r, 6).setFormula('=(\'Summer Camps\'!E5*\'Summer Camps\'!P5*\'Summer Camps\'!G5+\'Summer Camps\'!E6*\'Summer Camps\'!P6*\'Summer Camps\'!G6+\'Summer Camps\'!E8*\'Summer Camps\'!P8*\'Summer Camps\'!G8+\'Summer Camps\'!E10*\'Summer Camps\'!P10*\'Summer Camps\'!G10+\'Summer Camps\'!E14*\'Summer Camps\'!P14*\'Summer Camps\'!G14+\'Summer Camps\'!E16*\'Summer Camps\'!P16*\'Summer Camps\'!G16)');
+  sheet.getRange(r, 2).setFormula('=(\'Summer Camps\'!F5*\'Summer Camps\'!I5*\'Summer Camps\'!H5+\'Summer Camps\'!F6*\'Summer Camps\'!I6*\'Summer Camps\'!H6+\'Summer Camps\'!F8*\'Summer Camps\'!I8*\'Summer Camps\'!H8+\'Summer Camps\'!F10*\'Summer Camps\'!I10*\'Summer Camps\'!H10+\'Summer Camps\'!F14*\'Summer Camps\'!I14*\'Summer Camps\'!H14+\'Summer Camps\'!F16*\'Summer Camps\'!I16*\'Summer Camps\'!H16)');
+  sheet.getRange(r, 3).setFormula('=(\'Summer Camps\'!F5*\'Summer Camps\'!K5*\'Summer Camps\'!H5+\'Summer Camps\'!F6*\'Summer Camps\'!K6*\'Summer Camps\'!H6+\'Summer Camps\'!F8*\'Summer Camps\'!K8*\'Summer Camps\'!H8+\'Summer Camps\'!F10*\'Summer Camps\'!K10*\'Summer Camps\'!H10+\'Summer Camps\'!F14*\'Summer Camps\'!K14*\'Summer Camps\'!H14+\'Summer Camps\'!F16*\'Summer Camps\'!K16*\'Summer Camps\'!H16)');
+  sheet.getRange(r, 4).setFormula('=(\'Summer Camps\'!F5*\'Summer Camps\'!M5*\'Summer Camps\'!H5+\'Summer Camps\'!F6*\'Summer Camps\'!M6*\'Summer Camps\'!H6+\'Summer Camps\'!F8*\'Summer Camps\'!M8*\'Summer Camps\'!H8+\'Summer Camps\'!F10*\'Summer Camps\'!M10*\'Summer Camps\'!H10+\'Summer Camps\'!F14*\'Summer Camps\'!M14*\'Summer Camps\'!H14+\'Summer Camps\'!F16*\'Summer Camps\'!M16*\'Summer Camps\'!H16)');
+  sheet.getRange(r, 5).setFormula('=(\'Summer Camps\'!F5*\'Summer Camps\'!O5*\'Summer Camps\'!H5+\'Summer Camps\'!F6*\'Summer Camps\'!O6*\'Summer Camps\'!H6+\'Summer Camps\'!F8*\'Summer Camps\'!O8*\'Summer Camps\'!H8+\'Summer Camps\'!F10*\'Summer Camps\'!O10*\'Summer Camps\'!H10+\'Summer Camps\'!F14*\'Summer Camps\'!O14*\'Summer Camps\'!H14+\'Summer Camps\'!F16*\'Summer Camps\'!O16*\'Summer Camps\'!H16)');
+  sheet.getRange(r, 6).setFormula('=(\'Summer Camps\'!F5*\'Summer Camps\'!Q5*\'Summer Camps\'!H5+\'Summer Camps\'!F6*\'Summer Camps\'!Q6*\'Summer Camps\'!H6+\'Summer Camps\'!F8*\'Summer Camps\'!Q8*\'Summer Camps\'!H8+\'Summer Camps\'!F10*\'Summer Camps\'!Q10*\'Summer Camps\'!H10+\'Summer Camps\'!F14*\'Summer Camps\'!Q14*\'Summer Camps\'!H14+\'Summer Camps\'!F16*\'Summer Camps\'!Q16*\'Summer Camps\'!H16)');
   r++;
   r++;
   
@@ -761,17 +772,17 @@ function createExpensesSheet(ss) {
   
   sheet.getRange(r, 1).setValue('Teachers (calculated from enrollment)');
   // Year 1: (Duration × Enrolled × Sessions) for classes + camps × $25/hr
-  // Classes: Duration × Yr1 Enrolled × 6 sessions
-  // Camps: Approx 5hr/day × Enrolled × Weeks
-  sheet.getRange(r, 2).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13,\'Class Schedule\'!F4:F13)*Assumptions!$B$13 + SUMPRODUCT(\'Summer Camps\'!H4:H19,\'Summer Camps\'!G4:G19)*5)*Assumptions!$B$35');
-  // Year 2: Duration × Yr2 Enrolled × 12 sessions
-  sheet.getRange(r, 3).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13,\'Class Schedule\'!H4:H13)*Assumptions!$B$14 + SUMPRODUCT(\'Summer Camps\'!J4:J19,\'Summer Camps\'!G4:G19)*5)*Assumptions!$B$35');
+  // Classes: (Duration + 0.5 prep) × Yr1 Enrolled × 6 sessions
+  // Camps: Hours/Day × Enrolled × Weeks
+  sheet.getRange(r, 2).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13+0.5,\'Class Schedule\'!F4:F13)*Assumptions!$B$13 + SUMPRODUCT(\'Summer Camps\'!I4:I19,\'Summer Camps\'!H4:H19,\'Summer Camps\'!D4:D19))*Assumptions!$B$35');
+  // Year 2: (Duration + 0.5 prep) × Yr2 Enrolled × 12 sessions
+  sheet.getRange(r, 3).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13+0.5,\'Class Schedule\'!H4:H13)*Assumptions!$B$14 + SUMPRODUCT(\'Summer Camps\'!K4:K19,\'Summer Camps\'!H4:H19,\'Summer Camps\'!D4:D19))*Assumptions!$B$35');
   // Year 3
-  sheet.getRange(r, 4).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13,\'Class Schedule\'!J4:J13)*Assumptions!$B$14 + SUMPRODUCT(\'Summer Camps\'!L4:L19,\'Summer Camps\'!G4:G19)*5)*Assumptions!$B$35');
+  sheet.getRange(r, 4).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13+0.5,\'Class Schedule\'!J4:J13)*Assumptions!$B$14 + SUMPRODUCT(\'Summer Camps\'!M4:M19,\'Summer Camps\'!H4:H19,\'Summer Camps\'!D4:D19))*Assumptions!$B$35');
   // Year 4
-  sheet.getRange(r, 5).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13,\'Class Schedule\'!L4:L13)*Assumptions!$B$14 + SUMPRODUCT(\'Summer Camps\'!N4:N19,\'Summer Camps\'!G4:G19)*5)*Assumptions!$B$35');
+  sheet.getRange(r, 5).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13+0.5,\'Class Schedule\'!L4:L13)*Assumptions!$B$14 + SUMPRODUCT(\'Summer Camps\'!O4:O19,\'Summer Camps\'!H4:H19,\'Summer Camps\'!D4:D19))*Assumptions!$B$35');
   // Year 5
-  sheet.getRange(r, 6).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13,\'Class Schedule\'!N4:N13)*Assumptions!$B$14 + SUMPRODUCT(\'Summer Camps\'!P4:P19,\'Summer Camps\'!G4:G19)*5)*Assumptions!$B$35');
+  sheet.getRange(r, 6).setFormula('=(SUMPRODUCT(\'Class Schedule\'!B4:B13+0.5,\'Class Schedule\'!N4:N13)*Assumptions!$B$14 + SUMPRODUCT(\'Summer Camps\'!Q4:Q19,\'Summer Camps\'!H4:H19,\'Summer Camps\'!D4:D19))*Assumptions!$B$35');
   r++;
 
   sheet.getRange(r, 1).setValue('Assistants (for classes >10 students)');
